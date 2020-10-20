@@ -1,18 +1,52 @@
-h2 {
+.master-div {
+  background-image: url("../assets/githum_bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.logo {
+  width: 300px;
+  height: 300px;
+}
+
+.header-text {
   font-family: "Red Hat Text", sans-serif;
   font-size: 5em;
   font-weight: 200;
   color: #c8e6c9;
 }
 
-.container {
-  height: 100%;
-  /* display: flex; */
-  margin-top: 25%;
-  text-align: center;
+.clear {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.buttons-container {
+.spacer {
+  min-width: 100px;
+}
+
+button {
+  background-color: #fedbff;
+  border: none;
+  text-align: center;
+  padding: 15px 35px;
+}
+
+
+/* .buttons-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,14 +69,13 @@ button {
 .title {
   padding-top: 90px;
   padding-right: 100px;
-  /* text-align: center; */
+  // text-align: center;
   margin: auto auto;
   margin-top: 40px;
   margin-left: 40px;
   position: absolute;
 }
 
-/* Logo */
 .logo {
   max-width: 300px;
   max-height: 300px;
@@ -54,4 +87,4 @@ button {
 
 .main-title {
   position: relative;
-}
+} */

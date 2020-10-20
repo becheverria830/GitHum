@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-// import Landing from "./components/landing";
-import SignUp from "./components/signup";
-// import LogIn from "./components/login";
-// import PasswordReset from "./components/passwordReset";
-// import MainNavBar from "./components/mainNavBar";
+import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(<SignUp />, document.getElementById("root"));
-// registerServiceWorker();
+import App from "./components/app";
+import "./index.css";
+
+ReactDOM.render(
+  <Router>
+    <App/>
+  </Router>,
+  document.getElementById("root")
+);
