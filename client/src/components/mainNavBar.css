@@ -1,0 +1,21 @@
+.small-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.main-nav {
+  background-color: #c8e6c9;
+}
+
+.search-bar {
+  width: 400px !important;
+}
+
+.nav-my-valley {
+  background-color: #fedbff;
+  color: #000000; /* This is being overriden by CSS */
+  border-radius: 10%;
+  height: 40px;
+  width: 100px;
+  text-align: center;
+}

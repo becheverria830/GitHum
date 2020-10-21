@@ -10,16 +10,16 @@ export default function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <LandingPage/>
+        <LandingPage />
       </Route>
       <Route path="/signup">
-        <SignUpPage/>
+        <SignUpPage />
       </Route>
       <Route path="/login">
-        <LogInPage/>
+        <LogInPage />
       </Route>
       <Route path="/resetpassword">
-        <PasswordResetPage/>
+        <PasswordResetPage />
       </Route>
     </Switch>
   );

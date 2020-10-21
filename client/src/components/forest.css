@@ -1,0 +1,33 @@
+#test-display {
+  background-color: #fedbff;
+}
+
+#forest-pic {
+  width: 90px;
+  height: 90px;
+}
+#forest-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-color: aqua;
+  padding: 6% 0 6% 0;
+  align-items: left;
+  vertical-align: left;
+}
+
+#forest-button-toggle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-color: white;
+  padding: 2% 0 2% 0;
+}
+
+#forest-song-display {
+  background-color: #c4c4c4;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 30% 0 30% 0;
+}
