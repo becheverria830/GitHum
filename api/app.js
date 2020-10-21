@@ -5,10 +5,11 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var testAPIRouter = require("./routes/testAPI");
-var testDBRouter = require("./routes/testDB");
+var searchRouter = require("./routes/search");
+var friendsRouter = require("./routes/user/friends");
+var forestsRouter = require("./routes/user/forests");
+var favoritesRouter = require("./routes/user/favorites");
+var queueRouter = require("./routes/user/queue");
 
 var app = express();
 
@@ -23,10 +24,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/testAPI", testAPIRouter);
-app.use("/testDB", testDBRouter);
+/*
+    Endpoints we need definitely need to have:
+
+    /search?query=..
+    /user/friends
+    /user/friends/add
+    /user/friends/remove
+    /user/friends/request
+    /user/forests?userid=
+    /user/forests/saved?userid=
+    /user/favorites/songs
+    /user/queue
+*/
+
+app.use("/search", searchRouter);
+app.use("/user/friends", friendsRouter);
+app.use("/user/forests", forestsRouter);
+app.use("/user/favorites", favoritesRouter);
+app.use("/user/queue", queueRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
