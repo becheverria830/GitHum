@@ -1,0 +1,66 @@
+/* MASTER CSS */
+#now-playing-master-div {
+  /* min-width: 300px;
+  max-width: 800px;
+  min-height: 300px;
+  max-height: 800px; */
+}
+
+.now-playing {
+  background-color: #c8e6c9;
+  max-width: 25em;
+  max-height: 30em;
+  width: 30vw;
+  height: 30vw;
+  border-radius: 10% 10% 10% 10%;
+}
+
+/* TITLE CSS */
+#now-playing-forest-default-icon {
+  max-width: 4em;
+  max-height: 4em;
+  width: 5vw;
+  height: 5vw;
+}
+
+#now-playing-forest-title-container {
+  margin-top: 1%;
+  align-items: flex-start;
+  text-align: center;
+}
+
+#now-playing-forest-title {
+  font-size: 1.5em;
+  white-space: nowrap;
+  /* position: absolute; */
+  align-items: center;
+  padding: 12% 0 0 0;
+}
+
+/* MUSIC CSS */
+#now-playing-album-art {
+  max-width: 10em;
+  max-height: 10em;
+  width: 15vw;
+  height: 15vw;
+  padding-bottom: 1em;
+}
+
+.now-playing-song {
+  margin-top: -1em;
+}
+
+#now-playing-song-title {
+  font-size: 1.5em;
+}
+
+#now-playing-song-artist {
+  font-size: 1.2em;
+}
+
+.now-playing-music-icons {
+  max-width: 3.3em;
+  max-height: 3.3em;
+  width: 3.3vw;
+  height: 3.3vw;
+}

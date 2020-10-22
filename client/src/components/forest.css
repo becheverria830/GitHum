@@ -5,13 +5,14 @@
 #forest-pic {
   width: 90px;
   height: 90px;
+  margin-left: 5%;
 }
 #forest-title-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   background-color: aqua;
-  padding: 6% 0 6% 0;
+  padding: 4% 0 4% 0;
   align-items: left;
   vertical-align: left;
 }
@@ -24,10 +25,29 @@
   padding: 2% 0 2% 0;
 }
 
-#forest-song-display {
+#forest-song-display-container {
   background-color: #c4c4c4;
   display: flex;
   flex-direction: row;
   align-items: stretch;
   padding: 30% 0 30% 0;
+  border-radius: 10% 10% 10% 10%;
+  margin: 0 0 0 2%;
+}
+
+#forest-action-container {
+  background-color: #c4c4c4;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  /* padding: 30% 0 25% 0; */
+  border-radius: 10% 10% 10% 10%;
+  margin-top: 10px;
+  height: 250px;
+  overflow: visible;
+}
+
+#forest-now-playing-container {
+  /* max-width: 25vw;
+  max-height: 25vw; */
 }

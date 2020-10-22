@@ -12,6 +12,7 @@ import Button from "react-bootstrap/Button";
 /* Importing All Resources & Custom CSS */
 import "./forest.css";
 import MainNavBar from "./mainNavBar";
+import NowPlaying from "./nowPlaying";
 
 class Forest extends Component {
   state = {
@@ -22,44 +23,59 @@ class Forest extends Component {
       <React.Fragment>
         <MainNavBar></MainNavBar>
         <div>
+          {/* <Container> */}
           <Row>
-            <Col md="8">
+            <Col lg="8">
+              <Row>
+                <Container
+                  className="container-fluid"
+                  id="forest-title-container"
+                >
+                  <Col lg="4" className="">
+                    <img
+                      id="forest-pic"
+                      src="https://picsum.photos/200/300"
+                    ></img>
+                  </Col>
+                  <Col lg="8">
+                    <h1>Forest Title</h1>
+                  </Col>
+                </Container>
+              </Row>
+              <Row>
+                <Container
+                  className="container-fluid"
+                  id="forest-button-toggle-container"
+                >
+                  <p>Toggle Buttons</p>
+                </Container>
+              </Row>
+            </Col>
+            <Col lg="4">
               <Container
-                className="container-fluid"
-                id="forest-title-container"
+                className="container container-fluid"
+                id="forest-action-container"
               >
-                <Col md="4">
-                  <img
-                    id="forest-pic"
-                    src="https://picsum.photos/200/300"
-                  ></img>
-                </Col>
-                <Col md="8">
-                  <h1>Forest Title</h1>
-                </Col>
+                <p>Forest Options Here</p>
               </Container>
             </Col>
-            <Col xs lg="2"></Col>
           </Row>
           <Row>
-            <Col md="8">
+            <Col lg="8">
               <Container
                 className="container-fluid"
-                id="forest-button-toggle-container"
+                id="forest-song-display-container"
               >
-                <p>Toggle Buttons</p>
-              </Container>
-            </Col>
-            <Col xs lg="2"></Col>
-          </Row>
-          <Row>
-            <Col md="8">
-              <Container className="container-fluid" id="forest-song-display">
                 <p>Songs here</p>
               </Container>
             </Col>
-            <Col xs lg="2">
-              3 of 3
+            <Col lg="4">
+              <Container
+                className="container"
+                id="forest-now-playing-container"
+              >
+                <NowPlaying></NowPlaying>
+              </Container>
             </Col>
           </Row>
         </div>
