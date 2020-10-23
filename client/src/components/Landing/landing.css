@@ -1,5 +1,6 @@
 .master-div {
-  background-image: url("../../assets/githum_bg.png");
+  background-color: #E1DDDD;
+  background-image: url("../../assets/bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -13,6 +14,24 @@
   align-items: center;
   height: 100%;
   width: 100%;
+}
+
+.upper_small {
+  width: 276px;
+  height: 350px;
+  left: 1350px;
+  top: 408.13px;
+  background: #C8E6C9;
+  transform: rotate(-179.76deg);
+}
+
+.upper_large {
+  width: 326px;
+  height: 342px;
+  left: 1440px;
+  top: 333.34px;
+  background: #C8E6C9;
+  transform: rotate(-179.76deg);
 }
 
 .logo {

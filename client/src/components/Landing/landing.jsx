@@ -12,10 +12,16 @@ import Button from 'react-bootstrap/Button';
 /* Importing All Resources & Custom CSS */
 import "./landing.css";
 import Logo from "../../assets/githum-tree.svg";
+import USmall from "../../assets/upper_small.svg";
+import ULarge from "../../assets/upper_large.svg";
+import UCorner from "../../assets/corner_test.svg";
 
 export default function Landing() {
   return (
     <div className="master-div container-fluid">
+      <div class="float-right">
+        <Image className="corner" src={UCorner}/>
+      </div>
       <Container>
         <Row>
           <Col md={12}>
