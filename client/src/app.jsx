@@ -5,10 +5,6 @@ import LandingPage from "./components/Landing/landing";
 import SignUpPage from "./components/SignUp/signup";
 import LogInPage from "./components/LogIn/login";
 import PasswordResetPage from "./components/PasswordReset/passwordreset";
-import FeedPage from "./components/Feed/feed";
-import ValleyPage from "./components/Valley/valley";
-import ForestPage from "./components/Forest/forest";
-import SearchPage from "./components/Search/search";
 
 export default function App() {
   return (
@@ -24,18 +20,6 @@ export default function App() {
       </Route>
       <Route path="/resetpassword">
         <PasswordResetPage />
-      </Route>
-      <Route path="/feed">
-        <FeedPage />
-      </Route>
-      <Route path="/valley/:id">
-        <ValleyPage />
-      </Route>
-      <Route path="/forest/:forestid">
-        <ForestPage />
-      </Route>
-      <Route path="/search?query=Avicii">
-        <SearchPage />
       </Route>
     </Switch>
   );

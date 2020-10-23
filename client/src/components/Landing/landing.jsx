@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 
 /* Importing All Resources & Custom CSS */
 import "./landing.css";
-import Logo from "../assets/githum-tree.svg";
+import Logo from "../../assets/githum-tree.svg";
 
 export default function Landing() {
   return (
