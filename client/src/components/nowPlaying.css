@@ -10,8 +10,8 @@
   background-color: #c8e6c9;
   max-width: 25em;
   max-height: 30em;
-  width: 30vw;
-  height: 30vw;
+  width: 27vw;
+  height: 29vw;
   border-radius: 10% 10% 10% 10%;
 }
 
@@ -19,8 +19,8 @@
 #now-playing-forest-default-icon {
   max-width: 4em;
   max-height: 4em;
-  width: 5vw;
-  height: 5vw;
+  width: 4.4vw;
+  height: 4.4vw;
 }
 
 #now-playing-forest-title-container {
@@ -30,7 +30,7 @@
 }
 
 #now-playing-forest-title {
-  font-size: 1.5em;
+  font-size: 1.8vw;
   white-space: nowrap;
   /* position: absolute; */
   align-items: center;
@@ -51,16 +51,16 @@
 }
 
 #now-playing-song-title {
-  font-size: 1.5em;
+  font-size: 2vw;
 }
 
 #now-playing-song-artist {
-  font-size: 1.2em;
+  font-size: 1.7vw;
 }
 
 .now-playing-music-icons {
   max-width: 3.3em;
   max-height: 3.3em;
-  width: 3.3vw;
-  height: 3.3vw;
+  width: 3.1vw;
+  height: 3.1vw;
 }

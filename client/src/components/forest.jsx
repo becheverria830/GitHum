@@ -25,21 +25,22 @@ class Forest extends Component {
         <div>
           {/* <Container> */}
           <Row>
-            <Col lg="8">
+            <Col lg="8" md="8" sm="8">
               <Row>
                 <Container
                   className="container-fluid"
                   id="forest-title-container"
                 >
-                  <Col lg="4" className="">
+                  <Col lg="3" md="3" sm="3" className="">
                     <img
                       id="forest-pic"
                       src="https://picsum.photos/200/300"
                     ></img>
                   </Col>
-                  <Col lg="8">
-                    <h1>Forest Title</h1>
+                  <Col lg="3" md="3" sm="3">
+                    <h1 id="forest-forest-title">Forest Title</h1>
                   </Col>
+                  <Col lg="6" md="6" sm="6"></Col>
                 </Container>
               </Row>
               <Row>
@@ -47,21 +48,62 @@ class Forest extends Component {
                   className="container-fluid"
                   id="forest-button-toggle-container"
                 >
-                  <p>Toggle Buttons</p>
+                  <Button className="forest-toggle-buttons">Songs</Button>
+                  <Button className="forest-toggle-buttons">Info</Button>
                 </Container>
               </Row>
             </Col>
-            <Col lg="4">
+            <Col lg="4" md="4" sm="4">
               <Container
                 className="container container-fluid"
                 id="forest-action-container"
               >
-                <p>Forest Options Here</p>
+                <Col lg="1" md="1" sm="1"></Col>
+                <Col lg="10" md="10" sm="10">
+                  <Row>
+                    <Button
+                      id="forest-action-1"
+                      className="forest-action-buttons"
+                    >
+                      Forest Settings
+                    </Button>
+                  </Row>
+                  <br></br>
+                  <Row>
+                    <Button
+                      id="forest-action-2"
+                      className="forest-action-buttons"
+                    >
+                      Share Forest
+                    </Button>
+                  </Row>
+                  <br></br>
+                  <Row>
+                    <Button
+                      id="forest-action-3"
+                      className="forest-action-buttons"
+                    >
+                      Branch from Forest
+                    </Button>
+                  </Row>
+                  <br></br>
+                  <Row>
+                    <Button
+                      type="Danger"
+                      id="forest-action-4"
+                      className="forest-action-buttons"
+                    >
+                      Deforest
+                    </Button>
+                  </Row>
+                  <br></br>
+                </Col>
+                <Col lg="1" md="1" sm="1"></Col>
               </Container>
             </Col>
           </Row>
           <Row>
-            <Col lg="8">
+            <Col lg="8" md="8" sm="8">
               <Container
                 className="container-fluid"
                 id="forest-song-display-container"
@@ -69,7 +111,7 @@ class Forest extends Component {
                 <p>Songs here</p>
               </Container>
             </Col>
-            <Col lg="4">
+            <Col lg="4" md="4" sm="4">
               <Container
                 className="container"
                 id="forest-now-playing-container"
