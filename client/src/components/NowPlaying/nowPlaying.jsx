@@ -11,15 +11,41 @@ import Button from "react-bootstrap/Button";
 
 /* Importing All Resources & Custom CSS */
 import "./nowPlaying.css";
-import ForestDefaultIcon from "../assets/forest.svg";
-import FastForwardIcon from "../assets/fast_forward.svg";
-import FastRewindIcon from "../assets/fast_rewind.svg";
-import PlayCircleIcon from "../assets/play_circle.svg";
-import LoopIcon from "../assets/loop.svg";
-import ShuffleIcon from "../assets/shuffle.svg";
+import ForestDefaultIcon from "../../assets/forest.svg";
+import FastForwardIcon from "../../assets/fast_forward.svg";
+import FastRewindIcon from "../../assets/fast_rewind.svg";
+import PlayCircleIcon from "../../assets/play_circle.svg";
+import LoopIcon from "../../assets/loop.svg";
+import ShuffleIcon from "../../assets/shuffle.svg";
 
 class NowPlaying extends Component {
-  state = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      queue: {
+        songs: [],
+        index: -1
+      }
+    };
+  }
+
+  getQueueData() {
+    fetch("http://localhost:9000/user/queue")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          queue: res
+        })
+        console.log(this.state);
+      })
+      .catch(err => err);
+  }
+
+  componentDidMount() {
+    this.getQueueData();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -41,7 +67,9 @@ class NowPlaying extends Component {
             <Row>
               <Image
                 id="now-playing-album-art"
-                src="https://picsum.photos/200/300"
+                src={
+                  this.state.queue.songs.length != 0 && this.state.queue.index != -1 && this.state.queue.songs[this.state.queue.index].album_art
+                }
               />
             </Row>
             <Row className="now-playing-song">

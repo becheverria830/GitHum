@@ -14,8 +14,8 @@ import Button from "react-bootstrap/Button";
 
 /* Importing All Resources & Custom CSS */
 import "./mainNavBar.css";
-import SmallLogo from "../assets/githum-tree.svg";
-import SearchIcon from "../assets/search.svg";
+import SmallLogo from "../../assets/githum-tree.svg";
+import SearchIcon from "../../assets/search.svg";
 
 class MainNavBar extends Component {
   state = {};

@@ -11,13 +11,42 @@ import Button from "react-bootstrap/Button";
 
 /* Importing All Resources & Custom CSS */
 import "./forest.css";
-import MainNavBar from "./mainNavBar";
-import NowPlaying from "./nowPlaying";
+import MainNavBar from "../MainNavBar/mainNavBar";
+import NowPlaying from "../NowPlaying/nowPlaying";
 
-class Forest extends Component {
-  state = {
-    owner: 0,
-  };
+class ForestPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      forest: {
+        id: 1,
+        name: "",
+        icon: "",
+        active: 1,
+        songs: [],
+        settings: {
+          privacy: 1
+        }
+      },
+    };
+  }
+
+  getForestData() {
+    fetch("http://localhost:9000/user/forests/1")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          forest: res
+        })
+      })
+      .catch(err => err);
+  }
+
+  componentDidMount() {
+    this.getForestData();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -34,7 +63,7 @@ class Forest extends Component {
                   <Col lg="3" md="3" sm="3" className="">
                     <img
                       id="forest-pic"
-                      src="https://picsum.photos/200/300"
+                      src={this.state.forest.icon}
                     ></img>
                   </Col>
                   <Col lg="3" md="3" sm="3">
@@ -126,4 +155,4 @@ class Forest extends Component {
   }
 }
 
-export default Forest;
+export default ForestPage;

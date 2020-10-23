@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class FeedPage extends Component {
+class SearchPage extends Component {
   state = {};
   render() {
     return (
@@ -11,4 +11,4 @@ class FeedPage extends Component {
   }
 }
 
-export default FeedPage;
+export default SearchPage;
