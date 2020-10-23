@@ -3,18 +3,27 @@
 }
 
 #forest-pic {
-  width: 90px;
-  height: 90px;
-  margin-left: 5%;
+  width: 9vw;
+  height: 9vw;
+  margin-left: 10%;
 }
 #forest-title-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  background-color: aqua;
-  padding: 4% 0 4% 0;
+  border: none;
+  /* padding: 4% 0 4% 0; */
+  margin: 3% 0 0 0;
   align-items: left;
   vertical-align: left;
+}
+
+#forest-forest-title {
+  text-align: left;
+  display: inline;
+  white-space: nowrap;
+  font-size: 3vw;
+  padding: 0 0 0 18%;
 }
 
 #forest-button-toggle-container {
@@ -32,22 +41,66 @@
   align-items: stretch;
   padding: 30% 0 30% 0;
   border-radius: 10% 10% 10% 10%;
-  margin: 0 0 0 2%;
+  margin: -10.5% 0 0 2%;
+  height: 30vw;
+  width: 65vw;
 }
 
 #forest-action-container {
   background-color: #c4c4c4;
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  /* padding: 30% 0 25% 0; */
   border-radius: 10% 10% 10% 10%;
   margin-top: 10px;
-  height: 250px;
+  height: 22vw;
+  width: 25vw;
   overflow: visible;
+  align-items: center;
+  vertical-align: center;
+}
+
+.forest-action-buttons {
+  color: #000000;
+  background-color: #fedbff;
+  border: none;
+  margin: 0 0 0 18%;
+  padding: 0 0 0 0;
+  width: 13vw;
+  height: 3.1vw;
+  max-width: 10em;
+  max-height: 5em;
+  /* min-width: 3.5em;
+  min-height: 2em; */
+  font-size: 1.4vw;
+  text-align: center;
+  align-items: center;
+}
+.btn-primary:hover .btn-primary:active {
+  background-color: #dab4db;
 }
 
 #forest-now-playing-container {
   /* max-width: 25vw;
   max-height: 25vw; */
+  width: 50vw;
+  height: 50vw;
+  padding: 0 60% 65% 0;
+}
+
+.forest-toggle-buttons {
+  color: #000000;
+  background-color: #c8e6c9;
+  border: none;
+  width: 8vw;
+  height: 3.5vw;
+  align-items: left;
+  vertical-align: left;
+  margin: -1% 30% 0 -26%;
+  min-width: 3.2em;
+  min-height: 1.8em;
+  font-size: 1.8vw;
+  border-radius: 20%;
+}
+
+#forest-action-4 {
+  background-color: #f16868;
 }

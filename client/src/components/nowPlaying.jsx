@@ -27,13 +27,13 @@ class NowPlaying extends Component {
           <Container className="now-playing">
             <Container id="now-playing-forest-title-container">
               <Row className="now-playing-forest-title">
-                <Col lg="4">
+                <Col lg="4" md="4" sm="4">
                   <Image
                     id="now-playing-forest-default-icon"
                     src={ForestDefaultIcon}
                   />
                 </Col>
-                <Col lg="8">
+                <Col lg="8" md="8" sm="8">
                   <h2 id="now-playing-forest-title"> Disney Bops </h2>
                 </Col>
               </Row>
