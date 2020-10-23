@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
 
 /* Importing All Resources & Custom CSS */
 import "./forest.css";
@@ -135,9 +136,32 @@ class ForestPage extends Component {
             <Col lg="8" md="8" sm="8">
               <Container
                 className="container-fluid"
-                id="forest-song-display-container"
-              >
-                <p>Songs here</p>
+                id="forest-song-display-container">
+                <div class="song-container">
+                  <Table id="songTable">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Song Name</th>
+                      <th>Last Name</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  {this.state.forest.songs.map(song => (
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td>{song.song_name}</td>
+                        <td>{song.artist_name}</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                ))
+                }
+                </Table>
+                </div>
               </Container>
             </Col>
             <Col lg="4" md="4" sm="4">
