@@ -15,6 +15,7 @@ import "./feed.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
 import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
+import FriendBox from "../FriendBox/friendBox";
 
 class FeedPage extends Component {
   state = {};
@@ -43,7 +44,8 @@ class FeedPage extends Component {
               </Row>
             </Col>
             <Col lg="4" md="4" sm="4" xs="4">
-              <Container
+              <FriendBox></FriendBox>
+              {/* <Container
                 className="container container-fluid"
                 id="friend-action-container"
               >
@@ -69,7 +71,7 @@ class FeedPage extends Component {
                     </Button>
                   </Col>
                 </Row>
-              </Container>
+              </Container> */}
             </Col>
           </Row>
           <Row>
