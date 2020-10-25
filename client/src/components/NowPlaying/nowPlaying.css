@@ -10,8 +10,8 @@
   background-color: #c8e6c9;
   max-width: 25em;
   max-height: 30em;
-  width: 27vw;
-  height: 29vw;
+  width: 27vw !important;
+  height: 29vw !important;
   border-radius: 10% 10% 10% 10%;
 }
 
