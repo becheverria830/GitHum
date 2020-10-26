@@ -1,9 +1,4 @@
-#forest-pic {
-  width: 9vw;
-  height: 9vw;
-  margin-left: 10%;
-}
-#forest-title-container {
+#search-title-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -14,20 +9,12 @@
   vertical-align: left;
 }
 
-#forest-forest-title {
-  text-align: left;
-  display: inline;
+#searching-for-text {
   white-space: nowrap;
-  font-size: 3vw;
-  padding: 0 0 0 18%;
 }
 
-#forest-button-toggle-container {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  background-color: white;
-  padding: 2% 0 2% 0;
+#search-input {
+  white-space: nowrap;
 }
 
 #forest-song-display-container {
@@ -44,7 +31,7 @@
 }
 
 .song-container {
-  width:60vw;
+  width: 60vw;
   display: inline;
 }
 
@@ -64,12 +51,7 @@
   width: 5%;
 }
 
-
-
-
-
-
-#forest-action-container {
+#search-action-container {
   background-color: #c4c4c4;
   display: flex;
   border-radius: 10% 10% 10% 10%;
@@ -81,7 +63,7 @@
   vertical-align: center;
 }
 
-.forest-action-buttons {
+button.search-action-buttons {
   color: #000000;
   background-color: #fedbff;
   border: none;
@@ -92,7 +74,7 @@
   max-width: 10em;
   max-height: 5em;
   /* min-width: 3.5em;
-  min-height: 2em; */
+    min-height: 2em; */
   font-size: 1.4vw;
   text-align: center;
   align-items: center;
@@ -101,9 +83,9 @@
   background-color: #dab4db;
 }
 
-#forest-now-playing-container {
+#search-now-playing-container {
   /* max-width: 25vw;
-  max-height: 25vw; */
+    max-height: 25vw; */
   width: 50vw;
   height: 50vw;
   padding: 0 60% 65% 0;
@@ -122,8 +104,4 @@
   min-height: 1.8em;
   font-size: 1.8vw;
   border-radius: 20%;
-}
-
-#forest-action-4 {
-  background-color: #f16868;
 }
