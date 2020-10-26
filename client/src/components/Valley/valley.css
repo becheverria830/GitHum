@@ -1,0 +1,123 @@
+#valley-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border: none;
+  margin: 3% 0 0 0;
+  align-items: left;
+  vertical-align: left;
+}
+
+#valley-title {
+  text-align: left;
+  display: inline;
+  white-space: nowrap;
+  font-size: 3vw;
+  padding: 0 0 0 0;
+}
+
+#valley-githum-logo {
+  margin: -10% 0 0 0;
+}
+
+#forest-button-toggle-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background-color: white;
+  padding: 2% 0 2% 0;
+}
+
+#forest-song-display-container {
+  background-color: #c4c4c4;
+  display: flex;
+  flex-direction: column;
+  padding: 5% 0 30% 0;
+  border-radius: 10% 10% 10% 10%;
+  margin: -10.5% 0 0 2%;
+  height: 40vw;
+  width: 65vw;
+  justify-content: start;
+  align-items: baseline;
+}
+
+.song-container {
+  width: 60vw;
+  display: inline;
+}
+
+#songTable tr td:nth-child(1) {
+  width: 10%;
+}
+#songTable tr td:nth-child(2) {
+  width: 40%;
+}
+#songTable tr td:nth-child(3) {
+  width: 40%;
+}
+#songTable tr td:nth-child(4) {
+  width: 5%;
+}
+#songTable tr td:nth-child(5) {
+  width: 5%;
+}
+
+#forest-action-container {
+  background-color: #c4c4c4;
+  display: flex;
+  border-radius: 10% 10% 10% 10%;
+  margin-top: 10px;
+  height: 22vw;
+  width: 25vw;
+  overflow: visible;
+  align-items: center;
+  vertical-align: center;
+}
+
+.forest-action-buttons {
+  color: #000000;
+  background-color: #fedbff;
+  border: none;
+  margin: 0 0 0 18%;
+  padding: 0 0 0 0;
+  width: 13vw;
+  height: 3.1vw;
+  max-width: 10em;
+  max-height: 5em;
+  /* min-width: 3.5em;
+    min-height: 2em; */
+  font-size: 1.4vw;
+  text-align: center;
+  align-items: center;
+}
+.btn-primary:hover .btn-primary:active {
+  background-color: #dab4db;
+}
+
+#valley-now-playing-container {
+  /* max-width: 25vw;
+    max-height: 25vw; */
+  width: 50vw;
+  height: 50vw;
+  padding: 0 60% 65% 0;
+}
+
+button.valley-toggle-buttons {
+  color: #000000;
+  background-color: #c8e6c9;
+  border: none;
+  width: 12vw;
+  height: 3.5vw;
+  align-items: left;
+  vertical-align: left;
+  margin: -1% 15% 0 -10%;
+  min-width: 3.2em;
+  min-height: 1.8em;
+  font-size: 1.3vw;
+  border-radius: 20%;
+  white-space: nowrap;
+}
+
+#forest-action-4 {
+  background-color: #f16868;
+}

@@ -45,33 +45,6 @@ class FeedPage extends Component {
             </Col>
             <Col lg="4" md="4" sm="4" xs="4">
               <FriendBox></FriendBox>
-              {/* <Container
-                className="container container-fluid"
-                id="friend-action-container"
-              >
-                <Row>
-                  <Col lg="12" md="12" sm="12" xs="12">
-                    <Table className="friend-list-table">
-                      <tbody>
-                        <tr className="friend-list-item">Somebody</tr>
-                        <tr className="friend-list-item">Somebody2</tr>
-                      </tbody>
-                    </Table>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg="6" md="6" sm="6" xs="6">
-                    <Button className="friend-list-action-button">
-                      Add Friend
-                    </Button>
-                  </Col>
-                  <Col lg="6" md="6" sm="6" xs="6">
-                    <Button className="friend-list-action-button">
-                      Friend Requests
-                    </Button>
-                  </Col>
-                </Row>
-              </Container> */}
             </Col>
           </Row>
           <Row>
