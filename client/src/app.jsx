@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
 
-import "bootstrap/dist/css/bootstrap.css";
 
 
 import LandingPage from "./components/Landing/landing";
@@ -37,7 +36,7 @@ export default function App() {
       <Route path="/forest/:forestid">
         <ForestPage />
       </Route>
-      <Route path="/search?query=Avicii">
+      <Route path="/search">
         <SearchPage />
       </Route>
     </Switch>
