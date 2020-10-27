@@ -1,0 +1,43 @@
+.forest-container {
+  padding: 2.5%;
+  background-color: #fedbff;
+  margin: 2.5%;
+  text-align: center;
+}
+
+.forest-container-header {
+  color: #000000;
+  font-size: 1.75vw;
+  text-align: left;
+}
+
+.song-container {
+  text-align:center;
+  margin: 0 auto;
+}
+
+.song-album-art-icon {
+  max-width: 15vw;
+  max-height: 15vw;
+  width: 10vw;
+  height: 10vw;
+  display: inline;
+  align-items: center;
+}
+
+.song-name-header {
+  color: #000000;
+  font-size: 1.2vw;
+}
+
+.artist-name-header {
+  color: #000000;
+  font-size: 1vw;
+}
+
+.explore-forest-button {
+  color: #000000;
+  border: none;
+  font-size: 1.3vw;
+  background-color: #C8E6C9;
+}

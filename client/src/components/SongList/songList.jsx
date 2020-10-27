@@ -17,9 +17,9 @@ class SongList extends Component {
     };
   }
 
-  updateSongs(songs) {
+  updateState(state) {
     this.setState({
-      songs: songs
+      songs: state
     });
   }
 

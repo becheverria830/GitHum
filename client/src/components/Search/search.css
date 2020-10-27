@@ -38,106 +38,11 @@
   border-radius: 10% 10% 10% 10%;
   height: 40vw;
   padding: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 #song-container {
   height: 33vw;
   overflow-y: scroll;
 }
-
-
-
-
-/* button.filter-by-button {
-  color: #000000;
-  background-color: #fedbff;
-  width: 13vw;
-  height: 3.1vw;
-  font-size: 1.4vw;
-  text-align: center;
-  align-items: center;
-}
-.btn-primary:hover .btn-primary:active {
-  background-color: #dab4db;
-} */
-
-
-
-
-
-
-
-
-
-/* #search-title-container {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  border: none;
-  margin: 3% 0 0 0;
-  align-items: left;
-  vertical-align: left;
-}
-
-#searching-for-text {
-  white-space: nowrap;
-}
-
-#search-input {
-  white-space: nowrap;
-}
-
-#search-action-container {
-  background-color: #c4c4c4;
-  display: flex;
-  border-radius: 10% 10% 10% 10%;
-  margin-top: 10px;
-  height: 22vw;
-  width: 25vw;
-  overflow: visible;
-  align-items: center;
-  vertical-align: center;
-}
-
-button.search-action-buttons {
-  color: #000000;
-  background-color: #fedbff;
-  border: none;
-  margin: 0 0 0 18%;
-  padding: 0 0 0 0;
-  width: 13vw;
-  height: 3.1vw;
-  max-width: 10em;
-  max-height: 5em;
-  font-size: 1.4vw;
-  text-align: center;
-  align-items: center;
-}
-.btn-primary:hover .btn-primary:active {
-  background-color: #dab4db;
-}
-
-h3.filter-by-header {
-  margin: 0 auto;
-  color: #000000;
-  font-size: 2vw;
-  text-align: center;
-  height: 5vw;
-}
-
-
-
-.forest-toggle-buttons {
-  color: #000000;
-  background-color: #c8e6c9;
-  border: none;
-  width: 8vw;
-  height: 3.5vw;
-  align-items: left;
-  vertical-align: left;
-  margin: -1% 30% 0 -26%;
-  min-width: 3.2em;
-  min-height: 1.8em;
-  font-size: 1.8vw;
-  border-radius: 20%;
-} */

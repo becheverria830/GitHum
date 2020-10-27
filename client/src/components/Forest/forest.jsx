@@ -15,6 +15,7 @@ import "./forest.css";
 import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import ForestInfo from "./forestInfo";
+import SongList from "../SongList/songList";
 
 class ForestPage extends Component {
   constructor(props) {
@@ -135,7 +136,8 @@ class ForestPage extends Component {
                 className="container-fluid"
                 id="forest-song-display-container"
               >
-                <ForestInfo />
+                // <ForestInfo />
+                <SongList />
                 {/* <div class="song-container">
                   <Table id="songTable">
                     <thead>
