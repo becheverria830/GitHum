@@ -1,0 +1,64 @@
+/* FOREST INFO CSS */
+
+#forest-info-container {
+  background-color: #c4c4c4;
+  border-radius: 10% 10% 10% 10%;
+  height: 40vw;
+  width: 65vw;
+  overflow: visible;
+  align-items: center;
+  vertical-align: center;
+  display: flex;
+}
+
+/* Panels */
+.forest-info-panel {
+  background-color: #fedbff;
+  border-radius: 10% 10% 10% 10%;
+  margin: 0 0 10% 0;
+  align-items: center;
+  vertical-align: center;
+  display: flex;
+}
+
+/* Owner */
+#owner-panel {
+  height: 12vw;
+  width: 25vw;
+}
+#owner-panel h3 {
+  font-size: 1.8vw;
+  white-space: nowrap;
+}
+
+/* Number of Forests Branched */
+#number-branched-panel {
+  height: 12vw;
+  width: 25vw;
+}
+#number-branched-panel h3 {
+  font-size: 1.8vw;
+  white-space: nowrap;
+}
+
+/* Original Forest */
+#original-forest-panel {
+  height: 12vw;
+  width: 25vw;
+}
+
+#original-forest-panel h3 {
+  font-size: 1.8vw;
+  white-space: nowrap;
+}
+
+/* Number of Times Saved */
+#number-saved-panel {
+  height: 12vw;
+  width: 25vw;
+}
+
+#number-saved-panel h3 {
+  font-size: 1.8vw;
+  white-space: nowrap;
+}

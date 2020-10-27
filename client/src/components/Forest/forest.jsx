@@ -14,9 +14,9 @@ import Table from "react-bootstrap/Table";
 import "./forest.css";
 import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
+import ForestInfo from "./forestInfo";
 
 class ForestPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,21 +27,21 @@ class ForestPage extends Component {
         active: 1,
         songs: [],
         settings: {
-          privacy: 1
-        }
+          privacy: 1,
+        },
       },
     };
   }
 
   getForestData() {
     fetch("http://localhost:9000/user/forests/1")
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         this.setState({
-          forest: res
-        })
+          forest: res,
+        });
       })
-      .catch(err => err);
+      .catch((err) => err);
   }
 
   componentDidMount() {
@@ -62,10 +62,7 @@ class ForestPage extends Component {
                   id="forest-title-container"
                 >
                   <Col lg="3" md="3" sm="3" className="">
-                    <img
-                      id="forest-pic"
-                      src={this.state.forest.icon}
-                    ></img>
+                    <img id="forest-pic" src={this.state.forest.icon}></img>
                   </Col>
                   <Col lg="3" md="3" sm="3">
                     <h1 id="forest-forest-title">Forest Title</h1>
@@ -136,32 +133,33 @@ class ForestPage extends Component {
             <Col lg="8" md="8" sm="8">
               <Container
                 className="container-fluid"
-                id="forest-song-display-container">
-                <div class="song-container">
+                id="forest-song-display-container"
+              >
+                <ForestInfo />
+                {/* <div class="song-container">
                   <Table id="songTable">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Song Name</th>
-                      <th>Last Name</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  {this.state.forest.songs.map(song => (
-                    <tbody>
+                    <thead>
                       <tr>
-                        <td></td>
-                        <td>{song.song_name}</td>
-                        <td>{song.artist_name}</td>
-                        <td></td>
-                        <td></td>
+                        <th></th>
+                        <th>Song Name</th>
+                        <th>Last Name</th>
+                        <th></th>
+                        <th></th>
                       </tr>
-                    </tbody>
-                ))
-                }
-                </Table>
-                </div>
+                    </thead>
+                    {this.state.forest.songs.map((song) => (
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td>{song.song_name}</td>
+                          <td>{song.artist_name}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </Table>
+                </div> */}
               </Container>
             </Col>
             <Col lg="4" md="4" sm="4">
