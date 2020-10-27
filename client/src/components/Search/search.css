@@ -1,9 +1,79 @@
-#search-title-container {
+#search-text-div {
+  margin: 5%;
+}
+
+#filter-by-div {
+  margin: 5%;
+  padding: 5%;
+  border-radius: 10% 10% 10% 10%;
+  background-color: #c4c4c4;
+  height: 25vw;
+  text-align: center;
+}
+
+#filter-by-header {
+  margin: 0 auto;
+  color: #000000;
+  font-size: 2vw;
+  text-align: center;
+}
+
+.filter-by-button {
+  margin-top:10%;
+  margin-bottom: 10%;
+  color: #000000;
+  background-color: #fedbff;
+  width: 15vw;
+  height: 3vw;
+  max-width: 20em;
+  max-height: 5em;
+  font-size: 1.2vw;
+  text-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+#song-list-div {
+  background-color: #c4c4c4;
+  border-radius: 10% 10% 10% 10%;
+  height: 40vw;
+  padding: 5%;
+}
+
+#song-container {
+  height: 33vw;
+  overflow-y: scroll;
+}
+
+
+
+
+/* button.filter-by-button {
+  color: #000000;
+  background-color: #fedbff;
+  width: 13vw;
+  height: 3.1vw;
+  font-size: 1.4vw;
+  text-align: center;
+  align-items: center;
+}
+.btn-primary:hover .btn-primary:active {
+  background-color: #dab4db;
+} */
+
+
+
+
+
+
+
+
+
+/* #search-title-container {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   border: none;
-  /* padding: 4% 0 4% 0; */
   margin: 3% 0 0 0;
   align-items: left;
   vertical-align: left;
@@ -15,40 +85,6 @@
 
 #search-input {
   white-space: nowrap;
-}
-
-#forest-song-display-container {
-  background-color: #c4c4c4;
-  display: flex;
-  flex-direction: column;
-  padding: 5% 0 30% 0;
-  border-radius: 10% 10% 10% 10%;
-  margin: -10.5% 0 0 2%;
-  height: 40vw;
-  width: 65vw;
-  justify-content: start;
-  align-items: baseline;
-}
-
-.song-container {
-  width: 60vw;
-  display: inline;
-}
-
-#songTable tr td:nth-child(1) {
-  width: 10%;
-}
-#songTable tr td:nth-child(2) {
-  width: 40%;
-}
-#songTable tr td:nth-child(3) {
-  width: 40%;
-}
-#songTable tr td:nth-child(4) {
-  width: 5%;
-}
-#songTable tr td:nth-child(5) {
-  width: 5%;
 }
 
 #search-action-container {
@@ -73,8 +109,6 @@ button.search-action-buttons {
   height: 3.1vw;
   max-width: 10em;
   max-height: 5em;
-  /* min-width: 3.5em;
-    min-height: 2em; */
   font-size: 1.4vw;
   text-align: center;
   align-items: center;
@@ -83,13 +117,15 @@ button.search-action-buttons {
   background-color: #dab4db;
 }
 
-#search-now-playing-container {
-  /* max-width: 25vw;
-    max-height: 25vw; */
-  width: 50vw;
-  height: 50vw;
-  padding: 0 60% 65% 0;
+h3.filter-by-header {
+  margin: 0 auto;
+  color: #000000;
+  font-size: 2vw;
+  text-align: center;
+  height: 5vw;
 }
+
+
 
 .forest-toggle-buttons {
   color: #000000;
@@ -104,4 +140,4 @@ button.search-action-buttons {
   min-height: 1.8em;
   font-size: 1.8vw;
   border-radius: 20%;
-}
+} */

@@ -1,0 +1,23 @@
+#songTable td:nth-child(1) {
+  width: 10%;
+}
+#songTable td:nth-child(2) {
+  width: 40%;
+}
+#songTable td:nth-child(3) {
+  width: 40%;
+}
+#songTable td:nth-child(4) {
+  width: 5%;
+}
+#songTable td:nth-child(5) {
+  width: 5%;
+}
+
+#songTable tr:nth-child(odd) {
+  background: #fedbff;
+}
+
+#songTable tr:nth-child(even) {
+  background: #c4c4c4;
+}
