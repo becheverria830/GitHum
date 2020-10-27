@@ -86,12 +86,17 @@ class ForestInfo extends Component {
                 </Row>
                 <Row>
                   <Col>
-                    <p>12</p>
+                    <p>5</p>
                   </Col>
                 </Row>
                 <Row></Row>
               </Container>
             </Col>
+          </Row>
+          <Row>
+              <Col>
+                <Button id="see-hierarchy-button"> S E E <br></br>   H I E R A R C H Y</Button>
+              </Col>
           </Row>
         </Container>
       </React.Fragment>
