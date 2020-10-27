@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import "./login.css";
 
 class LogIn extends Component {
@@ -27,13 +28,14 @@ class LogIn extends Component {
                 value="Password"
               ></input>
               <br></br>
-              <input id="submit" type="submit" value="Log In"></input>
+              <Link to="/feed"><input id="submit" type="submit" value="Log In"></input>
+</Link>
             </div>
           </form>
-          <a href="#"> Forgot Password? </a>
+          <Link to="/resetpassword"><a> Forgot Password? </a></Link>
           <br></br>
           <p> Don't have an account?</p>
-          <a href="#"> Sign Up </a>
+          <Link to="/signup"><a> Sign Up </a></Link>
         </div>
       </React.Fragment>
     );

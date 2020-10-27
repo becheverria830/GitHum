@@ -24,25 +24,29 @@ class MainNavBar extends Component {
       <React.Fragment>
         <div>
           <Navbar className="main-nav">
-            <Navbar.Brand href="#home">
-              <Image className="small-logo" src={SmallLogo} />
-              GitHum
-            </Navbar.Brand>
+            <Link to="/feed">
+              <Navbar.Brand>
+                <Image className="small-logo" src={SmallLogo} />
+                GitHum
+              </Navbar.Brand>
+            </Link>
             <Form inline>
               <FormControl
                 type="text"
                 placeholder="Search for songs and artists"
                 className="ml-sm-2 search-bar"
               />
-              <Button variant="dark">
-                <Image className="search-button" src={SearchIcon} />
-              </Button>
+              <Link to="/search?=Avicii">
+                <Button variant="dark">
+                  <Image className="search-button" src={SearchIcon} />
+                </Button>
+              </Link>
             </Form>
             <Nav className="ml-auto nav-opts">
-              <Nav.Link className="nav-my-valley" id="my-valley-link" href="#">
+              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/3">
                 My Valley
               </Nav.Link>
-              <Nav.Link href="#" id="log-out-link">
+              <Nav.Link href="/" id="log-out-link">
                 Log Out
               </Nav.Link>
             </Nav>

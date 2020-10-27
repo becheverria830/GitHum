@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import "./passwordreset.css";
 
 class PasswordReset extends Component {
@@ -19,15 +20,15 @@ class PasswordReset extends Component {
                   value="Enter your Email Address"
                 ></input>
                 <br></br>
-                <input
+                <Link to="/"> <input
                   id="submit"
                   type="submit"
                   value="Send Password Reset"
-                ></input>
+                /></Link>
               </div>
             </form>
             <p> Don't have an account?</p>
-            <a href="#"> Sign Up </a>
+            <Link to="/signup"><a> Sign Up </a></Link>
           </div>
         </div>
       </React.Fragment>

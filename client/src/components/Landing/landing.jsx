@@ -35,13 +35,13 @@ export default function Landing() {
         </Row>
         <Row className="justify-content-md-center clear">
           <Col xs lg="2">
-            <Button className=""><Link to="/login"> Log In </Link></Button>
+            <Link to="/login"><Button> Log In </Button></Link>
           </Col>
           <Col md="auto">
           <div className="spacer"></div>
           </Col>
           <Col xs lg="2">
-            <Button className=""><Link to="/signup"> Sign Up </Link></Button>
+            <Link to="/signup"><Button> Sign Up </Button></Link>
           </Col>
         </Row>
       </Container>

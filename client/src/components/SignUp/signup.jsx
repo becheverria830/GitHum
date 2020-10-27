@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 import "./signup.css";
 
 class SignUp extends Component {
@@ -50,11 +51,11 @@ class SignUp extends Component {
                 value="Create a Password"
               ></input>
               <br></br>
-              <input id="submit" type="submit" value="Sign Up"></input>
+              <Link to="/feed"><input id="submit" type="submit" value="Sign Up"></input></Link>
             </div>
           </form>
           <p> Already have an account?</p>
-          <a href="#"> Log In </a>
+          <Link to="/login"><a> Log In </a></Link>
         </div>
       </React.Fragment>
     );
