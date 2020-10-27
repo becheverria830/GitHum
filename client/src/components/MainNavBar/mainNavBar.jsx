@@ -38,11 +38,13 @@ class MainNavBar extends Component {
                 <Image className="search-button" src={SearchIcon} />
               </Button>
             </Form>
-            <Nav className="ml-auto">
-              <Nav.Link className="nav-my-valley" href="#">
+            <Nav className="ml-auto nav-opts">
+              <Nav.Link className="nav-my-valley" id="my-valley-link" href="#">
                 My Valley
               </Nav.Link>
-              <Nav.Link href="#">Log Out</Nav.Link>
+              <Nav.Link href="#" id="log-out-link">
+                Log Out
+              </Nav.Link>
             </Nav>
           </Navbar>
         </div>

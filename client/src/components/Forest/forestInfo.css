@@ -14,7 +14,7 @@
 /* Panels */
 .forest-info-panel {
   background-color: #fedbff;
-  border-radius: 10% 10% 10% 10%;
+  border-radius: 50px;
   margin: 0 0 10% 0;
   align-items: center;
   vertical-align: center;
@@ -27,7 +27,7 @@
   width: 25vw;
 }
 #owner-panel h3 {
-  font-size: 1.8vw;
+  font-size: 1.7vw;
   white-space: nowrap;
 }
 
@@ -37,7 +37,7 @@
   width: 25vw;
 }
 #number-branched-panel h3 {
-  font-size: 1.8vw;
+  font-size: 1.7vw;
   white-space: nowrap;
 }
 
@@ -48,7 +48,7 @@
 }
 
 #original-forest-panel h3 {
-  font-size: 1.8vw;
+  font-size: 1.7vw;
   white-space: nowrap;
 }
 
@@ -59,6 +59,25 @@
 }
 
 #number-saved-panel h3 {
-  font-size: 1.8vw;
+  font-size: 1.7vw;
   white-space: nowrap;
+}
+
+/* See Hierarchy*/
+#see-hierarchy-button {
+  width: 26vw;
+  height: 7.2vw;
+  font-weight: bold;
+  font-size: 2.2vw;
+  color: #949191;
+  background-color: #fedbff;
+  border-color: #000000;
+  border-width: 0.1vw;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+#see-hierarchy-button:hover {
+  color: #545252;
+  background-color: #e7c3e8;
 }

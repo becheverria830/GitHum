@@ -13,9 +13,27 @@
 
 .nav-my-valley {
   background-color: #fedbff;
-  color: #000000; /* This is being overriden by CSS */
-  border-radius: 10%;
-  height: 40px;
-  width: 100px;
+  border-radius: 50px;
+  height: 4vw;
+  width: 10vw;
   text-align: center;
+}
+.nav-my-valley:hover {
+  background-color: #e7c3e8;
+}
+
+.nav-opts {
+  white-space: nowrap;
+}
+
+#my-valley-link {
+  font-size: 1.4vw;
+  color: #423e3e;
+}
+#my-valley-link:hover {
+  color: #000000;
+}
+
+#log-out-link {
+  font-size: 1.4vw;
 }
