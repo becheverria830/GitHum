@@ -12,6 +12,7 @@ import "./songList.css";
 
 import Tree from "../../assets/tree.svg";
 import Play from "../../assets/play.svg";
+import Queue from "../../assets/queue.svg";
 import Flower from "../../assets/flower.svg";
 
 class SongList extends Component {
@@ -36,142 +37,96 @@ class SongList extends Component {
         {
           this.state.songs.map(song => (
             <tr>
-              <td><Image className="play-logo" src={Play}></Image></td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td><Image className="tree-logo" src={Tree}></Image></td>
-              <td><Image className="flower-logo" src={Flower}></Image></td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
-            </tr>
-          ))
-        }{
-          this.state.songs.map(song => (
-            <tr>
-              <td>PLAY</td>
-              <td>{song.song_name}</td>
-              <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
-            </tr>
-          ))
-        }
-        {
-          this.state.songs.map(song => (
-            <tr>
-              <td>PLAY</td>
-              <td>{song.song_name}</td>
-              <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
-            </tr>
-          ))
-        }
-        {
-          this.state.songs.map(song => (
-            <tr>
-              <td>PLAY</td>
-              <td>{song.song_name}</td>
-              <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
-            </tr>
-          ))
-        }
-        {
-          this.state.songs.map(song => (
-            <tr>
-              <td>PLAY</td>
-              <td>{song.song_name}</td>
-              <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
-            </tr>
-          ))
-        }
-        {
-          this.state.songs.map(song => (
-            <tr>
-              <td>PLAY</td>
-              <td>{song.song_name}</td>
-              <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image src={Queue}></Image></td>
+              <td><Image src={Tree}></Image></td>
+              <td><Image src={Flower}></Image></td>
             </tr>
           ))
         }

@@ -46,86 +46,50 @@ class NowPlaying extends Component {
   }
 
   render() {
-    return (
+    return(
       <React.Fragment>
-        <div id="now-playing-master-div">
-          <Container className="now-playing">
-            <Container id="now-playing-forest-title-container">
-              <Row className="now-playing-forest-title">
-                <Col lg="4" md="4" sm="4" xs="4">
-                  <Image
-                    id="now-playing-forest-default-icon"
-                    src={ForestDefaultIcon}
-                  />
-                </Col>
-                <Col lg="8" md="8" sm="8" xs="8">
-                  <h2 id="now-playing-forest-title"> Disney Bops </h2>
-                </Col>
-              </Row>
-            </Container>
-            <Row>
-              <Col>
-                <Image
-                  id="now-playing-album-art"
-                  src={
-                    this.state.queue.songs.length != 0 &&
-                    this.state.queue.index != -1 &&
-                    this.state.queue.songs[this.state.queue.index].album_art
-                  }
-                />
-              </Col>
-            </Row>
-            <Row className="now-playing-song">
-              <Col>
-                <h4 id="now-playing-song-title">Let it Go</h4>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h5 id="now-playing-song-artist">Indina Menzel </h5>
-              </Col>
-            </Row>
-            <Row className="">
-              <Col lg="4" md="4" sm="4" xs="4">
-                <Image
-                  className="now-playing-top-music-icons"
-                  src={FastRewindIcon}
-                  id="fast-rewind-button"
-                />
-              </Col>
-              <Col lg="4" md="4" sm="4" xs="4">
-                <Image
-                  className="now-playing-top-music-icons"
-                  src={PlayCircleIcon}
-                  id="play-circle-button"
-                />
-              </Col>
-              <Col lg="4" md="4" sm="4" xs="4">
-                <Image
-                  className="now-playing-top-music-icons"
-                  src={FastForwardIcon}
-                  id="fast-forward-button"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col lg="1" md="1" sm="1" xs="1">
-                <Image
-                  className="now-playing-bottom-music-icons"
-                  src={ShuffleIcon}
-                  id="shuffle-button"
-                />
-              </Col>
-              <Col lg="10" md="10" sm="10" xs="10"></Col>
-              <Col lg="1" md="1" sm="1" xs="1">
-                <Image
-                  className="now-playing-bottom-music-icons"
-                  src={LoopIcon}
-                  id="loop-button"
-                />
-              </Col>
-            </Row>
-          </Container>
+        <div className="component">
+          <Row>
+            <Col className="now-playing-header-div">
+              <h3 className="now-playing-header"><b>Now Playing</b></h3>
+            </Col>
+          </Row>
+          <Row className="now-playing-container">
+            <Col md="12" className="playlist-name-div">
+              <h3 className="playlist-name-header"><span><Image className="playlist-icon" src={ForestDefaultIcon}/></span> Disney Bops </h3>
+            </Col>
+            <Col md="12" className="song-container">
+              <img className="song-album-art-icon"
+                src={ this.state.queue.songs.length != 0
+                   && this.state.queue.index != -1
+                   && this.state.queue.songs[this.state.queue.index].album_art }></img>
+              <h3 className="song-name-header">
+                    { this.state.queue.songs.length != 0
+                   && this.state.queue.index != -1
+                   && this.state.queue.songs[this.state.queue.index].song_name }</h3>
+              <h3 className="artist-name-header">
+                    { this.state.queue.songs.length != 0
+                   && this.state.queue.index != -1
+                   && this.state.queue.songs[this.state.queue.index].artist_name }</h3>
+            </Col>
+            <Col md="12" className="actions-div">
+              <Image
+                className="now-playing-icon"
+                src={ShuffleIcon}/>
+              <Image
+                className="now-playing-icon"
+                src={FastRewindIcon}/>
+              <Image
+                className="now-playing-icon"
+                src={PlayCircleIcon}/>
+              <Image
+                className="now-playing-icon"
+                src={FastForwardIcon}/>
+              <Image
+                className="now-playing-icon"
+                src={LoopIcon}/>
+            </Col>
+          </Row>
         </div>
       </React.Fragment>
     );

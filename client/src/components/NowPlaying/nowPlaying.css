@@ -1,91 +1,69 @@
-/* MASTER CSS */
-#now-playing-master-div {
-  /* min-width: 300px;
-  max-width: 800px;
-  min-height: 300px;
-  max-height: 800px; */
+.component {
+  padding: 5%;
 }
 
-.now-playing {
+.now-playing-header-div {
+  text-align: center;
+}
+
+.now-playing-header {
+  font-size: 1.3vw;
+}
+
+.now-playing-container {
   background-color: #c8e6c9;
-  max-width: 25em;
-  max-height: 30em;
-  width: 27vw !important;
-  height: 29vw !important;
-  border-radius: 10% 10% 10% 10%;
+  width: 100%;
+  padding: 5%;
 }
 
-/* TITLE CSS */
-#now-playing-forest-default-icon {
+.playlist-name-div {
+  text-align: center;
+  display: inline-bloc
+}
+
+.playlist-icon {
   max-width: 4em;
   max-height: 4em;
   width: 4.2vw;
   height: 4.2vw;
 }
 
-#now-playing-forest-title-container {
-  margin-top: 1%;
-  align-items: flex-start;
-  text-align: center;
+.playlist-name-header {
+  font-size: 2.2vw;
 }
 
-#now-playing-forest-title {
-  font-size: 1.8vw;
-  white-space: nowrap;
-  /* position: absolute; */
+.song-container {
+  text-align:center;
+  margin: 0 auto;
+}
+
+.song-album-art-icon {
+  max-width: 15vw;
+  max-height: 15vw;
+  width: 10vw;
+  height: 10vw;
+  display: inline;
   align-items: center;
-  padding: 12% 0 10% 0;
-  height: 3vw;
 }
 
-/* MUSIC CSS */
-#now-playing-album-art {
-  max-width: 10em;
-  max-height: 10em;
-  width: 12vw;
-  height: 12vw;
-  padding: 0 0 0 0;
-  margin: 0 0 10% 0;
+.song-name-header {
+  color: #000000;
+  font-size: 1.2vw;
 }
 
-.now-playing-song {
-  margin-top: -0.5em;
+.artist-name-header {
+  color: #000000;
+  font-size: 1vw;
 }
 
-#now-playing-song-title {
-  font-size: 2vw;
+.actions-div {
+  text-align: center;
+  margin: 0 auto;
+  vertical-align: center;
+  display:inline-block;
 }
 
-#now-playing-song-artist {
-  font-size: 1.7vw;
-}
-
-.now-playing-top-music-icons {
-  max-width: 3.3em;
-  max-height: 3.3em;
-  width: 3.1vw;
-  height: 3.1vw;
-}
-
-.now-playing-bottom-music-icons {
-  max-width: 3.3em;
-  max-height: 3.3em;
-  width: 3.1vw;
-  height: 3.1vw;
-}
-
-#fast-rewind-button {
-  margin: 0 0 0 -100%;
-}
-#play-circle-button {
-  margin: 0 0 0 0;
-}
-#fast-forward-button {
-  margin: 0 0 0 100%;
-}
-#shuffle-button {
-  margin: 0 0 0 -200%;
-}
-#loop-button {
-  margin: 0 0 0 -200%;
+.now-playing-icon {
+  width: 2vw;
+  height: 2vw;
 }
