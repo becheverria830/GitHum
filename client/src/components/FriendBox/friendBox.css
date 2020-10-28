@@ -1,16 +1,28 @@
 /* FRIEND CONTAINER CSS */
 
+#friend-box-title {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  margin: 0 0 0 140%;
+}
+
+#friend-list-container {
+  height: 15vw;
+  overflow-y: scroll;
+}
+
 #friend-action-container {
   background-color: #c4c4c4;
   display: flex;
   border-radius: 10% 10% 10% 10%;
-  margin: 15% 0 0 20%;
-  height: 22vw;
-  width: 25vw;
-  overflow: visible;
+  margin: 0 0 0 20%;
+  height: 25vw;
+  width: 28vw;
   align-items: center;
   vertical-align: center;
 }
+
 table.friend-list-table {
   table-layout: fixed;
   width: 18vw;
@@ -18,7 +30,7 @@ table.friend-list-table {
 
 .friend-list-item {
   background-color: #fedbff;
-  width: 100px;
+  width: 10vw;
   font-size: 1.4vw;
 }
 
@@ -26,7 +38,7 @@ th.friend-list-item,
 td.friend-list-item {
   text-align: left;
   padding: 8px;
-  width: 100px;
+  width: 10vw;
   overflow: hidden;
 }
 
@@ -38,13 +50,25 @@ button.friend-list-action-button {
   color: #000000;
   background-color: #fedbff;
   border: none;
-  margin: 0 0 -50% 0;
-  padding: 0 0 0 0;
-  width: 10vw;
+  margin: 0 0 30% 0;
+  white-space: nowrap;
+  width: 9vw;
   height: 3.1vw;
   max-width: 10em;
   max-height: 5em;
-  font-size: 1.2vw;
+  font-size: 1vw;
   text-align: center;
   align-items: center;
+}
+
+button.friend-list-action-button:hover {
+  background-color: #e7c3e8;
+}
+
+#add-friend-button {
+  margin: 10% 0 0 -20%;
+}
+
+#friend-requests-button {
+  margin: 10% 0 0 5%;
 }
