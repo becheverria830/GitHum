@@ -4,7 +4,7 @@
   background-color: #c4c4c4;
   border-radius: 10% 10% 10% 10%;
   height: 40vw;
-  width: 65vw;
+  width: 100%;
   overflow: visible;
   align-items: center;
   vertical-align: center;
@@ -24,7 +24,7 @@
 /* Owner */
 #owner-panel {
   height: 12vw;
-  width: 25vw;
+  width: 25%vw;
 }
 #owner-panel h3 {
   font-size: 1.7vw;
