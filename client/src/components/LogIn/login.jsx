@@ -28,8 +28,7 @@ class LogIn extends Component {
                 value="Password"
               ></input>
               <br></br>
-              <Link to="/feed"><input id="submit" type="submit" value="Log In"></input>
-</Link>
+              <Link to="/feed"><input id="submit" type="submit" value="Log In"></input></Link>
             </div>
           </form>
           <Link to="/resetpassword"><a> Forgot Password? </a></Link>
