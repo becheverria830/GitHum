@@ -1,5 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
+import { Link, Route, Switch } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Button from "react-bootstrap/Button";
@@ -52,7 +53,7 @@ class ForestList extends Component {
               </Row>
               <Row>
                 <Col>
-                  <Button className="explore-forest-button">Explore This Forest</Button>
+                  <Link to="/forest/3"><Button className="explore-forest-button">Explore This Forest</Button></Link>
                 </Col>
               </Row>
             </div>

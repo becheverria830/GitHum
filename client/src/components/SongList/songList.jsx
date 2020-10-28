@@ -4,9 +4,15 @@ import { Link, Route, Switch } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Table from "react-bootstrap/Table";
+import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 
 /* Importing All Resources & Custom CSS */
 import "./songList.css";
+
+import Tree from "../../assets/tree.svg";
+import Play from "../../assets/play.svg";
+import Flower from "../../assets/flower.svg";
 
 class SongList extends Component {
 
@@ -30,11 +36,11 @@ class SongList extends Component {
         {
           this.state.songs.map(song => (
             <tr>
-              <td>PLAY</td>
+              <td><Image className="play-logo" src={Play}></Image></td>
               <td>{song.song_name}</td>
               <td>{song.artist_name}</td>
-              <td>TREE</td>
-              <td>FLOWER</td>
+              <td><Image className="tree-logo" src={Tree}></Image></td>
+              <td><Image className="flower-logo" src={Flower}></Image></td>
             </tr>
           ))
         }
