@@ -36,8 +36,11 @@ export default function App() {
       <Route path="/valley/2">
         <ValleyPage myValley={false}/>
       </Route>
-      <Route path="/forest/:forestid">
-        <ForestPage />
+      <Route path="/forest/1">
+        <ForestPage myForest={true}/>
+      </Route>
+      <Route path="/forest/2">
+        <ForestPage myForest={false}/>
       </Route>
       <Route path="/search">
         <SearchPage />

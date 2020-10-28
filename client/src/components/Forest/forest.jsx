@@ -18,11 +18,19 @@ import ForestInfo from "./forestInfo";
 import SongList from "../SongList/songList";
 
 class ForestPage extends Component {
+
   constructor(props) {
     super(props);
+    this.songListElement = React.createRef();
+
+    this.displaySongs = this.displaySongs.bind(this);
+    this.displayInfo = this.displayInfo.bind(this);
+
     this.state = {
+      showSongList: true,
+      showForestInfo: false,
       forest: {
-        id: 1,
+        id: -1,
         name: "",
         icon: "",
         active: 1,
@@ -34,10 +42,26 @@ class ForestPage extends Component {
     };
   }
 
+  displaySongs() {
+    this.setState({
+      showSongList: true,
+      showForestInfo: false
+    });
+    console.log(this.songListElement)
+  }
+
+  displayInfo() {
+    this.setState({
+      showSongList: false,
+      showForestInfo: true
+    });
+  }
+
   getForestData() {
     fetch("http://localhost:9000/user/forests/1")
       .then((res) => res.json())
       .then((res) => {
+        this.songListElement.current.updateState(res.songs);
         this.setState({
           forest: res,
         });
@@ -52,128 +76,56 @@ class ForestPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <MainNavBar></MainNavBar>
-        <div>
-          {/* <Container> */}
-          <Row>
-            <Col lg="8" md="8" sm="8">
-              <Row>
-                <Container
-                  className="container-fluid"
-                  id="forest-title-container"
-                >
-                  <Col lg="3" md="3" sm="3" className="">
-                    <img id="forest-pic" src={this.state.forest.icon}></img>
-                  </Col>
-                  <Col lg="3" md="3" sm="3">
-                    <h1 id="forest-forest-title">Forest Title</h1>
-                  </Col>
-                  <Col lg="6" md="6" sm="6"></Col>
-                </Container>
-              </Row>
-              <Row>
-                <Container
-                  className="container-fluid"
-                  id="forest-button-toggle-container"
-                >
-                  <Button className="forest-toggle-buttons">Songs</Button>
-                  <Button className="forest-toggle-buttons">Info</Button>
-                </Container>
-              </Row>
-            </Col>
-            <Col lg="4" md="4" sm="4">
-              <Container
-                className="container container-fluid"
-                id="forest-action-container"
-              >
-                <Col lg="1" md="1" sm="1"></Col>
-                <Col lg="10" md="10" sm="10">
-                  <Row>
-                    <Button
-                      id="forest-action-1"
-                      className="forest-action-buttons"
-                    >
-                      Forest Settings
-                    </Button>
-                  </Row>
-                  <br></br>
-                  <Row>
-                    <Button
-                      id="forest-action-2"
-                      className="forest-action-buttons"
-                    >
-                      Share Forest
-                    </Button>
-                  </Row>
-                  <br></br>
-                  <Row>
-                    <Button
-                      id="forest-action-3"
-                      className="forest-action-buttons"
-                    >
-                      Branch from Forest
-                    </Button>
-                  </Row>
-                  <br></br>
-                  <Row>
-                    <Button
-                      type="Danger"
-                      id="forest-action-4"
-                      className="forest-action-buttons"
-                    >
-                      Deforest
-                    </Button>
-                  </Row>
-                  <br></br>
-                </Col>
-                <Col lg="1" md="1" sm="1"></Col>
-              </Container>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg="8" md="8" sm="8">
-              <Container
-                className="container-fluid"
-                id="forest-song-display-container"
-              >
-                // <ForestInfo />
-                <SongList />
-                {/* <div class="song-container">
-                  <Table id="songTable">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Song Name</th>
-                        <th>Last Name</th>
-                        <th></th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    {this.state.forest.songs.map((song) => (
-                      <tbody>
-                        <tr>
-                          <td></td>
-                          <td>{song.song_name}</td>
-                          <td>{song.artist_name}</td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    ))}
-                  </Table>
-                </div> */}
-              </Container>
-            </Col>
-            <Col lg="4" md="4" sm="4">
-              <Container
-                className="container"
-                id="forest-now-playing-container"
-              >
-                <NowPlaying></NowPlaying>
-              </Container>
-            </Col>
-          </Row>
-        </div>
+        <MainNavBar/>
+        <Row>
+          <Col xl="8" lg="8" md="8" sm="12" xs="12">
+            <Row>
+              <Col className="forest-title-div">
+                <h1 className="forest-title-text"><span><Image className="forest-icon" src={this.state.forest.icon}></Image></span>{this.state.forest.name}</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col className="forest-info-song-actions">
+                <Button onClick={this.displaySongs} className="button forest-info-song-buttons">Songs</Button>
+                <Button onClick={this.displayInfo} className="button forest-info-song-buttons">Info</Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col id="song-list-div">
+                <div id="song-container">
+                  <div className={this.state.showSongList ? null : "hidden"}>
+                    <SongList ref={this.songListElement}/>
+                  </div>
+                  <div className={this.state.showForestInfo ? null : "hidden"}>
+                    <ForestInfo/>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Col>
+          <Col xl="4" lg="4" md="4" sm="12" xs="12">
+            <Row className="forest-options-div">
+              <Col>
+                <Button className="button forest-settings-button"> Share Forest </Button>
+                {
+                  this.props.myForest
+                  ? <Button className="button forest-settings-button"> Forest Settings </Button>
+                  : <Button className="button forest-settings-button"> Branch From Forest </Button>
+                }
+                {
+                  this.props.myForest
+                  ? <Button className="button forest-settings-button"> Deforest </Button>
+                  : <Button className="button forest-settings-button"> Save Forest </Button>
+                }
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <NowPlaying/>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
