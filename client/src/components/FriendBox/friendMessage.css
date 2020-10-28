@@ -1,0 +1,84 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* HEADER */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#friend-msg-modal-header {
+  min-width: 30em;
+  min-height: 3em;
+  height: 4em;
+  text-align: center;
+  align-items: center;
+  background-color: #fedbff;
+}
+
+#friend-msg-modal-title {
+  text-align: center;
+  align-items: center;
+  padding: 0 0 0 23%;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* BODY */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#friend-msg-modal-body {
+  background-color: #2e2621;
+  height: 27em;
+}
+
+/* Search */
+
+#msg-address {
+  font-size: 2em;
+  color: #ffffff;
+  font-style: italic;
+  margin: 0 0 0 8%;
+  /* padding: 0 20% 0 0; */
+}
+
+.friend-msg-container{
+  height: 45vw;
+  overflow-y: scroll;
+}
+
+table.friend-msg-results {
+  color: #000000;
+  width: 25em;
+}
+
+tr.friend-msg-item:nth-child(even) {
+  background-color: #fbf3f3;
+}
+
+td.friend-msg-item:nth-child(even) {
+  background-color: #fbf3f3;
+  display: block;
+  height: 2.5em;
+}
+
+tr.friend-msg-item:nth-child(odd) {
+  background-color: #fedbff;
+}
+
+td.friend-msg-item:nth-child(odd) {
+  background-color: #fedbff;
+  display: block;
+  height: 2.5em;
+}
+
+/* Input */
+#msg-input-bar {
+  width: 25em;
+  margin: 5% 0 2% 0;
+}
+
+/* Action */
+#friend-msg-send-button {
+  background-color: #c8e6c9;
+  color: #000000;
+  border-radius: 50px;
+  border-color: #000000;
+  width: 11em;
+}
