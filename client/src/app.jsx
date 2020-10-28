@@ -30,8 +30,11 @@ export default function App() {
       <Route path="/feed">
         <FeedPage />
       </Route>
-      <Route path="/valley/:id">
-        <ValleyPage />
+      <Route path="/valley/1">
+        <ValleyPage myValley={true}/>
+      </Route>
+      <Route path="/valley/2">
+        <ValleyPage myValley={false}/>
       </Route>
       <Route path="/forest/:forestid">
         <ForestPage />

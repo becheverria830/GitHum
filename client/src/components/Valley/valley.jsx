@@ -37,7 +37,7 @@ class ValleyPage extends Component {
                     <Image id="valley-githum-logo" src={Logo}></Image>
                   </Col>
                   <Col lg="3" md="3" sm="3" xs="3">
-                    <p id="valley-username">@becheverria830</p>
+                    {this.props.myValley && <p id="valley-username">@becheverria830</p>}
                     <br></br>
                     <h1 id="valley-title">Britney's Valley</h1>
                   </Col>

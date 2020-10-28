@@ -21,8 +21,9 @@
 .filter-by-button {
   margin-top:10%;
   margin-bottom: 10%;
-  color: #000000;
+  color: #423e3e;
   background-color: #fedbff;
+  border: none;
   width: 15vw;
   height: 3vw;
   max-width: 20em;
@@ -31,6 +32,10 @@
   text-align: center;
   align-items: center;
   white-space: nowrap;
+}
+
+.filter-by-button:hover {
+  background-color: #e7c3e8;
 }
 
 #song-list-div {
