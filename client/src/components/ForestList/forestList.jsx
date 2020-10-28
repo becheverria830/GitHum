@@ -53,7 +53,7 @@ class ForestList extends Component {
               </Row>
               <Row>
                 <Col>
-                  <Link to="/forest/3"><Button className="explore-forest-button">Explore This Forest</Button></Link>
+                  <Link to="/forest/2"><Button className="explore-forest-button">Explore This Forest</Button></Link>
                 </Col>
               </Row>
             </div>

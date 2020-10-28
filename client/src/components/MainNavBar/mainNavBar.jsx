@@ -43,7 +43,7 @@ class MainNavBar extends Component {
               </Link>
             </Form>
             <Nav className="ml-auto nav-opts">
-              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/3">
+              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/1">
                 My Valley
               </Nav.Link>
               <Nav.Link href="/" id="log-out-link">

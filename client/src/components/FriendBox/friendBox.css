@@ -1,10 +1,69 @@
-/* FRIEND CONTAINER CSS */
+.component {
+  padding: 5%;
+}
 
+.friends-header-div {
+  text-align: center;
+}
+
+.friends-header {
+  font-size: 1.3vw;
+}
+
+.friend-container {
+  background-color: #c4c4c4;
+  width: 100%;
+  padding: 5%;
+}
+
+.friend-buttons {
+  text-align:center;
+  padding-top: 5%;
+}
+
+.friend-button {
+  color: #000000;
+  background-color: #fedbff;
+  border: none;
+  width: 95%;
+  white-space: nowrap;
+  font-size: 1vw;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.friend-button:hover {
+  background-color: #e7c3e8;
+}
+
+
+button.friend-list-action-button {
+  align-items: center;
+}
+
+.friend-table {
+  height:30vh;
+  overflow-y: scroll;
+}
+
+.friend-table-row {
+  font-size: 1.4vw;
+}
+
+.friend-table-row:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.friend-table-row:nth-child(odd) {
+  background-color: #fedbff;
+}
+
+
+/* FRIEND CONTAINER CSS */
+/*
 #friend-box-title {
   text-align: center;
-  vertical-align: middle;
   font-weight: bold;
-  margin: 0 0 0 140%;
 }
 
 #friend-list-container {
@@ -71,4 +130,4 @@ button.friend-list-action-button:hover {
 
 #friend-requests-button {
   margin: 10% 0 0 5%;
-}
+} */

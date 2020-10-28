@@ -105,13 +105,17 @@ class ForestPage extends Component {
           </Col>
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row className="forest-options-div">
-              <Col>
+              <Col md="12">
                 <Button className="button forest-settings-button"> Share Forest </Button>
+              </Col>
+              <Col md="12">
                 {
                   this.props.myForest
                   ? <Button className="button forest-settings-button"> Forest Settings </Button>
                   : <Button className="button forest-settings-button"> Branch From Forest </Button>
                 }
+              </Col>
+              <Col md="12">
                 {
                   this.props.myForest
                   ? <Button className="button forest-settings-button"> Deforest </Button>

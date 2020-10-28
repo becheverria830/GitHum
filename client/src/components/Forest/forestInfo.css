@@ -1,6 +1,38 @@
-/* FOREST INFO CSS */
+.info-holder-container {
+  padding: 5% !important;
+}
 
-#forest-info-container {
+.info-holder {
+  padding-top: 2.5vmax;
+  padding-bottom: 2.5vmax;
+  background-color: #fedbff;
+  border-radius: 10% 10% 10% 10%;
+}
+
+.valley-forest-icon-holder {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.valley-forest-icon {
+  width: 8vw;
+  height: 8vw;
+}
+
+.valley-forest-title-holder {
+  text-align: center;
+  min-height: 3vw;
+}
+
+.valley-forest-title {
+  font-size: 1.5vw;
+}
+
+
+
+
+
+/* #forest-info-container {
   background-color: #c4c4c4;
   border-radius: 10% 10% 10% 10%;
   height: 40vw;
@@ -11,7 +43,6 @@
   display: flex;
 }
 
-/* Panels */
 .forest-info-panel {
   background-color: #fedbff;
   border-radius: 50px;
@@ -21,7 +52,6 @@
   display: flex;
 }
 
-/* Owner */
 #owner-panel {
   height: 12vw;
   width: 25%vw;
@@ -31,7 +61,6 @@
   white-space: nowrap;
 }
 
-/* Number of Forests Branched */
 #number-branched-panel {
   height: 12vw;
   width: 25vw;
@@ -41,7 +70,6 @@
   white-space: nowrap;
 }
 
-/* Original Forest */
 #original-forest-panel {
   height: 12vw;
   width: 25vw;
@@ -52,7 +80,6 @@
   white-space: nowrap;
 }
 
-/* Number of Times Saved */
 #number-saved-panel {
   height: 12vw;
   width: 25vw;
@@ -63,7 +90,6 @@
   white-space: nowrap;
 }
 
-/* See Hierarchy*/
 #see-hierarchy-button {
   width: 26vw;
   height: 7.2vw;
@@ -80,4 +106,4 @@
 #see-hierarchy-button:hover {
   color: #545252;
   background-color: #e7c3e8;
-}
+} */

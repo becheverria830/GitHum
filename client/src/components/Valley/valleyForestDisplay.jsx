@@ -15,47 +15,95 @@ import "./valleyForestDisplay.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
 
 class ValleyForestDisplay extends Component {
-  state = {};
   render() {
     return (
       <React.Fragment>
-        <Col lg="8" md="8" sm="8" xs="8">
-          <Container
-            className="container-fluid"
-            id="valley-forest-display-container"
-          >
-            <div className="">
-              <Table className="valley-forest-display-table">
-                <tr>
-                  <div className="valley-forest-display-item">
-                    <td>
-                      <Image
-                        className="valley-forest-pic"
-                        src={ForestDefaultIcon}
-                      ></Image>
-                    </td>
-                    <td>
-                      <h3 className="valley-forest-title"> Forest #1</h3>
-                    </td>
-                  </div>
-                </tr>
-                <tr>
-                  <div className="valley-forest-display-item">
-                    <td>
-                      <Image
-                        className="valley-forest-pic"
-                        src={ForestDefaultIcon}
-                      ></Image>
-                    </td>
-                    <td>
-                      <h3 className="valley-forest-title"> Forest #2</h3>
-                    </td>
-                  </div>
-                </tr>
-              </Table>
+        <Row>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
             </div>
-          </Container>
-        </Col>
+          </Col>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col md="6" sm="12" className="valley-forest-holder-container">
+            <div className="valley-forest-holder">
+              <Row>
+                <Col className="valley-forest-icon-holder">
+                  <Image className="valley-forest-icon" src={ForestDefaultIcon}></Image>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"> Forest #1</h3>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
