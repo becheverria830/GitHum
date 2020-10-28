@@ -1,0 +1,57 @@
+#hierarchy-modal {
+  /* height: 40em;
+  width: 45em; */
+  position: relative;
+  text-align: center;
+  margin: 0 0 0 15%;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* HEADER */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#hierarchy-modal-header {
+  min-width: 30em;
+  min-height: 3em;
+  width: 60em;
+  height: 4em;
+  text-align: center;
+  align-items: center;
+  background-color: #fedbff;
+}
+
+#hierarchy-modal-title {
+  text-align: center;
+  align-items: center;
+  padding: 0 0 0 42%;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* BODY */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#hierarchy-modal-body {
+  background-color: #2e2621;
+  height: 40em;
+  width: 60em;
+}
+
+/* Search */
+
+#hierarchy-forest-title {
+  font-size: 2em;
+  color: #ffffff;
+  font-style: italic;
+  margin: 0 0 0 0;
+}
+
+.hierarchy-container {
+  height: 45vw;
+}
+
+#hierarchy-view {
+  width: 50em;
+  height: 20em;
+}
