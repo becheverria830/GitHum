@@ -1,4 +1,21 @@
-h1 {
+.login-div {
+  background-color: #FFFFFF;
+  text-align: center !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+.login-div .row{
+  height: 100%;
+}
+
+.login-div .loginLogo {
+  width: 30%;
+  height: 30%;
+  margin-top: 2em;
+}
+
+.login-div h1 {
   font-size: 2em;
   font-weight: bold;
   color: #000000;
@@ -6,49 +23,52 @@ h1 {
   margin-top: 35px;
 }
 
-.login-box {
+.login-div .login-box {
   text-align: center;
-  border-radius: 10%;
+  border-radius: 0.5em;
   background-color: #fedbff;
-  width: 350px;
-  height: 400px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: auto;
 }
 
-.login-fields {
+.login-div .login-fields {
   margin-top: 20px;
 }
 
-input {
+.login-div .login-fields input {
   /* background-color: #c8e6c9; */
   border: none;
   font-family: "Red Hat Text", sans-serif;
-  margin-bottom: 20px;
+  margin-bottom: 2em;
+  padding: 0.5em;
   width: 250px;
   height: 50px;
   color: #aaabad;
 }
 
-p {
+.login-div p {
   color: #707173;
   font-size: 15px;
   display: inline;
+  margin-bottom: 0;
 }
 
-#submit {
+.login-div #submit {
   width: 80px;
   height: 40px;
   background-color: #c8e6c9;
   color: #000000;
 }
 
-a {
-    color: #000000;
+.login-div a {
+    /* color: #000000; */
     font-weight: bolder;
     font-size: 15px;
+    margin-bottom: 1em;
+}
+
+@media(max-width: 61em){
+  .login-div .login-box{
+    margin-left: 2em !important;
+    margin-right: 2em !important;
   }
+}

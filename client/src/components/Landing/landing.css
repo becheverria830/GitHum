@@ -1,110 +1,75 @@
-.master-div {
+.landing-div {
   background-color: #FFFFFF;
   text-align: center;
   padding: 0 !important;
-  /*
-  background-image: url("../../assets/bg.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  */
-}
-
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
   height: 100%;
 }
 
-.corner {
+.landing-div .corner {
   width: 50%;
   height: 50%;
 }
 
-.align-items-end {
-  text-align: left !important;
-}
-
-.align-items-start {
-  text-align: right !important;
-}
-
-.logo {
-  width: 30%;
+.landing-div .row{
   height: 100%;
 }
 
-.header-text {
+.landing-div .landing-box {
+  text-align: center;
+  margin: auto;
+}
+
+.landing-div .align-items-end {
+  text-align: left !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+}
+
+.landing-div .align-items-start {
+  text-align: right !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+}
+
+.landing-div .logo {
+  width: 30%;
+  height: 30%;
+  margin-top: 2em;
+}
+
+.landing-div .header-text {
   font-family: "Red Hat Text", sans-serif;
   font-size: 5em;
   font-weight: 200;
   color: #c8e6c9;
 }
 
-.clear {
+.landing-div .clear {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.spacer {
+.landing-div .spacer {
   min-width: 100px;
 }
 
-.btn {
+.landing-div .btn {
   background-color: #fedbff !important;
   border: none !important;
   text-align: center !important;
   padding: 15px 35px !important;
+  margin-bottom: 1em;
 }
 
-
-
-/* .buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media(max-width: 61em){
+  .landing-div .landing-box{
+    margin-left: 2em !important;
+    margin-right: 2em !important;
+  }
 }
-
-button {
-  background-color: #fedbff;
-  border: none;
-  text-align: center;
-  padding: 15px 35px;
-}
-
-#login-button,
-#signup-button {
-  display: inline-block;
-  margin-left: 15px;
-  margin-right: 15px;
-}
-
-.title {
-  padding-top: 90px;
-  padding-right: 100px;
-  // text-align: center;
-  margin: auto auto;
-  margin-top: 40px;
-  margin-left: 40px;
-  position: absolute;
-}
-
-.logo {
-  max-width: 300px;
-  max-height: 300px;
-  z-index: 10;
-  object-fit: contain;
-  margin-right: 400px;
-  position: relative;
-}
-
-.main-title {
-  position: relative;
-} */

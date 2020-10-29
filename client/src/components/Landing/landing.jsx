@@ -17,28 +17,26 @@ import BCorner from "../../assets/cornerBottom.svg";
 
 export default function Landing() {
   return (
-    <Container fluid className="master-div">
+    <Container fluid className="landing-div">
         <Row className="align-items-start">
           <Col md={{span: 1, offset: 11}} lg={{span: 2, offset: 10}}>
             <Image className="corner" src={UCorner}/>
           </Col>
         </Row>
-        <Row>
-          <Col md={{span: 8, offset: 2}} lg={{span: 6, offset: 3}}>
-            <Image className="logo" src={Logo}/>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={{span: 10, offset: 1}} lg={{span: 8, offset: 2}}>
-            <h2 className="header-text">GitHum</h2>
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center clear">
-          <Col md={{span: 8}} lg={{ span: 2}}>
-            <Link to="/login"><Button> Log In </Button></Link>
-          </Col>
-          <Col md={{span: 8}} lg={{ span: 2 }}>
-            <Link to="/signup"><Button> Sign Up </Button></Link>
+        <Row className="justify-content-md-center clear landing-box">
+          <Col md={{span: 8}} lg={{span: 6}}>
+          <Col lg={{span: 12}}>
+              <Image className="logo" src={Logo}/>
+            </Col>
+            <Col lg={{span: 12}}>
+              <h2 className="header-text">GitHum</h2>
+            </Col>
+            <Col lg={{ span: 8, offset: 2}}>
+              <Link to="/login"><Button> Log In </Button></Link>
+            </Col>
+            <Col lg={{ span: 8, offset: 2}}>
+              <Link to="/signup"><Button> Sign Up </Button></Link>
+            </Col>
           </Col>
         </Row>
         <Row className="align-items-end">
