@@ -164,3 +164,7 @@
   color: #000000 !important;
   border: none;
 }
+
+.invisible {
+  visibility: hidden;
+}

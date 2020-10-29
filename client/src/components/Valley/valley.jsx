@@ -171,7 +171,7 @@ class ValleyPage extends Component {
                     <ValleyForestDisplay />
                   </div>
                 </div>
-                <div className={this.state.showForests ? null : "hidden"}>
+                <div className={this.state.showForests ? null : "invisible"}>
                   <Row>
                     <Col md="12" className="start-forest-button">
                       <StartForest />
