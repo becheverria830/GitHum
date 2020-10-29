@@ -19,7 +19,7 @@ import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 
-function Example() {
+function AddFriendButton() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,8 +27,8 @@ function Example() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Launch Add Friend Modal
+      <Button className="friend-button" onClick={handleShow}>
+        Add Friend
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -49,7 +49,7 @@ function Example() {
                   className="ml-sm-2"
                   id="add-friend-search-bar"
                 />
-                <Button variant="dark">
+                <Button variant="dark" id="add-friend-search-button">
                   <Image className="search-button" src={SearchIcon} />
                 </Button>
               </Form>
@@ -57,9 +57,15 @@ function Example() {
           </Row>
           <Row>
             <Container className="add-friend-search-container">
-              <Row>
+              <Row className="add-friend-search-items">
                 <Table className="add-friend-search-results">
                   <tbody>
+                    <tr className="add-friend-search-item">
+                      <td>Hello</td>
+                    </tr>
+                    <tr className="add-friend-search-item">
+                      <td>Hello</td>
+                    </tr>
                     <tr className="add-friend-search-item">
                       <td>Hello</td>
                     </tr>
@@ -91,11 +97,11 @@ function Example() {
 
 // render(<Example />);
 
-export default Example;
+export default AddFriendButton;
 
 class AddFriend extends Component {
   state = {};
   render() {
-    return <Example />;
+    return <AddFriendButton />;
   }
 }

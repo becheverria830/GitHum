@@ -23,7 +23,6 @@
 /* BODY */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 #friend-requests-modal-body {
   background-color: #2e2621;
   height: 27em;
@@ -38,7 +37,7 @@ button.friend-requests-toggle-buttons {
 }
 
 .friend-requests-toggle-button-column {
-  margin: 0 -20% 0 10%;
+  margin: 0 0 0 0;
 }
 
 /* Search */
@@ -50,10 +49,15 @@ button.friend-requests-toggle-buttons {
   border-radius: 50px;
 }
 
+.friend-requests-search-items {
+  height: 15em;
+  overflow-y: scroll;
+}
+
 table.friend-requests-search-results {
   color: #000000;
   text-align: center;
-  width: 25em;
+  width: 24em;
 }
 
 tr.friend-requests-search-item:nth-child(even) {
@@ -78,19 +82,19 @@ td.friend-requests-search-item:nth-child(odd) {
 
 /* Actions */
 #friend-requests-accept-button {
-  background-color: #c8e6c9;
+  background-color: #c8e6c9 !important;
   color: #000000;
-  width: 10em;
+  width: 8em;
   margin: 0 0 0 -15%;
-  border-radius: 0;
+  border-radius: 50px;
   border: none;
 }
 
 #friend-requests-decline-button {
-  background-color: #f16868;
+  background-color: #f16868 !important;
   color: #000000;
-  width: 10em;
-  margin: 0 0 0 -5%;
-  border-radius: 0;
+  width: 8em;
+  margin: 0 0 0 0;
+  border-radius: 50px;
   border: none;
 }

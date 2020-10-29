@@ -17,7 +17,7 @@ import FormControl from "react-bootstrap/FormControl";
 import "./friendMessage.css";
 import Message from "../../assets/comment.svg";
 
-function FriendMessageExample() {
+function FriendMessageButton() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -105,11 +105,11 @@ function FriendMessageExample() {
   );
 }
 
-export default FriendMessageExample;
+export default FriendMessageButton;
 
 class FriendMessage extends Component {
   state = {};
   render() {
-    return <FriendMessageExample />;
+    return <FriendMessageButton />;
   }
 }

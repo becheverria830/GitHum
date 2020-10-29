@@ -14,7 +14,9 @@ import Table from "react-bootstrap/Table";
 import "./friendBox.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
 import Message from "../../assets/comment.svg";
-import FriendMessageExample from "./friendMessage";
+import FriendMessageButton from "./friendMessage";
+import AddFriendButton from "./addFriend";
+import FriendRequestsButton from "./friendRequests";
 
 class FriendBox extends Component {
   constructor(props) {
@@ -76,7 +78,7 @@ class FriendBox extends Component {
                             </Button>
                           </td>
                           <td>
-                            <FriendMessageExample />
+                            <FriendMessageButton />
                           </td>
                         </tr>
                       ))}
@@ -86,10 +88,10 @@ class FriendBox extends Component {
               </Row>
               <Row className="friend-buttons">
                 <Col lg="6" md="6" sm="6" xs="6">
-                  <Button className="friend-button">Add Friend</Button>
+                  <AddFriendButton />
                 </Col>
                 <Col lg="6" md="6" sm="6" xs="6">
-                  <Button className="friend-button">Friend Requests</Button>
+                  <FriendRequestsButton />
                 </Col>
               </Row>
             </Col>

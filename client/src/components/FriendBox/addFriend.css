@@ -30,7 +30,12 @@
 
 /* Search */
 #add-friend-search-bar {
-  width: 25em;
+  width: 23em;
+}
+
+#add-friend-search-button {
+  width: 2em;
+  height: 3em;
 }
 
 .add-friend-search-container {
@@ -41,10 +46,15 @@
   border-radius: 50px;
 }
 
+.add-friend-search-items {
+  height: 14em;
+  overflow-y: scroll;
+}
+
 table.add-friend-search-results {
   color: #000000;
   text-align: center;
-  width: 25em;
+  width: 24em;
 }
 
 tr.add-friend-search-item:nth-child(even) {
@@ -74,4 +84,5 @@ td.add-friend-search-item:nth-child(odd) {
   border-radius: 50px;
   border-color: #000000;
   width: 11em;
+  margin: 10% 0 0 0;
 }

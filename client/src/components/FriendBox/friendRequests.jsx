@@ -19,7 +19,7 @@ import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 
-function friendRequestsExample() {
+function FriendRequestsButton() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,8 +27,8 @@ function friendRequestsExample() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Launch Friend Requests Modal
+      <Button className="friend-button" onClick={handleShow}>
+        Friend Requests
       </Button>
 
       <Modal show={show} onHide={handleClose}>
@@ -68,7 +68,7 @@ function friendRequestsExample() {
           </Row>
           <Row>
             <Container className="friend-requests-search-container">
-              <Row>
+              <Row className="friend-requests-search-items">
                 <Table className="friend-requests-search-results">
                   <tbody>
                     <tr className="friend-requests-search-item">
@@ -118,11 +118,11 @@ function friendRequestsExample() {
   );
 }
 
-export default friendRequestsExample;
+export default FriendRequestsButton;
 
 class FriendRequests extends Component {
   state = {};
   render() {
-    return <friendRequestsExample />;
+    return <FriendRequestsButton />;
   }
 }
