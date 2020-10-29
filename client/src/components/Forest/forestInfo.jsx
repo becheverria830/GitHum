@@ -12,6 +12,7 @@ import Table from "react-bootstrap/Table";
 
 /* Importing All Resources & Custom CSS */
 import "./forestInfo.css";
+import HierarchyButtom from "../Hierarchy/hierarchy";
 
 class ForestInfo extends Component {
   render() {
@@ -27,7 +28,9 @@ class ForestInfo extends Component {
               </Row>
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title"><b>becheverria830</b></h3>
+                  <h3 className="valley-forest-title">
+                    <b>becheverria830</b>
+                  </h3>
                 </Col>
               </Row>
             </div>
@@ -36,12 +39,16 @@ class ForestInfo extends Component {
             <div className="info-holder">
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title">Number Of Branched Forests</h3>
+                  <h3 className="valley-forest-title">
+                    Number Of Branched Forests
+                  </h3>
                 </Col>
               </Row>
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title"><b>24</b></h3>
+                  <h3 className="valley-forest-title">
+                    <b>24</b>
+                  </h3>
                 </Col>
               </Row>
             </div>
@@ -50,7 +57,14 @@ class ForestInfo extends Component {
             <div className="info-holder">
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title">This is an Original Forest</h3>
+                  <h3 className="valley-forest-title">
+                    This is an Original Forest
+                  </h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="valley-forest-title-holder">
+                  <h3 className="valley-forest-title"></h3>
                 </Col>
               </Row>
             </div>
@@ -64,16 +78,26 @@ class ForestInfo extends Component {
               </Row>
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title"><b>36</b></h3>
+                  <h3 className="valley-forest-title">
+                    <b>36</b>
+                  </h3>
                 </Col>
               </Row>
             </div>
           </Col>
-          <Col md="6" sm="12" className="offset-md-3 offset-sm-0 info-holder-container">
+          <Col
+            md="6"
+            sm="12"
+            className="offset-md-3 offset-sm-0 info-holder-container"
+          >
             <div className="info-holder">
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title"> S E E <br></br>   H I E R A R C H Y</h3>
+                  <HierarchyButtom/>
+                  {/* <h3 className="valley-forest-title">
+                    {" "}
+                    S E E <br></br> H I E R A R C H Y
+                  </h3> */}
                 </Col>
               </Row>
             </div>
@@ -82,10 +106,6 @@ class ForestInfo extends Component {
       </React.Fragment>
     );
   }
-
-
-
-
 
   //
   // render() {
