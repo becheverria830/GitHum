@@ -12,43 +12,53 @@ class LogIn extends Component {
   state = {};
   render() {
     return (
-      <Container fluid className="master-div">
-        <React.Fragment>
+      <Container fluid className="login-div">
+
           <Row className="justify-content-md-center clear">
-            <Col className="login-box" md={{span: 8}} lg={{ span: 4 }}>
-              <Col md={{span: 4}} lg={{span: 12}}>
-                <Image className="logo" src={Logo}/>
+            <Col md={{span: 8}} lg={{ span: 4 }} className="login-box">
+              
+              <Col lg={{span: 12}}>
+                  <Image className="loginLogo" src={Logo}/>
               </Col>
-              <h1> Log In </h1>
-              <form>
-                <div className="login-fields">
-                  <br></br>
-                  <label for="email"></label>
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    value="Email Address"
-                  ></input>
-                  <br></br>
-                  <label for="password"></label>
-                  <input
-                    type="text"
-                    id="password"
-                    name="password"
-                    value="Password"
-                  ></input>
-                  <br></br>
-                  <Link to="/feed"><input id="submit" type="submit" value="Log In"></input></Link>
-                </div>
-              </form>
-              <Link to="/resetpassword"><a> Forgot Password? </a></Link>
+              <Col lg={{span: 12}}>
+                <h1> Log In </h1>
+              </Col>
+
+              <Col lg={{span: 10, offset: 1}}>
+                <form>
+                  <div className="login-fields">
+                    <br></br>
+                    <label for="email"></label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      value="Email Address"
+                    ></input>
+                    <br></br>
+                    <label for="password"></label>
+                    <input
+                      type="text"
+                      id="password"
+                      name="password"
+                      value="Password"
+                    ></input>
+                    <br></br>
+                    <Link to="/feed"><input id="submit" type="submit" value="Log In"></input></Link>
+                  </div>
+                </form>
+              </Col>
+
+              <Link to="/resetpassword">Forgot Password?</Link>
               <br></br>
-              <p> Don't have an account?</p>
-              <Link to="/signup"><a> Sign Up </a></Link>
+              <p> Don't have an account? </p>
+              <Link to="/signup">Sign Up</Link>
+              <br></br>
+              <br></br>
+
             </Col> 
           </Row>
-        </React.Fragment>
+
       </Container>
     );
   }

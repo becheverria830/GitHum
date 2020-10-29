@@ -1,53 +1,74 @@
-h1 {
-  font-size: 2.1em;
+.signup-div {
+  background-color: #FFFFFF;
+  text-align: center !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+.signup-div .row{
+  height: 100%;
+}
+
+.signup-div .logo {
+  width: 30%;
+  height: 30%;
+  margin-top: 2em;
+}
+
+.signup-div h1 {
+  font-size: 2em;
   font-weight: bold;
   color: #000000;
   font-family: "Red Hat Text", sans-serif;
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
-.signup-box {
+.signup-div .signup-box {
   text-align: center;
-  border-radius: 10%;
+  border-radius: 0.5em;
   background-color: #fedbff;
-  width: 400px;
-  height: 500px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: auto;
 }
 
-.signup-fields {
-  margin-top: 30px;
+.signup-div .signup-fields {
+  margin-top: 20px;
 }
 
-input {
+.signup-div .signup-fields input {
   /* background-color: #c8e6c9; */
   border: none;
   font-family: "Red Hat Text", sans-serif;
-  margin-bottom: 20px;
-  width: 300px;
-  height: 40px;
+  margin-bottom: 1em;
+  width: 250px;
+  height: 50px;
   color: #aaabad;
+  padding: 0.5em;
 }
 
-#submit {
-  width: 80px;
+.signup-div p {
+  color: #707173;
+  font-size: 15px;
+  display: inline;
+  margin-bottom: 0 !important;
+}
+
+.signup-div #submit {
+  width: 120px;
+  height: 40px;
   background-color: #c8e6c9;
   color: #000000;
 }
 
-p {
-  color: #707173;
-  font-size: 15px;
-  display: inline;
+.signup-div a {
+    /* color: #000000; */
+    font-weight: bolder;
+    font-size: 15px;
+    margin-bottom: 1em;
 }
 
-a {
-  color: #000000;
-  font-weight: bolder;
-  font-size: 15px;
+@media(max-width: 61em){
+  .signup-div .signup-box {
+    margin-left: 2em !important;
+    margin-right: 2em !important;
+  }
 }
