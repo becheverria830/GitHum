@@ -37,9 +37,9 @@
   border-radius: 10% 10% 10% 10%;
   /* height: 30em; */
   /* width: 35em; */ /* Leave this commented out */
-  align-items: center;
+  /* align-items: center;
   vertical-align: center;
-}
+} */
 
 .forest-info-panel {
   background-color: #fedbff;
@@ -104,4 +104,4 @@
 #see-hierarchy-button:hover {
   color: #545252;
   background-color: #e7c3e8;
-} */
+} 

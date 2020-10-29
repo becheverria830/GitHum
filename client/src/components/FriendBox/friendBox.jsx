@@ -14,9 +14,9 @@ import Table from "react-bootstrap/Table";
 import "./friendBox.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
 import Message from "../../assets/comment.svg";
+import FriendMessageExample from "./friendMessage";
 
 class FriendBox extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -24,22 +24,22 @@ class FriendBox extends Component {
         current_friends: [],
         requests: {
           received: [],
-          sent: []
-        }
-      }
-    }
+          sent: [],
+        },
+      },
+    };
   }
 
   getFriends() {
     fetch("http://localhost:9000/user/friends")
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         this.setState({
-          friends: res
-        })
-        console.log(res)
+          friends: res,
+        });
+        console.log(res);
       })
-      .catch(err => err);
+      .catch((err) => err);
   }
 
   componentDidMount() {
@@ -52,7 +52,9 @@ class FriendBox extends Component {
         <div className="component">
           <Row>
             <Col md="12" className="friends-header-div">
-              <h3 className="friends-header"><b>Friends</b></h3>
+              <h3 className="friends-header">
+                <b>Friends</b>
+              </h3>
             </Col>
           </Row>
           <Row className="friend-container">
@@ -61,36 +63,38 @@ class FriendBox extends Component {
                 <Col md="12">
                   <Table>
                     <tbody>
-                      {
-                        this.state.friends.current_friends.map(friend => (
-                          <tr className="friend-table-row">
-                            <td><h3 className="friend-name-text">{ friend.firstname } { friend.lastname }</h3></td>
-                            <td><Button className="friend-visit-valley">Visit</Button></td>
-                            <td><Image src={Message} className="message-icon"></Image></td>
-                          </tr>
-                        ))
-                      }
+                      {this.state.friends.current_friends.map((friend) => (
+                        <tr className="friend-table-row">
+                          <td>
+                            <h3 className="friend-name-text">
+                              {friend.firstname} {friend.lastname}
+                            </h3>
+                          </td>
+                          <td>
+                            <Button className="friend-visit-valley">
+                              Visit
+                            </Button>
+                          </td>
+                          <td>
+                            <FriendMessageExample />
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
                 </Col>
               </Row>
               <Row className="friend-buttons">
                 <Col lg="6" md="6" sm="6" xs="6">
-                  <Button className="friend-button">
-                    Add Friend
-                  </Button>
+                  <Button className="friend-button">Add Friend</Button>
                 </Col>
                 <Col lg="6" md="6" sm="6" xs="6">
-                  <Button className="friend-button">
-                    Friend Requests
-                  </Button>
+                  <Button className="friend-button">Friend Requests</Button>
                 </Col>
               </Row>
             </Col>
           </Row>
         </div>
-
-
       </React.Fragment>
     );
   }

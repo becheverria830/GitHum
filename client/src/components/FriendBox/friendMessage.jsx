@@ -15,6 +15,7 @@ import FormControl from "react-bootstrap/FormControl";
 
 /* Importing All Resources & Custom CSS */
 import "./friendMessage.css";
+import Message from "../../assets/comment.svg";
 
 function FriendMessageExample() {
   const [show, setShow] = useState(false);
@@ -24,9 +25,12 @@ function FriendMessageExample() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Launch Friend Message Modal
-      </Button>
+      <input
+        type="image"
+        className="message-button"
+        src={Message}
+        onClick={handleShow}
+      ></input>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header

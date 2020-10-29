@@ -1,3 +1,8 @@
+.message-button {
+  width: 1.7em;
+  height: 1.7em;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* HEADER */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -25,7 +30,7 @@
 
 #friend-msg-modal-body {
   background-color: #2e2621;
-  height: 27em;
+  height: 33em;
 }
 
 /* Search */
@@ -38,8 +43,8 @@
   /* padding: 0 20% 0 0; */
 }
 
-.friend-msg-container{
-  height: 45vw;
+.friend-msg-container {
+  height: 20em;
   overflow-y: scroll;
 }
 
