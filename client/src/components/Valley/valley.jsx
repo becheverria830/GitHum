@@ -18,16 +18,15 @@ import NowPlaying from "../NowPlaying/nowPlaying";
 import FriendBox from "../FriendBox/friendBox";
 import ValleyForestDisplay from "./valleyForestDisplay";
 import SongList from "../SongList/songList";
+import StartForest from "./startForest";
 
 import ForestDefaultIcon from "../../assets/forest.svg";
-import ForestList from "../ForestList/forestList"
+import ForestList from "../ForestList/forestList";
 
 import Forest from "../../assets/forest.svg";
 import Flower from "../../assets/flower.svg";
 
-
 class ValleyPage extends Component {
-
   constructor(props) {
     super(props);
     this.songListElement = React.createRef();
@@ -41,7 +40,7 @@ class ValleyPage extends Component {
     this.state = {
       showSongs: true,
       showForests: false,
-      showSavedForests: false
+      showSavedForests: false,
     };
   }
 
@@ -49,7 +48,7 @@ class ValleyPage extends Component {
     this.setState({
       showSongs: true,
       showForests: false,
-      showSavedForests: false
+      showSavedForests: false,
     });
   }
 
@@ -57,7 +56,7 @@ class ValleyPage extends Component {
     this.setState({
       showSongs: false,
       showForests: true,
-      showSavedForests: false
+      showSavedForests: false,
     });
   }
 
@@ -65,7 +64,7 @@ class ValleyPage extends Component {
     this.setState({
       showSongs: false,
       showForests: false,
-      showSavedForests: true
+      showSavedForests: true,
     });
   }
 
@@ -88,12 +87,15 @@ class ValleyPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <MainNavBar/>
+        <MainNavBar />
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
-              <Container className="container-fluid" id="valley-title-container">
-                <Col lg="1" >
+              <Container
+                className="container-fluid"
+                id="valley-title-container"
+              >
+                <Col lg="1">
                   <Image id="valley-githum-logo" src={Logo}></Image>
                 </Col>
                 <Col lg="3" md="3" sm="3" xs="3">
@@ -106,27 +108,63 @@ class ValleyPage extends Component {
             </Row>
             <Row className="valley-toggle-button-container-div">
               <Col md="4" className="valley-toggle-button-container">
-                <Button onClick={this.displaySongs} className="valley-toggle-button"> Favorites <span><Image className="icon" src={Flower}></Image></span></Button>
+                <Button
+                  onClick={this.displaySongs}
+                  className="valley-toggle-button"
+                >
+                  {" "}
+                  Favorites{" "}
+                  <span>
+                    <Image className="icon" src={Flower}></Image>
+                  </span>
+                </Button>
               </Col>
               <Col md="4" className="valley-toggle-button-container">
-                <Button onClick={this.displayForests} className="valley-toggle-button"> My Forests <span><Image className="icon" src={Forest}></Image></span></Button>
+                <Button
+                  onClick={this.displayForests}
+                  className="valley-toggle-button"
+                >
+                  {" "}
+                  My Forests{" "}
+                  <span>
+                    <Image className="icon" src={Forest}></Image>
+                  </span>
+                </Button>
               </Col>
               <Col md="4" className="valley-toggle-button-container">
-                <Button onClick={this.displaySavedForests} className="valley-toggle-button"> Saved Forests <span><Image className="icon" src={Forest}></Image></span></Button>
+                <Button
+                  onClick={this.displaySavedForests}
+                  className="valley-toggle-button"
+                >
+                  {" "}
+                  Saved Forests{" "}
+                  <span>
+                    <Image className="icon" src={Forest}></Image>
+                  </span>
+                </Button>
               </Col>
             </Row>
             <Row>
               <Col id="valley-content-div">
                 <div id="valley-content-container">
                   <div className={this.state.showSongs ? null : "hidden"}>
-                    <SongList ref={this.songListElement}/>
+                    <SongList ref={this.songListElement} />
                   </div>
                   <div className={this.state.showForests ? null : "hidden"}>
-                    <ValleyForestDisplay/>
+                    <ValleyForestDisplay />
                   </div>
-                  <div className={this.state.showSavedForests ? null : "hidden"}>
-                    <ValleyForestDisplay/>
+                  <div
+                    className={this.state.showSavedForests ? null : "hidden"}
+                  >
+                    <ValleyForestDisplay />
                   </div>
+                </div>
+                <div
+                  className={this.state.showForests ? null : "hidden"}
+                  id="start-forest-div"
+                >
+                  {/* <Button id="start-forest-button"> Start a Forest </Button> */}
+                  <StartForest />
                 </div>
               </Col>
             </Row>
@@ -134,12 +172,16 @@ class ValleyPage extends Component {
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row>
               <Col>
-                { this.props.myValley ? <FriendBox ref={this.friendListElement}/> : <FriendBox ref={this.friendListElement}/>}
+                {this.props.myValley ? (
+                  <FriendBox ref={this.friendListElement} />
+                ) : (
+                  <FriendBox ref={this.friendListElement} />
+                )}
               </Col>
             </Row>
             <Row>
               <Col>
-                <NowPlaying/>
+                <NowPlaying />
               </Col>
             </Row>
           </Col>

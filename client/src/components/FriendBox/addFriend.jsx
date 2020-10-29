@@ -18,6 +18,7 @@ import "./addFriend.css";
 import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
+import AddIcon from "../../assets/add.svg";
 
 function AddFriendButton() {
   const [show, setShow] = useState(false);
@@ -29,6 +30,7 @@ function AddFriendButton() {
     <div>
       <Button className="friend-button" onClick={handleShow}>
         Add Friend
+        <Image src={AddIcon} id="add-icon"></Image>
       </Button>
 
       <Modal show={show} onHide={handleClose}>

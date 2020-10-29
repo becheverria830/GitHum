@@ -2,7 +2,7 @@
 /* HEADER */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#add-friend-modal-header {
+#start-forest-modal-header {
   min-width: 30em;
   min-height: 3em;
   height: 4em;
@@ -11,10 +11,10 @@
   background-color: #fedbff;
 }
 
-#add-friend-modal-title {
+#start-forest-modal-title {
   text-align: center;
   align-items: center;
-  padding: 0 0 0 34%;
+  padding: 0 0 0 27%;
   font-weight: bold;
   font-size: 2em;
 }
@@ -23,22 +23,17 @@
 /* BODY */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#add-friend-modal-body {
+#start-forest-modal-body {
   background-color: #2e2621;
-  height: 27em;
+  height: 13em;
 }
 
 /* Search */
-#add-friend-search-bar {
-  width: 23em;
+#start-forest-search-bar {
+  width: 28em;
 }
 
-#add-friend-search-button {
-  width: 2em;
-  height: 3em;
-}
-
-.add-friend-search-container {
+.start-forest-search-container {
   width: 28em !important;
   height: 20em;
   margin: 5% 0 0 0;
@@ -46,49 +41,29 @@
   border-radius: 50px;
 }
 
-.add-friend-search-items {
+.start-forest-search-items {
   height: 14em;
   overflow-y: scroll;
 }
 
-table.add-friend-search-results {
-  color: #000000;
-  text-align: center;
-  width: 24em;
-}
-
-tr.add-friend-search-item:nth-child(even) {
-  background-color: #fbf3f3;
-}
-
-td.add-friend-search-item:nth-child(even) {
-  background-color: #fbf3f3;
-  display: block;
-  height: 2.5em;
-}
-
-tr.add-friend-search-item:nth-child(odd) {
-  background-color: #fedbff;
-}
-
-td.add-friend-search-item:nth-child(odd) {
-  background-color: #fedbff;
-  display: block;
-  height: 2.5em;
-}
-
 /* Action */
-#add-friend-request-button {
-  background-color: #c8e6c9;
+#start-forest-create-link {
+  background-color: #c8e6c9 !important;
   color: #000000;
   border-radius: 50px;
   border-color: #000000;
   width: 11em;
-  margin: 10% 0 0 0;
+  margin: 5% 0 0 90%;
 }
 
 /* Other */
-#add-icon{
-  width: 1.7em;
-  height: 1.7em;
+
+#start-forest-button {
+  background-color: #fedbff;
+  color: #c4c4c4;
+}
+
+#start-forest-button:hover {
+  background-color: #e7c3e8 !important;
+  color: #737070;
 }
