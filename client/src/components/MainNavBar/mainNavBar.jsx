@@ -33,11 +33,11 @@ class MainNavBar extends Component {
             <Form inline>
               <FormControl
                 type="text"
-                placeholder="Search for songs and artists"
+                placeholder="Search for Songs and Artists"
                 className="ml-sm-2 search-bar"
               />
               <Link to="/search?=Avicii">
-                <Button variant="dark">
+                <Button variant="dark" className="search-icon-button">
                   <Image className="search-button" src={SearchIcon} />
                 </Button>
               </Link>

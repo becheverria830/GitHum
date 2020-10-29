@@ -13,9 +13,39 @@ import Table from "react-bootstrap/Table";
 /* Importing All Resources & Custom CSS */
 import "./friendBox.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
+import Message from "../../assets/comment.svg";
 
 class FriendBox extends Component {
-  state = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      friends: {
+        current_friends: [],
+        requests: {
+          received: [],
+          sent: []
+        }
+      }
+    }
+  }
+
+  getFriends() {
+    fetch("http://localhost:9000/user/friends")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          friends: res
+        })
+        console.log(res)
+      })
+      .catch(err => err);
+  }
+
+  componentDidMount() {
+    this.getFriends();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -31,39 +61,15 @@ class FriendBox extends Component {
                 <Col md="12">
                   <Table>
                     <tbody>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
-                      <tr className="friend-table-row">
-                        <td>Somebody</td>
-                      </tr>
+                      {
+                        this.state.friends.current_friends.map(friend => (
+                          <tr className="friend-table-row">
+                            <td><h3 className="friend-name-text">{ friend.firstname } { friend.lastname }</h3></td>
+                            <td><Button className="friend-visit-valley">Visit</Button></td>
+                            <td><Image src={Message} className="message-icon"></Image></td>
+                          </tr>
+                        ))
+                      }
                     </tbody>
                   </Table>
                 </Col>

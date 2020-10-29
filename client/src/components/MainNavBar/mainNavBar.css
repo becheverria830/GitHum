@@ -14,7 +14,6 @@
 .nav-my-valley {
   background-color: #fedbff;
   border-radius: 50px;
-  height: 4vw;
   width: 10vw;
   text-align: center;
 }
@@ -26,7 +25,14 @@
   white-space: nowrap;
 }
 
+.search-icon-button {
+  padding: 0.375rem 0.75rem !important;
+}
+
 #my-valley-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.4vw;
   color: #423e3e;
 }
@@ -35,5 +41,8 @@
 }
 
 #log-out-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.4vw;
 }

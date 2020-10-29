@@ -58,6 +58,34 @@ button.friend-list-action-button {
   background-color: #fedbff;
 }
 
+.friend-table td {
+  vertical-align: middle;
+}
+
+.friend-table td:nth-child(1) {
+  width: 60%;
+}
+.friend-table td:nth-child(2) {
+  width: 30%;
+}
+.friend-table td:nth-child(3) {
+  width: 10%;
+}
+
+.friend-visit-valley {
+  background-color: #C8E6C9 !important;
+  color: #000000;
+}
+
+.friend-name-text {
+  font-size: 1.3vw;
+}
+
+.message-icon {
+  width: 2vw;
+  height: 2vw;
+}
+
 
 /* FRIEND CONTAINER CSS */
 /*
