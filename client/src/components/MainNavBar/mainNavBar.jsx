@@ -36,7 +36,7 @@ class MainNavBar extends Component {
                 placeholder="Search for Songs and Artists"
                 className="ml-sm-2 search-bar"
               />
-              <Link to="/search?=Avicii">
+              <Link to="/search?=Just%20Can%27t%20Wait%20to%20be%20King">
                 <Button variant="dark" className="search-icon-button">
                   <Image className="search-button" src={SearchIcon} />
                 </Button>

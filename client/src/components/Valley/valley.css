@@ -135,9 +135,10 @@
 }
 
 .valley-toggle-button {
+  border-radius: .5vw;
   width: 95%;
   color: #000000;
-  background-color: #c8e6c9;
+  background-color: #c8e6c9 !important;
   border: none;
   align-items: center;
   text-align:center;

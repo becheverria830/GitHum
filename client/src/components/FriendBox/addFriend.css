@@ -58,21 +58,21 @@ table.add-friend-search-results {
 }
 
 tr.add-friend-search-item:nth-child(even) {
-  background-color: #fbf3f3;
+  background-color: #fedbff;
 }
 
 td.add-friend-search-item:nth-child(even) {
-  background-color: #fbf3f3;
+  background-color: #fedbff;
   display: block;
   height: 2.5em;
 }
 
 tr.add-friend-search-item:nth-child(odd) {
-  background-color: #fedbff;
+  background-color: #fbf3f3;
 }
 
 td.add-friend-search-item:nth-child(odd) {
-  background-color: #fedbff;
+  background-color: #fbf3f3;
   display: block;
   height: 2.5em;
 }
@@ -85,4 +85,8 @@ td.add-friend-search-item:nth-child(odd) {
   border-color: #000000;
   width: 11em;
   margin: 10% 0 0 0;
+}
+
+.add-friend-search-icon-button {
+  padding: 0.375rem 0.75rem !important;
 }

@@ -16,6 +16,7 @@ import Logo from "../../assets/githum-tree.svg";
 import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import FriendBox from "../FriendBox/friendBox";
+import MutualFriendBox from "../FriendBox/mutualFriendBox";
 import ValleyForestDisplay from "./valleyForestDisplay";
 import SongList from "../SongList/songList";
 
@@ -134,7 +135,7 @@ class ValleyPage extends Component {
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row>
               <Col>
-                { this.props.myValley ? <FriendBox ref={this.friendListElement}/> : <FriendBox ref={this.friendListElement}/>}
+                { this.props.myValley ? <FriendBox ref={this.friendListElement}/> : <MutualFriendBox ref={this.friendListElement}/>}
               </Col>
             </Row>
             <Row>

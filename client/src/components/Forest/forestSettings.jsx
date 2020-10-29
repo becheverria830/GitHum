@@ -24,8 +24,8 @@ function ForestSettingsExample() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Launch Forest Settings Modal
+      <Button className="button forest-settings-button" onClick={handleShow}>
+        Forest Settings
       </Button>
 
       <Modal show={show} onHide={handleClose}>

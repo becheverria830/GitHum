@@ -1,4 +1,5 @@
 .forest-container {
+  border-radius: 1.5vw;
   padding: 2.5%;
   background-color: #fedbff;
   margin: 2.5%;
@@ -36,8 +37,9 @@
 }
 
 .explore-forest-button {
+  border-radius: .5vw;
   color: #000000;
-  border: none;
+  border: none !important;
   font-size: 1.3vw;
-  background-color: #C8E6C9;
+  background-color: #C8E6C9 !important;
 }
