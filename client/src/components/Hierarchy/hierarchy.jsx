@@ -17,7 +17,7 @@ import FormControl from "react-bootstrap/FormControl";
 import "./hierarchy.css";
 import HierarchySample from "../../assets/hierarchy-pic.png";
 
-function HierarchyExample() {
+function HierarchyButton() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -25,8 +25,8 @@ function HierarchyExample() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Launch Hierarchy Modal
+      <Button variant="primary" onClick={handleShow} id="hierarchy-button">
+        S E E <br/> H I E R A R C H Y
       </Button>
 
       <Modal show={show} onHide={handleClose} id="hierarchy-modal">
@@ -58,11 +58,11 @@ function HierarchyExample() {
   );
 }
 
-export default HierarchyExample;
+export default HierarchyButton;
 
 class Hierarchy extends Component {
   state = {};
   render() {
-    return <HierarchyExample />;
+    return <HierarchyButton />;
   }
 }
