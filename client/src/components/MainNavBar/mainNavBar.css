@@ -27,6 +27,8 @@
 
 .search-icon-button {
   padding: 0.375rem 0.75rem !important;
+  background-color: #fedbff !important;
+  border: none;
 }
 
 #my-valley-link {
