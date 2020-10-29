@@ -73,9 +73,11 @@ class FriendBox extends Component {
                             </h3>
                           </td>
                           <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
+                            <Link to="/valley/2">
+                              <Button className="friend-visit-valley">
+                                Visit
+                              </Button>
+                            </Link>
                           </td>
                           <td>
                             <FriendMessageButton />
