@@ -33,17 +33,17 @@ class MainNavBar extends Component {
             <Form inline>
               <FormControl
                 type="text"
-                placeholder="Search for songs and artists"
+                placeholder="Search for Songs and Artists"
                 className="ml-sm-2 search-bar"
               />
               <Link to="/search?=Avicii">
-                <Button variant="dark">
+                <Button variant="dark" className="search-icon-button">
                   <Image className="search-button" src={SearchIcon} />
                 </Button>
               </Link>
             </Form>
             <Nav className="ml-auto nav-opts">
-              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/3">
+              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/1">
                 My Valley
               </Nav.Link>
               <Nav.Link href="/" id="log-out-link">

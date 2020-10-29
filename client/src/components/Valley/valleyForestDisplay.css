@@ -1,4 +1,33 @@
-#valley-forest-display-container {
+.valley-forest-holder-container {
+  padding: 5% !important;
+}
+
+.valley-forest-holder {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: #fedbff;
+  border-radius: 10% 10% 10% 10%;
+}
+
+.valley-forest-icon-holder {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.valley-forest-icon {
+  width: 8vw;
+  height: 8vw;
+}
+
+.valley-forest-title-holder {
+  text-align: center;
+}
+
+.valley-forest-title {
+  font-size: 2vw;
+}
+
+/* #valley-forest-display-container {
   background-color: #c4c4c4;
   display: flex;
   flex-direction: column;
@@ -8,12 +37,6 @@
   align-items: center;
 }
 
-table.valley-forest-display-table {
-  /* width: 40vw;
-  height: 15vw; */
-  /* border-radius: 50% 50% 50% 50% !important; */
-  /* background-color: #fedbff; */
-}
 .valley-forest-display-item {
   width: 40vw;
   height: 17vw;
@@ -40,4 +63,4 @@ td {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
+} */

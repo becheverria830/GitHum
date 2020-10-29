@@ -64,7 +64,7 @@ class FeedPage extends Component {
           </Col>
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row>
-              <Col id="friend-div">
+              <Col>
                 <FriendBox ref={this.friendListElement}/>
               </Col>
             </Row>

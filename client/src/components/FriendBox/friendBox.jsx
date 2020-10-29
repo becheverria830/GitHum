@@ -13,59 +13,84 @@ import Table from "react-bootstrap/Table";
 /* Importing All Resources & Custom CSS */
 import "./friendBox.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
+import Message from "../../assets/comment.svg";
 
 class FriendBox extends Component {
-  state = {};
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      friends: {
+        current_friends: [],
+        requests: {
+          received: [],
+          sent: []
+        }
+      }
+    }
+  }
+
+  getFriends() {
+    fetch("http://localhost:9000/user/friends")
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          friends: res
+        })
+        console.log(res)
+      })
+      .catch(err => err);
+  }
+
+  componentDidMount() {
+    this.getFriends();
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Col lg="4" md="4" sm="4" xs="4">
-          <h6 id="friend-box-title">Friends</h6>
-          <Container
-            className="container container-fluid"
-            id="friend-action-container"
-          >
-            <Container id="friend-list-container">
-              <Row>
-                <Col lg="12" md="12" sm="12" xs="12">
-                  <Table className="friend-list-table">
+        <div className="component">
+          <Row>
+            <Col md="12" className="friends-header-div">
+              <h3 className="friends-header"><b>Friends</b></h3>
+            </Col>
+          </Row>
+          <Row className="friend-container">
+            <Col md="12">
+              <Row className="friend-table">
+                <Col md="12">
+                  <Table>
                     <tbody>
-                      <tr className="friend-list-item">Somebody</tr>
-                      <tr className="friend-list-item">Somebody2</tr>
-                      <tr className="friend-list-item">Somebody3</tr>
-                      <tr className="friend-list-item">Somebody4</tr>
-                      <tr className="friend-list-item">Somebody</tr>
-                      <tr className="friend-list-item">Somebody2</tr>
-                      <tr className="friend-list-item">Somebody3</tr>
-                      <tr className="friend-list-item">Somebody4</tr>
-                      <tr className="friend-list-item">Somebody</tr>
-                      <tr className="friend-list-item">Somebody2</tr>
-                      <tr className="friend-list-item">Somebody3</tr>
-                      <tr className="friend-list-item">Somebody4</tr>
-                      <tr className="friend-list-item">Somebody</tr>
-                      <tr className="friend-list-item">Somebody2</tr>
-                      <tr className="friend-list-item">Somebody3</tr>
-                      <tr className="friend-list-item">Somebody4</tr>
+                      {
+                        this.state.friends.current_friends.map(friend => (
+                          <tr className="friend-table-row">
+                            <td><h3 className="friend-name-text">{ friend.firstname } { friend.lastname }</h3></td>
+                            <td><Button className="friend-visit-valley">Visit</Button></td>
+                            <td><Image src={Message} className="message-icon"></Image></td>
+                          </tr>
+                        ))
+                      }
                     </tbody>
                   </Table>
                 </Col>
               </Row>
-            </Container>
+              <Row className="friend-buttons">
+                <Col lg="6" md="6" sm="6" xs="6">
+                  <Button className="friend-button">
+                    Add Friend
+                  </Button>
+                </Col>
+                <Col lg="6" md="6" sm="6" xs="6">
+                  <Button className="friend-button">
+                    Friend Requests
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </div>
 
-            <Row>
-              <Col lg="6" md="6" sm="6" xs="6">
-                <Button className="friend-list-action-button" id="add-friend-button">
-                  Add Friend
-                </Button>
-              </Col>
-              <Col lg="6" md="6" sm="6" xs="6">
-                <Button className="friend-list-action-button" id="friend-requests-button">
-                  Friend Requests
-                </Button>
-              </Col>
-            </Row>
-          </Container>
-        </Col>
+
       </React.Fragment>
     );
   }

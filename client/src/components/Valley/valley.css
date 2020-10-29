@@ -20,6 +20,27 @@
   margin: -10% 0 0 0;
 }
 
+#valley-content-div {
+  background-color: #c4c4c4;
+  border-radius: 10% 10% 10% 10%;
+  height: 40vw;
+  padding: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+#valley-content-container {
+  height: 33vw;
+  overflow-y: scroll;
+}
+
+.icon {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+
+
+
 #forest-button-toggle-container {
   display: flex;
   flex-direction: row;
@@ -101,20 +122,27 @@
   height: 50vw;
   padding: 0 60% 65% 0;
 }
+.valley-toggle-button-container-div {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
 
-button.valley-toggle-buttons {
+.valley-toggle-button-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.valley-toggle-button {
+  width: 95%;
   color: #000000;
   background-color: #c8e6c9;
   border: none;
-  width: 12vw;
-  height: 3.5vw;
-  align-items: left;
-  vertical-align: left;
-  margin: -1% 15% 0 -10%;
-  min-width: 3.2em;
-  min-height: 1.8em;
+  align-items: center;
+  text-align:center;
+  margin:0 auto;
   font-size: 1.3vw;
-  border-radius: 20%;
   white-space: nowrap;
 }
 
