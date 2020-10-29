@@ -17,10 +17,10 @@ import NowPlaying from "../NowPlaying/nowPlaying";
 import ForestInfo from "./forestInfo";
 import SongList from "../SongList/songList";
 import Deforest from "./deforest";
+import BranchForest from "./branchForest";
 import ForestSettings from "./forestSettings";
 
 class ForestPage extends Component {
-
   constructor(props) {
     super(props);
     this.songListElement = React.createRef();
@@ -47,15 +47,15 @@ class ForestPage extends Component {
   displaySongs() {
     this.setState({
       showSongList: true,
-      showForestInfo: false
+      showForestInfo: false,
     });
-    console.log(this.songListElement)
+    console.log(this.songListElement);
   }
 
   displayInfo() {
     this.setState({
       showSongList: false,
-      showForestInfo: true
+      showForestInfo: true,
     });
   }
 
@@ -78,28 +78,46 @@ class ForestPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <MainNavBar/>
+        <MainNavBar />
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
               <Col className="forest-title-div">
-                <h1 className="forest-title-text"><span><Image className="forest-icon" src={this.state.forest.icon}></Image></span>{this.state.forest.name}</h1>
+                <h1 className="forest-title-text">
+                  <span>
+                    <Image
+                      className="forest-icon"
+                      src={this.state.forest.icon}
+                    ></Image>
+                  </span>
+                  {this.state.forest.name}
+                </h1>
               </Col>
             </Row>
             <Row>
               <Col className="forest-info-song-actions">
-                <Button onClick={this.displaySongs} className="button forest-info-song-buttons">Songs</Button>
-                <Button onClick={this.displayInfo} className="button forest-info-song-buttons">Info</Button>
+                <Button
+                  onClick={this.displaySongs}
+                  className="button forest-info-song-buttons"
+                >
+                  Songs
+                </Button>
+                <Button
+                  onClick={this.displayInfo}
+                  className="button forest-info-song-buttons"
+                >
+                  Info
+                </Button>
               </Col>
             </Row>
             <Row>
               <Col id="song-list-div">
                 <div id="song-container">
                   <div className={this.state.showSongList ? null : "hidden"}>
-                    <SongList ref={this.songListElement}/>
+                    <SongList ref={this.songListElement} />
                   </div>
                   <div className={this.state.showForestInfo ? null : "hidden"}>
-                    <ForestInfo/>
+                    <ForestInfo />
                   </div>
                 </div>
               </Col>
@@ -108,26 +126,34 @@ class ForestPage extends Component {
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row className="forest-options-div">
               <Col md="12">
-                <Button className="button forest-settings-button"> Share Forest </Button>
+                <Button className="button forest-action-button">
+                  Share Forest
+                </Button>
               </Col>
               <Col md="12">
-                {
-                  this.props.myForest
-                  ? <ForestSettings/>
-                  : <Button className="button forest-settings-button"> Branch From Forest </Button>
-                }
+                <BranchForest/>
               </Col>
               <Col md="12">
-                {
-                  this.props.myForest
-                  ? <Button className="button forest-settings-button"> Deforest </Button>
-                  : <Button className="button forest-settings-button"> Save Forest </Button>
-                }
+                <div className={this.props.myForest ? null : "hidden"}>
+                  <ForestSettings />
+                </div>
+              </Col>
+              <Col md="12">
+                {this.props.myForest ? (
+                  <Deforest/>
+                  // <Button className="button forest-action-button danger" id="deforest-button">
+                  //   Deforest
+                  // </Button>
+                ) : (
+                  <Button className="button forest-action-button">
+                    Save Forest
+                  </Button>
+                )}
               </Col>
             </Row>
             <Row>
               <Col>
-                <NowPlaying/>
+                <NowPlaying />
               </Col>
             </Row>
           </Col>

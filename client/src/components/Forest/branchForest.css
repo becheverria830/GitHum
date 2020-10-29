@@ -2,7 +2,7 @@
 /* HEADER */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#deforest-modal-header {
+#branch-forest-modal-header {
   min-width: 30em;
   min-height: 3em;
   height: 4em;
@@ -11,10 +11,10 @@
   background-color: #fedbff;
 }
 
-#deforest-modal-title {
+#branch-forest-modal-title {
   text-align: center;
   align-items: center;
-  padding: 0 0 0 35%;
+  padding: 0 0 0 21%;
   font-weight: bold;
   font-size: 2em;
 }
@@ -23,41 +23,37 @@
 /* BODY */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#deforest-modal-body {
+#branch-forest-modal-body {
   background-color: #2e2621;
-  height: 20em;
+  height: 13em;
 }
 
-#deforest-warning-container {
-  width: 29em !important;
-  height: 16em;
+/* Search */
+#branch-forest-name-bar {
+  width: 28em;
+  text-align: center;
+}
+
+.branch-forest-search-container {
+  width: 28em !important;
+  height: 20em;
   margin: 5% 0 0 0;
   background: #c4c4c4;
   border-radius: 50px;
-  align-items: center;
 }
 
-#deforest-warning-container h1,h6 {
-  text-align: center;
+.branch-forest-search-items {
+  height: 14em;
+  overflow-y: scroll;
 }
 
-#deforest-warning-container a{
-  text-align: center;
-  font-size: 1em;
-  font-weight: bold;
-  margin: 0 0 0 35%;
-}
-
-#deforest-submit {
-  background-color: #f76d6d;
-  width: 8em;
-  height: 2em;
-}
-
-.deforest-link-button{
-  background-color: #f76d6d;
-  width: 8em;
-  height: 2em;
+/* Action */
+#branch-forest-create-link {
+  background-color: #c8e6c9 !important;
+  color: #000000;
   border-radius: 50px;
-  text-align: center;
+  border-color: #000000;
+  width: 11em;
+  height:3em;
+  margin: 5% 0 0 90%;
 }

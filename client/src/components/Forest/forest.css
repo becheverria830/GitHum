@@ -38,13 +38,17 @@
   text-align: center;
 }
 
-.forest-settings-button {
-  margin-top:4%;
+.forest-action-button {
+  margin-top: 4%;
   margin-bottom: 4%;
   width: 15vw;
   height: 3vw;
   max-width: 20em;
   max-height: 5em;
+}
+
+#deforest-button {
+  background-color: #f76d6d;
 }
 
 .button {

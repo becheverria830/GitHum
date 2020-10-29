@@ -24,7 +24,7 @@ function ForestSettingsExample() {
 
   return (
     <div>
-      <Button className="button forest-settings-button" onClick={handleShow}>
+      <Button className="button forest-action-button" onClick={handleShow}>
         Forest Settings
       </Button>
 
@@ -49,26 +49,53 @@ function ForestSettingsExample() {
                   <tbody>
                     <tr className="forest-settings-item">
                       <td>Forest Name: </td>
-                      <td>Meme Songs</td>
                       <td>
-                        <Button className="forest-settings-change-button">
-                          {" "}
-                          Change{" "}
-                        </Button>
+                        <Form inline>
+                          <FormControl
+                            type="text"
+                            placeholder="My First Forest"
+                            className="ml-sm-2"
+                            id="forest-settings-name-bar"
+                          />
+                        </Form>
                       </td>
                     </tr>
                     <tr className="forest-settings-item">
                       <td>Visibility: </td>
-                      <td>Public</td>
-                      <td>
-                        <Button> Change </Button>
-                      </td>
+                      <div class="dropdown">
+                        <button
+                          class="btn dropdown-toggle visibility-button"
+                          type="button"
+                          data-toggle="dropdown"
+                        >
+                          Public
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a href="#">Public</a>
+                          </li>
+                          <li>
+                            <a href="#">Unlisted</a>
+                          </li>
+                          <li>
+                            <a href="#">Private</a>
+                          </li>
+                        </ul>
+                      </div>
                     </tr>
                   </tbody>
                 </Table>
               </Row>
               <Row>
-                <Button id="forest-settings-save-button">Save Changes</Button>
+                <Col lg="12" md="12" sm="12" xs="12">
+                  <Button
+                    id="forest-settings-save-button"
+                    onClick={handleClose}
+                  >
+                    Save Changes
+                  </Button>
+                </Col>
               </Row>
             </Container>
           </Row>
