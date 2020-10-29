@@ -90,3 +90,9 @@ tr.forest-settings-item {
   text-align: center;
   width: 15em;
 }
+
+
+.forest-privacy-selector-div {
+  vertical-align: center;
+  margin: 0 auto;
+}

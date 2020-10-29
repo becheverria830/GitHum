@@ -38,11 +38,21 @@ class ValleyPage extends Component {
     this.displayForests = this.displayForests.bind(this);
     this.displaySavedForests = this.displaySavedForests.bind(this);
 
-    this.state = {
-      showSongs: true,
-      showForests: false,
-      showSavedForests: false,
-    };
+    if(this.props.myValley) {
+      this.state = {
+        showSongs: true,
+        showForests: false,
+        showSavedForests: false,
+      };
+    } else {
+      this.state = {
+        showSongs: false,
+        showForests: true,
+        showSavedForests: false,
+      };
+    }
+
+
   }
 
   displaySongs() {
@@ -108,7 +118,7 @@ class ValleyPage extends Component {
               </Container>
             </Row>
             <Row className="valley-toggle-button-container-div">
-              <Col md="4" className="valley-toggle-button-container">
+              {this.props.myValley && <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displaySongs}
                   className="valley-toggle-button"
@@ -120,6 +130,7 @@ class ValleyPage extends Component {
                   </span>
                 </Button>
               </Col>
+              }
               <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displayForests}
@@ -144,6 +155,8 @@ class ValleyPage extends Component {
                   </span>
                 </Button>
               </Col>
+              {!this.props.myValley && <Col md="4"/>
+              }
             </Row>
             <Row>
               <Col id="valley-content-div">

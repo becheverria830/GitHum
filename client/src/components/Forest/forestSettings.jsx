@@ -62,27 +62,13 @@ function ForestSettingsExample() {
                     </tr>
                     <tr className="forest-settings-item">
                       <td>Visibility: </td>
-                      <div class="dropdown">
-                        <button
-                          class="btn dropdown-toggle visibility-button"
-                          type="button"
-                          data-toggle="dropdown"
-                        >
-                          Public
-                          <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li>
-                            <a href="#">Public</a>
-                          </li>
-                          <li>
-                            <a href="#">Unlisted</a>
-                          </li>
-                          <li>
-                            <a href="#">Private</a>
-                          </li>
-                        </ul>
-                      </div>
+                      <td>
+                        <Form.Control inline as="select" defaultValue="Public">
+                          <option>Public</option>
+                          <option>Unlisted</option>
+                          <option>Private</option>
+                        </Form.Control>
+                      </td>
                     </tr>
                   </tbody>
                 </Table>

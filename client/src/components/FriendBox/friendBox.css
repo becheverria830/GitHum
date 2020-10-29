@@ -75,6 +75,7 @@ button.friend-list-action-button {
 
 .friend-visit-valley {
   background-color: #C8E6C9 !important;
+  border: none;
   color: #000000;
   border-radius: .25vw;
 }
