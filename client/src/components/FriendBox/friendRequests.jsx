@@ -67,24 +67,24 @@ function FriendRequestsButton() {
             </Col>
           </Row>
           <Row>
-            <Container className="friend-requests-search-container">
-              <Row className="friend-requests-search-items">
-                <Table className="friend-requests-search-results">
+            <Container className="friend-requests-container">
+              <Row className="friend-requests-items">
+                <Table className="friend-requests-results">
                   <tbody>
-                    <tr className="friend-requests-search-item">
-                      <td> Hello </td>
+                    <tr className="friend-requests-item">
+                      <td> PrincessDaisy </td>
                     </tr>
-                    <tr className="friend-requests-search-item">
-                      <td> Hello </td>
+                    <tr className="friend-requests-item">
+                      <td> PrincessPeach </td>
                     </tr>
-                    <tr className="friend-requests-search-item">
-                      <td> Hello </td>
+                    <tr className="friend-requests-item">
+                      <td> Mario_Br0 </td>
                     </tr>
-                    <tr className="friend-requests-search-item">
-                      <td> Hello </td>
+                    <tr className="friend-requests-item">
+                      <td> Gooooonbas </td>
                     </tr>
-                    <tr className="friend-requests-search-item">
-                      <td> Hello </td>
+                    <tr className="friend-requests-item">
+                      <td> Toadette123 </td>
                     </tr>
                   </tbody>
                 </Table>

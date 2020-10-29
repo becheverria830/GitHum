@@ -63,31 +63,34 @@ function AddFriendButton() {
                 <Table className="add-friend-search-results">
                   <tbody>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>John_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Joe_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Jake_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Justin_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Jeremy_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Jae_Doe</td>
                     </tr>
                     <tr className="add-friend-search-item">
-                      <td>Hello</td>
+                      <td>Jonn_Doe</td>
                     </tr>
                   </tbody>
                 </Table>
               </Row>
               <Row>
-                <Button id="add-friend-request-button"> Send Request </Button>
+                <Col lg="12" md="12" sm="12" xs="12" className="center-button">
+                  <Button id="add-friend-request-button"> Send Request </Button>
+                </Col>
+                
               </Row>
             </Container>
           </Row>

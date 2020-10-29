@@ -161,4 +161,6 @@
 
 .start-forest-button button{
   font-size: 1.3vw;
+  color: #000000 !important;
+  border: none;
 }

@@ -80,6 +80,10 @@ td.friend-msg-item:nth-child(odd) {
 }
 
 /* Action */
+.friend-msg-send-col{
+  text-align: center;
+}
+
 #friend-msg-send-button {
   background-color: #c8e6c9;
   color: #000000;

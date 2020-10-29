@@ -93,7 +93,7 @@ function FriendMessageButton() {
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col lg="12" md="12" sm="12" xs="12" className="friend-msg-send-col">
                   <Button id="friend-msg-send-button"> Send </Button>
                 </Col>
               </Row>
