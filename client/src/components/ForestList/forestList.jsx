@@ -29,8 +29,8 @@ class ForestList extends Component {
     return (
       <Col md="4" sm="12" className="song-container">
         <img className="song-album-art-icon" src={song.album_art}></img>
-        <h3 className="artist-name-header">{song.artist_name}</h3>
         <h3 className="song-name-header">{song.song_name}</h3>
+        <h3 className="artist-name-header">{song.artist_name}</h3>
       </Col>
     )
   }

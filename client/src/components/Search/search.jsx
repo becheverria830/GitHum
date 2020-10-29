@@ -39,8 +39,8 @@ class SearchPage extends Component {
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
               <Col id="search-text-div">
-                <h1 id="searching-for-text">Searching for: </h1>
-                <h4 id="search-input">Just Can't Wait to be King</h4>
+                <h1 id="searching-for-text">Search Results For: </h1>
+                <h4 id="search-input"><b>Just Can't Wait to be King</b></h4>
               </Col>
             </Row>
             <Row>

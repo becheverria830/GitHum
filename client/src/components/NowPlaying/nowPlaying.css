@@ -11,6 +11,7 @@
 }
 
 .now-playing-container {
+  border-radius: 2.5vw;
   background-color: #c8e6c9;
   width: 100%;
   padding: 5%;
@@ -64,6 +65,6 @@
 }
 
 .now-playing-icon {
-  width: 2vw;
-  height: 2vw;
+  width: 3.5vw;
+  height: 3.5vw;
 }

@@ -16,6 +16,8 @@ import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import ForestInfo from "./forestInfo";
 import SongList from "../SongList/songList";
+import Deforest from "./deforest";
+import ForestSettings from "./forestSettings";
 
 class ForestPage extends Component {
 
@@ -111,7 +113,7 @@ class ForestPage extends Component {
               <Col md="12">
                 {
                   this.props.myForest
-                  ? <Button className="button forest-settings-button"> Forest Settings </Button>
+                  ? <ForestSettings/>
                   : <Button className="button forest-settings-button"> Branch From Forest </Button>
                 }
               </Col>

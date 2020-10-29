@@ -55,7 +55,7 @@ class FriendBox extends Component {
           <Row>
             <Col md="12" className="friends-header-div">
               <h3 className="friends-header">
-                <b>Friends</b>
+                <b>Mutual Friends</b>
               </h3>
             </Col>
           </Row>
@@ -65,40 +65,6 @@ class FriendBox extends Component {
                 <Col md="12">
                   <Table>
                     <tbody>
-                      {this.state.friends.current_friends.map((friend) => (
-                        <tr className="friend-table-row">
-                          <td>
-                            <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
-                            </h3>
-                          </td>
-                          <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
-                          </td>
-                          <td>
-                            <FriendMessageButton />
-                          </td>
-                        </tr>
-                      ))}
-                      {this.state.friends.current_friends.map((friend) => (
-                        <tr className="friend-table-row">
-                          <td>
-                            <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
-                            </h3>
-                          </td>
-                          <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
-                          </td>
-                          <td>
-                            <FriendMessageButton />
-                          </td>
-                        </tr>
-                      ))}
                       {this.state.friends.current_friends.map((friend) => (
                         <tr className="friend-table-row">
                           <td>

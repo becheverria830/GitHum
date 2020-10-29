@@ -11,6 +11,7 @@
 }
 
 .friend-container {
+  border-radius: 2vw;
   background-color: #c4c4c4;
   width: 100%;
   padding: 5%;
@@ -51,11 +52,11 @@ button.friend-list-action-button {
 }
 
 .friend-table-row:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #fedbff;
 }
 
 .friend-table-row:nth-child(odd) {
-  background-color: #fedbff;
+  background-color: #f2f2f2;
 }
 
 .friend-table td {
@@ -75,6 +76,7 @@ button.friend-list-action-button {
 .friend-visit-valley {
   background-color: #C8E6C9 !important;
   color: #000000;
+  border-radius: .25vw;
 }
 
 .friend-name-text {

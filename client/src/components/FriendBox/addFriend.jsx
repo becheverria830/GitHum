@@ -51,7 +51,7 @@ function AddFriendButton() {
                   className="ml-sm-2"
                   id="add-friend-search-bar"
                 />
-                <Button variant="dark" id="add-friend-search-button">
+                <Button variant="dark" className="add-friend-search-icon-button">
                   <Image className="search-button" src={SearchIcon} />
                 </Button>
               </Form>
