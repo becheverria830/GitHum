@@ -33,7 +33,7 @@ class LogIn extends Component {
                       type="text"
                       id="email"
                       name="email"
-                      value="Email Address"
+                      placeholder="Email Address"
                     ></input>
                     <br></br>
                     <label for="password"></label>
@@ -41,7 +41,7 @@ class LogIn extends Component {
                       type="text"
                       id="password"
                       name="password"
-                      value="Password"
+                      placeholder="Password"
                     ></input>
                     <br></br>
                     <Link to="/feed"><input id="submit" type="submit" value="Log In"></input></Link>

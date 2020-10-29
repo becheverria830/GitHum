@@ -80,19 +80,18 @@ tr.forest-settings-item {
   margin: 5% 0 0 30%;
 }
 
-.visibility-button {
-  width: 10em;
-  height: 2.8em;
-  background-color: #c8e6c9;
-}
-
 #forest-settings-name-bar{
   text-align: center;
   width: 15em;
 }
 
-
 .forest-privacy-selector-div {
   vertical-align: center;
   margin: 0 auto;
+}
+
+.visibility-dropdown{
+  text-align: center;
+  align-items: center;
+  padding: 0 0 0 37%;
 }

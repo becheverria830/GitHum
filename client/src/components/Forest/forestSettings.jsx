@@ -63,10 +63,10 @@ function ForestSettingsExample() {
                     <tr className="forest-settings-item">
                       <td>Visibility: </td>
                       <td>
-                        <Form.Control inline as="select" defaultValue="Public">
-                          <option>Public</option>
-                          <option>Unlisted</option>
-                          <option>Private</option>
+                        <Form.Control inline as="select" defaultValue="Public" className="visibility-dropdown">
+                          <option className="visibility-dropdown" >Public</option>
+                          <option className="visibility-dropdown">Unlisted</option>
+                          <option className="visibility-dropdown">Private</option>
                         </Form.Control>
                       </td>
                     </tr>

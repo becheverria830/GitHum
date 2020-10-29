@@ -33,7 +33,7 @@ class SignUp extends Component {
                 type="text"
                 id="fname"
                 name="fname"
-                value="First Name"
+                placeholder="First Name"
               ></input>
               <br></br>
               <label for="lname"></label>
@@ -41,7 +41,7 @@ class SignUp extends Component {
                 type="text"
                 id="lname"
                 name="lname"
-                value="Last Name"
+                placeholder="Last Name"
               ></input>
               <br></br>
               <label for="email"></label>
@@ -49,7 +49,7 @@ class SignUp extends Component {
                 type="text"
                 id="email"
                 name="email"
-                value="Email Address"
+                placeholder="Email Address"
               ></input>
               <br></br>
               <label for="username"></label>
@@ -57,7 +57,7 @@ class SignUp extends Component {
                 type="text"
                 id="username"
                 name="username"
-                value="Create a Username"
+                placeholder="Create a Username"
               ></input>
               <br></br>
               <label for="password"></label>
@@ -65,7 +65,7 @@ class SignUp extends Component {
                 type="text"
                 id="password"
                 name="password"
-                value="Create a Password"
+                placeholder="Create a Password"
               ></input>
               <br></br>
               <Link to="/feed"><input id="submit" type="submit" value="Sign Up"></input></Link>
