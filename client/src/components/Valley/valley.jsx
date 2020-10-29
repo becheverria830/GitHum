@@ -154,18 +154,16 @@ class ValleyPage extends Component {
                   <div className={this.state.showForests ? null : "hidden"}>
                     <ValleyForestDisplay />
                   </div>
-                  <div
-                    className={this.state.showSavedForests ? null : "hidden"}
-                  >
+                  <div className={this.state.showSavedForests ? null : "hidden"}>
                     <ValleyForestDisplay />
                   </div>
                 </div>
-                <div
-                  className={this.state.showForests ? null : "hidden"}
-                  id="start-forest-div"
-                >
-                  {/* <Button id="start-forest-button"> Start a Forest </Button> */}
-                  <StartForest />
+                <div className={this.state.showForests ? null : "hidden"}>
+                  <Row>
+                    <Col md="12" className="start-forest-button">
+                      <StartForest />
+                    </Col>
+                  </Row>
                 </div>
               </Col>
             </Row>
