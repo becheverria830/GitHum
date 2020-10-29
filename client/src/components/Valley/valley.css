@@ -23,7 +23,6 @@
 #valley-content-div {
   background-color: #c4c4c4;
   border-radius: 10% 10% 10% 10%;
-  height: 40vw;
   padding: 5%;
   margin-left: 5%;
   margin-right: 5%;
@@ -153,4 +152,13 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.start-forest-button {
+  text-align: center;
+  padding-top: 1vmin;
+}
+
+.start-forest-button button{
+  font-size: 1.3vw;
 }
