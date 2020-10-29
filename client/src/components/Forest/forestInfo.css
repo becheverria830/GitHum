@@ -3,12 +3,10 @@
 #forest-info-container {
   background-color: #c4c4c4;
   border-radius: 10% 10% 10% 10%;
-  height: 40vw;
-  width: 100%;
-  overflow: visible;
+  /* height: 30em; */
+  /* width: 35em; */ /* Leave this commented out */
   align-items: center;
   vertical-align: center;
-  display: flex;
 }
 
 /* Panels */
@@ -23,8 +21,8 @@
 
 /* Owner */
 #owner-panel {
-  height: 12vw;
-  width: 25%vw;
+  height: 8em;
+  width: 17em;
 }
 #owner-panel h3 {
   font-size: 1.7vw;
@@ -33,8 +31,8 @@
 
 /* Number of Forests Branched */
 #number-branched-panel {
-  height: 12vw;
-  width: 25vw;
+  height: 8em;
+  width: 17em;
 }
 #number-branched-panel h3 {
   font-size: 1.7vw;
@@ -43,8 +41,8 @@
 
 /* Original Forest */
 #original-forest-panel {
-  height: 12vw;
-  width: 25vw;
+  height: 8em;
+  width: 17em;
 }
 
 #original-forest-panel h3 {
@@ -54,8 +52,8 @@
 
 /* Number of Times Saved */
 #number-saved-panel {
-  height: 12vw;
-  width: 25vw;
+  height: 8em;
+  width: 17em;
 }
 
 #number-saved-panel h3 {
@@ -65,8 +63,8 @@
 
 /* See Hierarchy*/
 #see-hierarchy-button {
-  width: 26vw;
-  height: 7.2vw;
+  width: 10em;
+  height: 3em;
   font-weight: bold;
   font-size: 2.2vw;
   color: #949191;

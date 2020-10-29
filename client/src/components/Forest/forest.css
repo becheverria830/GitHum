@@ -19,11 +19,11 @@
 }
 
 .forest-info-song-buttons:hover {
-  background-color: #86DB89 !important;
+  background-color: #86db89 !important;
 }
 
 .forest-info-song-buttons:active {
-  background-color: #86DB89 !important;
+  background-color: #86db89 !important;
 }
 
 .hidden {
@@ -40,7 +40,7 @@
 }
 
 .forest-settings-button {
-  margin-top:10%;
+  margin-top: 10%;
   margin-bottom: 10%;
   width: 15vw;
   height: 3vw;
@@ -62,11 +62,11 @@
   background-color: #e7c3e8;
 }
 
-
 #song-list-div {
   background-color: #c4c4c4;
   border-radius: 10% 10% 10% 10%;
   height: 40vw;
+  /* width: 35vw; */
   padding: 5%;
   margin-left: 5%;
   margin-right: 5%;
@@ -90,12 +90,11 @@
 }
 
 .forest-icon {
-  margin:1.5%;
-  padding:1.5%;
+  margin: 1.5%;
+  padding: 1.5%;
   width: 10vw;
   height: 10vw;
 }
-
 
 /* #forest-pic {
   width: 9vw;

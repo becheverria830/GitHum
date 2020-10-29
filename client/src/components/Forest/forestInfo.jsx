@@ -18,12 +18,9 @@ class ForestInfo extends Component {
   render() {
     return (
       <React.Fragment>
-        <Container
-          className="container container-fluid"
-          id="forest-info-container"
-        >
+        <Container className="container" id="forest-info-container">
           <Row>
-            <Col>
+            <Col lg="6" md="6" sm="6" xs="6" >
               <Container className="forest-info-panel" id="owner-panel">
                 <Row>
                   <Col>
@@ -38,7 +35,7 @@ class ForestInfo extends Component {
                 <Row></Row>
               </Container>
             </Col>
-            <Col>
+            <Col lg="6" md="6" sm="6" xs="6">
               <Container
                 className="forest-info-panel"
                 id="number-branched-panel"
@@ -56,7 +53,7 @@ class ForestInfo extends Component {
                 <Row></Row>
               </Container>
             </Col>
-            <Col>
+            <Col lg="6" md="6" sm="6" xs="6">
               <Container
                 className="forest-info-panel"
                 id="original-forest-panel"
@@ -74,11 +71,8 @@ class ForestInfo extends Component {
                 <Row></Row>
               </Container>
             </Col>
-            <Col>
-              <Container
-                className="forest-info-panel"
-                id="number-saved-panel"
-              >
+            <Col lg="6" md="6" sm="6" xs="6">
+              <Container className="forest-info-panel" id="number-saved-panel">
                 <Row>
                   <Col>
                     <h3>Number of Times Saved</h3>
@@ -94,9 +88,12 @@ class ForestInfo extends Component {
             </Col>
           </Row>
           <Row>
-              <Col>
-                <Button id="see-hierarchy-button"> S E E <br></br>   H I E R A R C H Y</Button>
-              </Col>
+            <Col>
+              <Button id="see-hierarchy-button">
+                {" "}
+                S E E <br></br> H I E R A R C H Y
+              </Button>
+            </Col>
           </Row>
         </Container>
       </React.Fragment>
