@@ -16,7 +16,7 @@ class SignUp extends Component {
 
       <Row className="justify-content-md-center clear">
         <Col md={{span: 8}} lg={{ span: 4 }} className="signup-box">
-          
+
           <Col lg={{span: 12}}>
               <Image className="logo" src={Logo}/>
           </Col>
@@ -62,7 +62,7 @@ class SignUp extends Component {
               <br></br>
               <label for="password"></label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 name="password"
                 placeholder="Create a Password"
@@ -78,7 +78,7 @@ class SignUp extends Component {
           <br></br>
           <br></br>
 
-        </Col> 
+        </Col>
       </Row>
 
   </Container>

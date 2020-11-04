@@ -17,7 +17,7 @@ class PasswordReset extends Component {
 
       <Row className="justify-content-md-center clear">
         <Col md={{span: 8}} lg={{ span: 4 }} className="pwdreset-box">
-          
+
           <Col lg={{span: 12}}>
               <Image className="logo" src={Logo}/>
           </Col>
@@ -34,7 +34,7 @@ class PasswordReset extends Component {
                   type="text"
                   id="email"
                   name="email"
-                  value="Email Address"
+                  placeholder="Email Address"
                 ></input>
                 <br></br>
                 <br></br>
@@ -52,7 +52,7 @@ class PasswordReset extends Component {
           <br></br>
           <br></br>
 
-        </Col> 
+        </Col>
       </Row>
 
   </Container>

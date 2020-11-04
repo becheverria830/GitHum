@@ -16,7 +16,7 @@ class LogIn extends Component {
 
           <Row className="justify-content-md-center clear">
             <Col md={{span: 8}} lg={{ span: 4 }} className="login-box">
-              
+
               <Col lg={{span: 12}}>
                   <Image className="loginLogo" src={Logo}/>
               </Col>
@@ -38,7 +38,7 @@ class LogIn extends Component {
                     <br></br>
                     <label for="password"></label>
                     <input
-                      type="text"
+                      type="password"
                       id="password"
                       name="password"
                       placeholder="Password"
@@ -56,7 +56,7 @@ class LogIn extends Component {
               <br></br>
               <br></br>
 
-            </Col> 
+            </Col>
           </Row>
 
       </Container>
