@@ -124,31 +124,26 @@ class ForestPage extends Component {
             </Row>
           </Col>
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
-            <Row className="forest-options-div">
-              <Col md="12">
-                <Button className="button forest-action-button">
-                  Share Forest
-                </Button>
-              </Col>
-              <Col md="12">
-                <BranchForest/>
-              </Col>
-              <Col md="12">
-                <div className={this.props.myForest ? null : "hidden"}>
-                  <ForestSettings />
-                </div>
-              </Col>
-              <Col md="12">
-                {this.props.myForest ? (
-                  <Deforest/>
-                  // <Button className="button forest-action-button danger" id="deforest-button">
-                  //   Deforest
-                  // </Button>
-                ) : (
-                  <Button className="button forest-action-button">
-                    Save Forest
-                  </Button>
-                )}
+            <Row>
+              <Col className="forest-options-div">
+                <Row>
+                  <Col md="12">
+                    <Button className="button forest-action-button">
+                      Share Forest
+                    </Button>
+                  </Col>
+                  <Col md="12">
+                    <BranchForest/>
+                  </Col>
+                  <Col md="12">
+                    <div className={this.props.myForest ? null : "hidden"}>
+                      <ForestSettings />
+                    </div>
+                  </Col>
+                  <Col md="12">
+                    {this.props.myForest ? <Deforest/> : <Button className="button forest-action-button">Save Forest</Button>}
+                  </Col>
+                </Row>
               </Col>
             </Row>
             <Row>
