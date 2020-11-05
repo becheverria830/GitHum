@@ -33,7 +33,7 @@ class NowPlaying extends Component {
       albumName: "Album Name",
       playing: false,
       position: 0,
-      duration: 1
+      duration: 1,
     };
   }
 
@@ -76,26 +76,36 @@ class NowPlaying extends Component {
       // create a new player
       this.player = new window.Spotify.Player({
         name: "GitHum",
-        getOAuthToken: cb => { cb(token); },
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
       });
       // problem setting up the player
-      this.player.on('initialization_error', e => { console.error(e); });
+      this.player.on("initialization_error", (e) => {
+        console.error(e);
+      });
       // problem authenticating the user.
       // either the token was invalid in the first place,
       // or it expired (it lasts one hour)
-      this.player.on('authentication_error', e => {
+      this.player.on("authentication_error", (e) => {
         console.error(e);
       });
       // currently only premium accounts can use the API
-      this.player.on('account_error', e => { console.error(e); });
+      this.player.on("account_error", (e) => {
+        console.error(e);
+      });
       // loading/playing the track failed for some reason
-      this.player.on('playback_error', e => { console.error(e); });
+      this.player.on("playback_error", (e) => {
+        console.error(e);
+      });
 
       // Playback status updates
-      this.player.on('player_state_changed', state => this.onStateChanged(state));
+      this.player.on("player_state_changed", (state) =>
+        this.onStateChanged(state)
+      );
 
       // Ready
-      this.player.on('ready', async data => {
+      this.player.on("ready", async (data) => {
         let { device_id } = data;
         console.log("Let the music play on!");
         // set the deviceId variable, then let's try
@@ -134,10 +144,10 @@ class NowPlaying extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "device_ids": [ deviceId ],
+        device_ids: [deviceId],
         // true: start playing music if it was paused on the other device
         // false: paused if paused on other device, start playing music otherwise
-        "play": true,
+        play: true,
       }),
     });
   }
@@ -160,51 +170,74 @@ class NowPlaying extends Component {
   }
 
   render() {
-    return(
+    return (
       <React.Fragment>
         <div className="component">
           <Row>
             <Col className="now-playing-header-div">
-              <h3 className="now-playing-header"><b>Now Playing</b></h3>
+              <h3 className="now-playing-header">
+                <b>Now Playing</b>
+              </h3>
             </Col>
           </Row>
           <Row className="now-playing-container">
             <Col md="12" className="playlist-name-div">
-              <h3 className="playlist-name-header"><span><Image className="playlist-icon" src={ForestDefaultIcon}/></span> Disney Bops </h3>
+              <h3 className="playlist-name-header">
+                <span>
+                  <Image className="playlist-icon" src={ForestDefaultIcon} />
+                </span>{" "}
+                Disney Bops{" "}
+              </h3>
             </Col>
             <Col md="12" className="song-container">
-              <img className="song-album-art-icon"
-                src={ this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].album_art }></img>
+              <img
+                className="song-album-art-icon"
+                src={
+                  this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].album_art
+                }
+              ></img>
               <h3 className="song-name-header">
-                    { this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].song_name }</h3>
+                {this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].song_name}
+              </h3>
               <h3 className="artist-name-header">
-                    { this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].artist_name }</h3>
+                {this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].artist_name}
+              </h3>
             </Col>
             <Col md="12" className="actions-div">
-              <Image
+              <input
+                type="image"
                 className="now-playing-icon"
-                src={ShuffleIcon}/>
-              <Image
+                src={ShuffleIcon}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
                 src={FastRewindIcon}
-                onClick={() => this.onPrevClick()}/>
-              <Image
+                onClick={() => this.onPrevClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
                 src={PlayCircleIcon}
-                onClick={() => this.onPlayClick()}/>
-              <Image
+                onClick={() => this.onPlayClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
                 src={FastForwardIcon}
-                onClick={() => this.onNextClick()}/>
-              <Image
+                onClick={() => this.onNextClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
-                src={LoopIcon}/>
+                src={LoopIcon}
+              ></input>
             </Col>
           </Row>
         </div>
