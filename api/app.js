@@ -10,6 +10,7 @@ var friendsRouter = require("./routes/user/friends");
 var forestsRouter = require("./routes/user/forests");
 var favoritesRouter = require("./routes/user/favorites");
 var queueRouter = require("./routes/user/queue");
+var apolloRouter = require("./routes/apollo");
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use("/user/friends", friendsRouter);
 app.use("/user/forests", forestsRouter);
 app.use("/user/favorites", favoritesRouter);
 app.use("/user/queue", queueRouter);
+app.use(apolloRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
