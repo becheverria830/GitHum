@@ -15,6 +15,7 @@ import ForestDefaultIcon from "../../assets/forest.svg";
 import FastForwardIcon from "../../assets/fast_forward.svg";
 import FastRewindIcon from "../../assets/fast_rewind.svg";
 import PlayCircleIcon from "../../assets/play_circle.svg";
+import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
 
@@ -22,7 +23,8 @@ class NowPlaying extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: "INSERT YOUR TOKEN HERE :)",
+      token:
+        "BQB9z_p5VmU1dtACyRSF0TmSTX2k0QgLXSiMzhkecpQIm8cSz4CFE0P--xepz2hKYAqJsfTJnEFuE35q0XkxwBVKoWQMzcKPNVbbOYAr3kA03XZtOvSqhVobH36_ETWR21gSy2KNmYzh8VJ_50pOS89P9VLuUO3ga_Lk4_50RFkbCi8s7nYGGsc",
       queue: {
         songs: [],
         index: -1,
@@ -41,30 +43,30 @@ class NowPlaying extends Component {
   onStateChanged(state) {
     console.log("state changed");
     // // only update if we got a real state
-    // if (state !== null) {
-    //   const {
-    //     current_track: currentTrack,
-    //     position,
-    //     duration,
-    //   } = state.track_window;
-    //   const trackName = currentTrack.name;
-    //   const albumName = currentTrack.album.name;
-    //   const artistName = currentTrack.artists
-    //     .map(artist => artist.name)
-    //     .join(", ");
-    //   const playing = !state.paused;
-    //   this.setState({
-    //     position,
-    //     duration,
-    //     trackName,
-    //     albumName,
-    //     artistName,
-    //     playing
-    //   });
-    // } else {
-    //   // state was null, user might have swapped to another device
-    //   this.setState({ error: "Looks like you might have swapped to another device?" });
-    // }
+    if (state !== null) {
+      const {
+        current_track: currentTrack,
+        position,
+        duration,
+      } = state.track_window;
+      const trackName = currentTrack.name;
+      const albumName = currentTrack.album.name;
+      const artistName = currentTrack.artists
+        .map(artist => artist.name)
+        .join(", ");
+      const playing = !state.paused;
+      this.setState({
+        position,
+        duration,
+        trackName,
+        albumName,
+        artistName,
+        playing
+      });
+    } else {
+      // state was null, user might have swapped to another device
+      this.setState({ error: "Looks like you might have swapped to another device?" });
+    }
   }
 
   checkForPlayer() {
@@ -132,6 +134,14 @@ class NowPlaying extends Component {
   onNextClick() {
     console.log("next`");
     this.player.nextTrack();
+  }
+
+  onPlayClickIconChange(state) {
+    if (state.playing) {
+      return PlayCircleIcon;
+    } else {
+      return PauseCircleIcon;
+    }
   }
 
   transferPlaybackHere() {
@@ -224,7 +234,7 @@ class NowPlaying extends Component {
               <input
                 type="image"
                 className="now-playing-icon"
-                src={PlayCircleIcon}
+                src={this.state.playing ? PauseCircleIcon : PlayCircleIcon }
                 onClick={() => this.onPlayClick()}
               ></input>
               <input
