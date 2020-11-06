@@ -26,7 +26,7 @@ class PasswordReset extends Component {
           </Col>
 
           <Col lg={{span: 10, offset: 1}}>
-            <form>
+            <form action="http://localhost:9000/user/credentials/resetpassword" method="POST">
               <div className="pwdreset-fields">
                 <br></br>
                 <label for="email"></label>

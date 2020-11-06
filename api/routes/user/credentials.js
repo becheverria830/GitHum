@@ -33,7 +33,9 @@ router.post("/signup", (req, res, err) => {
 
   if(firstname == undefined || lastname == undefined || email == undefined || username == undefined || password == undefined){
     //Throwing an exception if user didn't supply all the information.
-    res.status(400).send("Please submit all requested information!");
+    res.status(400).json({
+      "message":"Please submit all requested information!"
+    });
   } else {
     //Finding if a user with the email exists already
     User.find({ 'credentials.email': email }, function (find_error, users) {
@@ -68,12 +70,16 @@ router.post("/signup", (req, res, err) => {
             //Inserting into the DB
             User.insertMany([user_data], function(create_error, result) {
               if (create_error) throw create_error;
-              res.status(200).send("Successfully created account!");
+              res.status(200).json({
+                "message":"Successfully created account!"
+              });
             });
           });
         });
       } else {
-        res.status(400).send("Email Address already in use!");
+        res.status(400).json({
+          "message":"Email Address already in use!"
+        });
       }
     })
   }
@@ -86,7 +92,9 @@ router.post("/login", (req, res, err) => {
 
   if(email == undefined || password == undefined){
     //Throwing an exception if user didn't supply all the information.
-    res.status(400).send("Please submit all requested information!");
+    res.status(400).json({
+      "message":"Please submit all requested information!"
+    });
   } else {
     //Finding if a user with the email exists
     User.find({ 'credentials.email': email }, function (find_error, users) {
@@ -108,17 +116,21 @@ router.post("/login", (req, res, err) => {
               { expiresIn: 60 * 60 * 24 * 365 },
               (err, token) => {
                 res.status(200).json({
-                  success: true,
-                  token: "Bearer " + token
+                  "success": true,
+                  "token": token
                 });
               }
             );
           } else {
-            res.status(400).send("Unable to login with the provided credentials!");
+            res.status(400).json({
+              "message":"Unable to login with the provided credentials!"
+            });
           }
         });
       } else {
-        res.status(400).send("Unable to login with the provided credentials!");
+        res.status(400).json({
+          "message":"Unable to login with the provided credentials!"
+        });
       }
     })
   }

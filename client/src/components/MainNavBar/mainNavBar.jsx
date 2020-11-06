@@ -12,13 +12,21 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/authActions";
+
 /* Importing All Resources & Custom CSS */
 import "./mainNavBar.css";
 import SmallLogo from "../../assets/githum-tree.svg";
 import SearchIcon from "../../assets/search.svg";
 
 class MainNavBar extends Component {
-  state = {};
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -46,7 +54,7 @@ class MainNavBar extends Component {
               <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/1">
                 My Valley
               </Nav.Link>
-              <Nav.Link href="/" id="log-out-link">
+              <Nav.Link onClick={this.onLogoutClick} id="log-out-link">
                 Log Out
               </Nav.Link>
             </Nav>
@@ -57,4 +65,14 @@ class MainNavBar extends Component {
   }
 }
 
-export default MainNavBar;
+MainNavBar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(MainNavBar);
