@@ -35,8 +35,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'Jeremy.Herrmann2@stonybrook.edu',
-      password: 'testing'
+      email: '',
+      password: ''
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
