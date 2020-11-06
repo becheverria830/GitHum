@@ -1,6 +1,5 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -19,13 +18,31 @@ import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
 
+var play = ({
+  spotify_uri,
+  playerInstance: {
+    _options: { getOAuthToken, id },
+  },
+}) => {
+  getOAuthToken((access_token) => {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ uris: [spotify_uri] }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+  });
+};
+
 class NowPlaying extends Component {
   constructor(props) {
     super(props);
     this.onShuffleClick = this.onShuffleClick.bind(this);
     this.state = {
       token:
-        "BQDXEzDOQ7uwogLBTapdDv3gntBJxFTPXpD4sFYs8tXtbnnMhQ0Z6pyIyZyEfmuBaEwEBKPxSH6I0-QvD-6uJ-nIdRImITppX3vDGjYRRrH3AunpRhhcB0UWZKOc5QHkxU89ivJcisPyk2l7jGNH6ww_Q2irQAWwsGxJccUgXGaOxQgYt0gNUzM",
+        "BQDLUhpchf8gtMhSgw9XjP9sqbzAG6y4i_a6ebu02ZmZbUhObdXIMNdl9pq7MFNDgCP8clf-aGU7uiIf19sofWRCjy5cznQ5TQktgRn0Q-_WoywuiBr78_OsmNXDt7Ah0hZQMxFL-7cswiCkH-Y1l5RY4F_FZlwj9l_-l7D87QY4NmHLpVh6nZE",
       queue: {
         songs: [],
         index: -1,
@@ -51,6 +68,8 @@ class NowPlaying extends Component {
         position,
         duration,
       } = state.track_window;
+      // console.log("hello??");
+      // console.log(state.track_window);
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const albumArt = currentTrack.album.images[0].url;
@@ -60,6 +79,7 @@ class NowPlaying extends Component {
       const playing = !state.paused;
       const shuffle = state.shuffle;
       this.setState({
+        current_track: currentTrack,
         position: position,
         duration: duration,
         trackName: trackName,
@@ -129,6 +149,13 @@ class NowPlaying extends Component {
     }
   }
 
+  playTrack(songId) {
+    play({
+      playerInstance: this.player,
+      spotify_uri: "spotify:track:" + songId,
+    });
+  }
+
   onPrevClick() {
     console.log("prev");
     this.player.previousTrack();
@@ -137,9 +164,6 @@ class NowPlaying extends Component {
   onPlayClick() {
     console.log("play");
     this.player.togglePlay();
-    this.player.getCurrentState().then((state) => {
-      var curr_track = state.track_window;
-    });
   }
 
   onNextClick() {
@@ -188,8 +212,6 @@ class NowPlaying extends Component {
       })
       .catch((err) => err);
   }
-
-  playSpecifiedSong(songId) {}
 
   componentDidMount() {
     if (this.player != null) {
