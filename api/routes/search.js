@@ -1,26 +1,44 @@
 var express = require('express');
+var SpotifyWebApi = require('spotify-web-api-node');
+
+var keys = require('../config/keys');
 var router = express.Router();
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId: keys.Spotify_Client_ID,
+  clientSecret: keys.Spotify_Client_Secret
+});
+spotifyApi.setAccessToken(keys.Spotify_OAuth_Token);
 
 /*
 /search?query=..
 */
 
 router.get('/', function(req, res, next) {
-  res.json({
-    "songs": [
-      {
-        "id": 1,
-        "song_name": "Piano Man",
-        "artist_name": "Billy Joel",
-        "album_art": "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7"
-      },
-      {
-        "id": 2,
-        "song_name": "Up Town Funk",
-        "artist_name": "Bruno Mars",
-        "album_art": "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7"
+  console.log(req.query.query);
+  spotifyApi.searchTracks(req.query.query)
+  .then(function(tracks) {
+    refined_songs = []
+    for(song of tracks.body.tracks.items) {
+      refined_song = {
+        "id": song.id,
+        "song_name": song.name,
+        "artist_name": song.artists[0].name,
+        "album_art": song.album.images[0].url,
+        "uri": song.uri,
+        "href": song.href
       }
-    ]
+      refined_songs.push(refined_song);
+    }
+    res.status(200).json({
+      "songs": refined_songs
+    });
+  }, function(err) {
+    console.error(err);
+    res.status(400).json({
+      "songs": []
+    });
   });
 });
 

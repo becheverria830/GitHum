@@ -1,5 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Button from "react-bootstrap/Button";
@@ -15,13 +16,18 @@ import SongList from "../SongList/songList";
 class SearchPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      query: ""
+    }
     this.songListElement = React.createRef();
   }
 
   getSearchResults() {
-    fetch("http://localhost:9000/search")
+    fetch("http://localhost:9000/search?query=" + this.props.match.params.query)
       .then(res => res.json())
       .then(res => {
+        console.log("song list:");
+        console.log(res);
         this.songListElement.current.updateState(res.songs);
       })
       .catch(err => err);
@@ -40,7 +46,7 @@ class SearchPage extends Component {
             <Row>
               <Col id="search-text-div">
                 <h1 id="searching-for-text">Search Results For: </h1>
-                <h4 id="search-input"><b>Just Can't Wait to be King</b></h4>
+                <h4 id="search-input"><b>{this.state.query}</b></h4>
               </Col>
             </Row>
             <Row>
@@ -72,4 +78,4 @@ class SearchPage extends Component {
   }
 }
 
-export default SearchPage;
+export default withRouter(SearchPage);

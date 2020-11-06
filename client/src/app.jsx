@@ -35,7 +35,7 @@ export default function App() {
       <PrivateRoute exact path="/valley/2" component={ValleyPage} myValley={false} />
       <PrivateRoute exact path="/forest/1" component={ForestPage} myForest={true} />
       <PrivateRoute exact path="/forest/2" component={ForestPage} myForest={false} />
-      <PrivateRoute exact path="/search" component={SearchPage} />
+      <PrivateRoute exact path="/search/:query" component={SearchPage} />
     </Switch>
   );
 }
