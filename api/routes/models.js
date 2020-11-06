@@ -48,7 +48,7 @@ let forests = new Schema(
     icon: String,
     active: Boolean,
     children: Array,
-    depth: Int32Array,
+    depth: Number,
     creator: mongoose.ObjectId,
     songs: Array,
     settings: {
