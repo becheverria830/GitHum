@@ -13,7 +13,7 @@ const User = models['user'];
 /user/forests/friends?userid=
 */
 
-router.post("/createForest", (req, res, err) => {
+router.post("/forests/create", (req, res, err) => {
   const name = req.body.name;
   const user = req.body.user;
 
