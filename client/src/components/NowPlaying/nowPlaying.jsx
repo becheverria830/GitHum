@@ -22,9 +22,10 @@ import ShuffleIcon from "../../assets/shuffle.svg";
 class NowPlaying extends Component {
   constructor(props) {
     super(props);
+    this.onShuffleClick = this.onShuffleClick.bind(this);
     this.state = {
       token:
-        "BQBpC8k3-JVCqbV25D7JYTCxiLwRN43JhIXWSo5Ko7i8VJlLShBgNKOLz6GjAtNMyFZ1O6Jb1CNYDvePndrcV7rr5UFRdhM8X0X8CulP0BLuxrIwo2JRyqn5KnuPf9Fp15HsuzceGT1i3QirpfOCik2-C3uSnFBpValYXepovvGfdxZ1aegq7r4",
+        "BQDXEzDOQ7uwogLBTapdDv3gntBJxFTPXpD4sFYs8tXtbnnMhQ0Z6pyIyZyEfmuBaEwEBKPxSH6I0-QvD-6uJ-nIdRImITppX3vDGjYRRrH3AunpRhhcB0UWZKOc5QHkxU89ivJcisPyk2l7jGNH6ww_Q2irQAWwsGxJccUgXGaOxQgYt0gNUzM",
       queue: {
         songs: [],
         index: -1,
@@ -52,22 +53,22 @@ class NowPlaying extends Component {
       } = state.track_window;
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
+      const albumArt = currentTrack.album.images[0].url;
       const artistName = currentTrack.artists
         .map((artist) => artist.name)
         .join(", ");
       const playing = !state.paused;
-      const shuffle = !state.shuffle;
+      const shuffle = state.shuffle;
       this.setState({
         position: position,
         duration: duration,
         trackName: trackName,
         albumName: albumName,
+        albumArt: albumArt,
         artistName: artistName,
         playing: playing,
         shuffle: shuffle,
       });
-      console.log(state);
-      console.log(state.track_window);
     } else {
       // state was null, user might have swapped to another device
       this.setState({
@@ -136,10 +137,13 @@ class NowPlaying extends Component {
   onPlayClick() {
     console.log("play");
     this.player.togglePlay();
+    this.player.getCurrentState().then((state) => {
+      var curr_track = state.track_window;
+    });
   }
 
   onNextClick() {
-    console.log("next`");
+    console.log("next");
     this.player.nextTrack();
   }
 
@@ -150,10 +154,8 @@ class NowPlaying extends Component {
     // console.log("Player: " + this.player.shuffle);
 
     this.player.getCurrentState().then((currState) => {
-      var shuffle = !currState.shuffle;
-      console.log(shuffle);
-      this.setState({ shuffle });
-      console.log(this.player);
+      var shuffle_change = !currState.shuffle;
+      this.setState({ shuffle: shuffle_change });
     });
   }
 
@@ -190,9 +192,18 @@ class NowPlaying extends Component {
   playSpecifiedSong(songId) {}
 
   componentDidMount() {
+    if (this.player != null) {
+      console.log("player exists");
+      return;
+    }
     this.getQueueData();
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
   }
+
+  // Prevents overlapping music but makes it choppy when going to different pages
+  // componentWillUnmount() {
+  //   this.player.disconnect();
+  // }
 
   render() {
     return (
@@ -217,25 +228,10 @@ class NowPlaying extends Component {
             <Col md="12" className="song-container">
               <img
                 className="song-album-art-icon"
-                src={
-                  this.state.queue.songs.length != 0 &&
-                  this.state.queue.index != -1 &&
-                  this.state.queue.songs[this.state.queue.index].album_art
-                }
-                // src={this.state.album.album_art}
+                src={this.state.albumArt}
               ></img>
-              <h3 className="song-name-header">
-                {/* {this.state.queue.songs.length != 0 &&
-                  this.state.queue.index != -1 &&
-                  this.state.queue.songs[this.state.queue.index].song_name} */}
-                {this.state.trackName}
-              </h3>
-              <h3 className="artist-name-header">
-                {/* {this.state.queue.songs.length != 0 &&
-                  this.state.queue.index != -1 &&
-                  this.state.queue.songs[this.state.queue.index].artist_name} */}
-                {this.state.artistName}
-              </h3>
+              <h3 className="song-name-header">{this.state.trackName}</h3>
+              <h3 className="artist-name-header">{this.state.artistName}</h3>
             </Col>
             <Col md="12" className="actions-div">
               <input
