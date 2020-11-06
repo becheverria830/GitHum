@@ -106,7 +106,7 @@ function StartForestButton() {
                   id="start-forest-search-bar"
                   onChange = {StartForest.createNewForest}
                 />
-                <Link to="/forest/1">
+                <Link to="/forest/create">
                   <input
                     id="start-forest-create-link"
                     type="submit"
