@@ -18,6 +18,7 @@ import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
 
+// For playTrack(songId)
 var play = ({
   spotify_uri,
   playerInstance: {
@@ -35,6 +36,7 @@ var play = ({
     });
   });
 };
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 class NowPlaying extends Component {
   constructor(props) {
@@ -42,7 +44,7 @@ class NowPlaying extends Component {
     this.onShuffleClick = this.onShuffleClick.bind(this);
     this.state = {
       token:
-        "BQDLUhpchf8gtMhSgw9XjP9sqbzAG6y4i_a6ebu02ZmZbUhObdXIMNdl9pq7MFNDgCP8clf-aGU7uiIf19sofWRCjy5cznQ5TQktgRn0Q-_WoywuiBr78_OsmNXDt7Ah0hZQMxFL-7cswiCkH-Y1l5RY4F_FZlwj9l_-l7D87QY4NmHLpVh6nZE",
+        "BQC6KHSsUG0X7i7B35sHINBlP5iG4S-sKNscoLZMPF-28zuVyBG4mJBitxEz1iY_Ac7FaLwqpSMF3q_Sx_SJIUaaSUwKXfBQCEpmzgRAEZ-a8WLkFUMUB5w7MtZwDLKzRJch_iZHTwTfNuxU29M4JM0uBeQDDuxGadDzTikjTE9GCVhZEHveUa4",
       queue: {
         songs: [],
         index: -1,
@@ -68,8 +70,6 @@ class NowPlaying extends Component {
         position,
         duration,
       } = state.track_window;
-      // console.log("hello??");
-      // console.log(state.track_window);
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const albumArt = currentTrack.album.images[0].url;
@@ -196,7 +196,7 @@ class NowPlaying extends Component {
         device_ids: [deviceId],
         // true: start playing music if it was paused on the other device
         // false: paused if paused on other device, start playing music otherwise
-        play: true,
+        play: false,
       }),
     });
   }
