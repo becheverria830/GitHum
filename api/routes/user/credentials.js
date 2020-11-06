@@ -142,7 +142,9 @@ router.post("/resetpassword", (req, res, err) => {
 
   if(email == undefined){
     //Throwing an exception if user didn't supply all the information.
-    res.status(400).send("Please submit all requested information!");
+    res.status(400).json({
+      "message":"Please submit all requested information!"
+    });
   } else {
     //Finding if a user with the email exists
     User.find({ 'credentials.email': email }, function (find_error, users) {
@@ -167,7 +169,7 @@ router.post("/resetpassword", (req, res, err) => {
             ResetPassword.insertMany([reset_password_data], function(create_error, result) {
               if (create_error) throw create_error;
               //Sending an email to the user.
-              let url = "?id=" + result.id + "&token=" + token;
+              let url = "/" + result.id + "/" + token;
               url = "localhost/passwordreset" + url;
               const msg = {
                 to: 'jeremy.herrmann@notouchorders.com', // Change to your recipient
@@ -177,7 +179,7 @@ router.post("/resetpassword", (req, res, err) => {
                 html: '<strong>Follow the link below to reset your password: <a href="' + url + '">reset</a></strong>',
               }
               sgMail.send(msg).then(() => {
-                res.status(200).send("Email Sent!");
+                console.log("Email sent!");
               })
               .catch((error) => {
                 console.log(error)
@@ -185,9 +187,10 @@ router.post("/resetpassword", (req, res, err) => {
             });
           });
         });
-      } else {
-        res.status(200).send("If the account exists, an email was sent to reset the password! Please check your inbox.");
       }
+      res.status(200).json({
+        "message":"If the account exists, an email was sent to reset the password! Please check your inbox."
+      });
     })
   }
 });
@@ -200,7 +203,9 @@ router.post("/passwordreset", (req, res, err) => {
 
   if(id == undefined || token == undefined || password == undefined){
     //Throwing an exception if user didn't supply all the information.
-    res.status(400).send("Please submit all requested information!");
+    res.status(400).json({
+      "message":"Please submit all requested information!"
+    });
   } else {
     //Finding if a user with the email exists
     ResetPassword.find({ 'id': id }, function (find_error, reset_passwords) {
@@ -217,16 +222,23 @@ router.post("/passwordreset", (req, res, err) => {
                 if (err) throw err;
                 User.findAndModify({'id': reset_passwords[0].user_id}, {$set: {'password': hash}}, {}, function(update_error, user) {
                   if (update_error) throw update_error;
+                  res.status(200).json({
+                    "message": "Successfully updated your password!"
+                  });
                 });
               });
             });
 
           } else {
-            res.status(400).send("Invalid Token!");
+            res.status(400).json({
+              "message":"We didn't find any matching reset requests in our database!"
+            });
           }
         });
       } else {
-        res.status(200).send("If the account exists, an email was sent to reset the password! Please check your inbox.");
+        res.status(400).json({
+          "message":"We didn't find any matching reset requests in our database!"
+        });
       }
     })
   }

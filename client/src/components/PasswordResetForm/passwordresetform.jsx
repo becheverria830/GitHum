@@ -1,37 +1,44 @@
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
+
 import Row from "react-bootstrap/esm/Row";
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
 import Logo from "../../assets/githum-tree.svg";
 
-import "./passwordreset.css";
+import "./passwordresetform.css";
 
 class PasswordReset extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      id: '',
+      token: '',
+      password: ''
     }
 
-    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.resetPassword = this.resetPassword.bind(this);
   }
 
-  handleEmailChange(event) {
-    this.setState({email: event.target.value});
+  componentDidMount() {
+    this.setState({
+      id: this.props.match.params.id,
+      token: this.props.match.params.token
+    })
+  }
+
+  handlePasswordChange(event) {
+    this.setState({password: event.target.value});
   }
 
   resetPassword(event) {
     event.preventDefault();
 
-    const resetPasswordData = {
-      email: this.state.email,
-    };
-    const url = 'http://localhost:9000/user/credentials/resetpassword';
+    const url = 'http://localhost:9000/user/credentials/passwordreset';
     const options = {
       method: 'POST',
       mode: 'cors',
@@ -42,7 +49,9 @@ class PasswordReset extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: this.state.email
+        id: this.state.id,
+        token: this.state.token,
+        password: this.state.password
       })
     };
     fetch(url, options)
@@ -70,8 +79,8 @@ class PasswordReset extends Component {
             <form onSubmit={this.resetPassword}>
               <div className="pwdreset-fields">
                 <br></br>
-                <label for="email"></label>
-                <input type="text" id="email" name="email" placeholder="Email Address" value={this.state.email} onChange={this.handleEmailChange}></input>
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}></input>
                 <br></br>
                 <input id="submit" type="submit" value="Send Reset"></input>
               </div>
@@ -91,4 +100,4 @@ class PasswordReset extends Component {
   }
 }
 
-export default PasswordReset;
+export default withRouter(PasswordReset);

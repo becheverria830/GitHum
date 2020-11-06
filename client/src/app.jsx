@@ -5,6 +5,7 @@ import LandingPage from "./components/Landing/landing";
 import SignUpPage from "./components/SignUp/signup";
 import LogInPage from "./components/LogIn/login";
 import PasswordResetPage from "./components/PasswordReset/passwordreset";
+import PasswordResetFormPage from "./components/PasswordResetForm/passwordresetform";
 import FeedPage from "./components/Feed/feed";
 import ValleyPage from "./components/Valley/valley";
 import ForestPage from "./components/Forest/forest";
@@ -25,6 +26,9 @@ export default function App() {
       </Route>
       <Route path="/resetpassword">
         <PasswordResetPage />
+      </Route>
+      <Route path="/passwordreset/:id/:token">
+        <PasswordResetFormPage />
       </Route>
       <PrivateRoute exact path="/feed" component={FeedPage} />
       <PrivateRoute exact path="/valley/1" component={ValleyPage} myValley={true} />
