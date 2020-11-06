@@ -1,6 +1,9 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -38,21 +41,17 @@ class ValleyPage extends Component {
     this.displayForests = this.displayForests.bind(this);
     this.displaySavedForests = this.displaySavedForests.bind(this);
 
-    if(this.props.myValley) {
-      this.state = {
-        showSongs: true,
-        showForests: false,
-        showSavedForests: false,
-      };
-    } else {
-      this.state = {
-        showSongs: false,
-        showForests: true,
-        showSavedForests: false,
-      };
-    }
-
-
+    this.state = {
+      myValley: false,
+      showSongs: false,
+      showForests: true,
+      showSavedForests: false,
+      userid: '',
+      user_information: {
+        username: '',
+        firstname: ''
+      }
+    };
   }
 
   displaySongs() {
@@ -91,8 +90,43 @@ class ValleyPage extends Component {
       .catch((err) => err);
   }
 
+  getForests(userid) {
+    fetch("http://localhost:9000/user/forests/forests/" + userid)
+      .then((res) => res.json())
+      .then((res) => {
+        this.forestElement.current.updateState(res.forests);
+        this.setState({
+          forest: res,
+        });
+      })
+      .catch((err) => err);
+  }
+
+  getValleyInformation(userid) {
+    fetch("http://localhost:9000/user/credentials/" + userid)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          user_information: res.user,
+        });
+
+        if(userid === this.props.auth.user.id) {
+          this.setState({
+            myValley: true,
+            showSongs: true,
+            showForests: false,
+            showSavedForests: false,
+          });
+        }
+      })
+      .catch((err) => err);
+  }
+
+
   componentDidMount() {
     this.getFavoriteSongs();
+    this.getForests(this.props.match.params.userid);
+    this.getValleyInformation(this.props.match.params.userid);
   }
 
   render() {
@@ -110,15 +144,15 @@ class ValleyPage extends Component {
                   <Image id="valley-githum-logo" src={Logo}></Image>
                 </Col>
                 <Col lg="3" md="3" sm="3" xs="3">
-                  <p id="valley-username">@becheverria830</p>
+                  <p id="valley-username">@{this.state.user_information.username}</p>
                   <br></br>
-                  <h1 id="valley-title">Britney's Valley</h1>
+                  <h1 id="valley-title">{this.state.user_information.first_name}'s Valley</h1>
                 </Col>
                 <Col lg="6" md="6" sm="6" xs="6"></Col>
               </Container>
             </Row>
             <Row className="valley-toggle-button-container-div">
-              {this.props.myValley && <Col md="4" className="valley-toggle-button-container">
+              {this.state.myValley && <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displaySongs}
                   className="valley-toggle-button"
@@ -155,7 +189,7 @@ class ValleyPage extends Component {
                   </span>
                 </Button>
               </Col>
-              {!this.props.myValley && <Col md="4"/>
+              {!this.state.myValley && <Col md="4"/>
               }
             </Row>
             <Row>
@@ -165,7 +199,7 @@ class ValleyPage extends Component {
                     <SongList ref={this.songListElement} />
                   </div>
                   <div className={this.state.showForests ? null : "hidden"}>
-                    <ValleyForestDisplay />
+                    <ValleyForestDisplay ref={this.forestElement} />
                   </div>
                   <div className={this.state.showSavedForests ? null : "hidden"}>
                     <ValleyForestDisplay />
@@ -184,7 +218,7 @@ class ValleyPage extends Component {
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row>
               <Col>
-                { this.props.myValley ? <FriendBox ref={this.friendListElement}/> : <MutualFriendBox ref={this.friendListElement}/>}
+                { this.state.myValley ? <FriendBox ref={this.friendListElement}/> : <MutualFriendBox ref={this.friendListElement}/>}
               </Col>
             </Row>
             <Row>
@@ -199,4 +233,12 @@ class ValleyPage extends Component {
   }
 }
 
-export default ValleyPage;
+ValleyPage.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(withRouter(ValleyPage));

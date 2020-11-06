@@ -3,6 +3,8 @@ const bcrypt  = require("bcryptjs");
 const jwt     = require("jsonwebtoken");
 const sgMail  = require('@sendgrid/mail')
 
+const mongoose = require("mongoose");
+
 const models  = require("../models");
 const keys    = require("../../config/keys");
 
@@ -243,5 +245,27 @@ router.post("/passwordreset", (req, res, err) => {
     })
   }
 });
+
+router.get("/:userid", (req, res, err) => {
+  //Getting the information from the request
+  const userid = req.params.userid;
+  if(userid == undefined){
+    //Throwing an exception if user didn't supply all the information.
+    res.status(400).json({
+      "user": null
+    });
+  } else {
+    //Finding if a user with the email exists already
+    User.find({ 'id': mongoose.ObjectId(userid) }, function (find_error, users) {
+      console.log(users);
+      if (find_error) throw find_error;
+      //Checking if the user existed, if not creating an entry for them.
+      res.status(200).json({
+        "user": users[0]
+      });
+    })
+  }
+});
+
 
 module.exports = router;

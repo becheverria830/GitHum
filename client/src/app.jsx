@@ -31,8 +31,7 @@ export default function App() {
         <PasswordResetFormPage />
       </Route>
       <PrivateRoute exact path="/feed" component={FeedPage} />
-      <PrivateRoute exact path="/valley/1" component={ValleyPage} myValley={true} />
-      <PrivateRoute exact path="/valley/2" component={ValleyPage} myValley={false} />
+      <PrivateRoute exact path="/valley/:userid" component={ValleyPage} />
       <PrivateRoute exact path="/forest/1" component={ForestPage} myForest={true} />
       <PrivateRoute exact path="/forest/2" component={ForestPage} myForest={false} />
       <PrivateRoute exact path="/search/:query" component={SearchPage} />

@@ -69,7 +69,7 @@ class MainNavBar extends Component {
               </Button>
             </Form>
             <Nav className="ml-auto nav-opts">
-              <Nav.Link className="nav-my-valley" id="my-valley-link" href="/valley/1">
+              <Nav.Link className="nav-my-valley" id="my-valley-link" href={"/valley/" + this.props.auth.user.id}>
                 My Valley
               </Nav.Link>
               <Nav.Link onClick={this.onLogoutClick} id="log-out-link">
