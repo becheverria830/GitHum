@@ -1,3 +1,4 @@
+const { introspectSchema } = require("apollo-server");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -40,9 +41,28 @@ let resetpassword = new Schema(
 
 resetpassword = mongoose.model("resetpassword", resetpassword);
 
+let forests = new Schema(
+  {
+    id: mongoose.ObjectId,
+    name: String,
+    icon: String,
+    active: Boolean,
+    children: Array,
+    depth: Int32Array,
+    creator: mongoose.ObjectId,
+    songs: Array,
+    settings: {
+      privacy: Boolean
+    }
+  }
+)
+
+forests = mongoose.model("forests", forests);
+
 const models = {
   'user': user,
-  'resetpassword': resetpassword
+  'resetpassword': resetpassword,
+  'forests': forests
 };
 
 module.exports = models;

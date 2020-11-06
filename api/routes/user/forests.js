@@ -1,11 +1,49 @@
 var express = require('express');
+
+const models  = require("../models");
+
 var router = express.Router();
+
+const Forest = models['forests'];
+const User = models['user'];
 
 /*
 /user/forests?userid=
 /user/forests/saved?userid=
 /user/forests/friends?userid=
 */
+
+router.post("/createForest", (req, res, err) => {
+  const name = req.body.name;
+  const user = req.body.user;
+
+  if(name == undefined){
+    res.status(400).send("Please Give A Name With At Least 1 Character!");
+  } else {
+    var forest_data = {
+      name: name,
+      icon: "",
+      active: true,
+      children:[],
+      depth: 1,
+      creator: user,
+      songs: [],
+      settings: {
+        privacy: true
+      }
+    }
+
+    User.insertMany([forest_data], function(create_error, result) {
+      if (create_error) throw create_error;
+      res.status(200).send("Successfully created a new forest!");
+    });
+
+  }
+});
+
+router.post("/valleyView", (req, res, err) => {
+  //Get from the DB what this users Forests are
+});
 
 router.get('/', function(req, res, next) {
   res.json({
