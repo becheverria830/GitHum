@@ -24,7 +24,7 @@ class NowPlaying extends Component {
     super(props);
     this.state = {
       token:
-        "BQB9z_p5VmU1dtACyRSF0TmSTX2k0QgLXSiMzhkecpQIm8cSz4CFE0P--xepz2hKYAqJsfTJnEFuE35q0XkxwBVKoWQMzcKPNVbbOYAr3kA03XZtOvSqhVobH36_ETWR21gSy2KNmYzh8VJ_50pOS89P9VLuUO3ga_Lk4_50RFkbCi8s7nYGGsc",
+        "BQBpC8k3-JVCqbV25D7JYTCxiLwRN43JhIXWSo5Ko7i8VJlLShBgNKOLz6GjAtNMyFZ1O6Jb1CNYDvePndrcV7rr5UFRdhM8X0X8CulP0BLuxrIwo2JRyqn5KnuPf9Fp15HsuzceGT1i3QirpfOCik2-C3uSnFBpValYXepovvGfdxZ1aegq7r4",
       queue: {
         songs: [],
         index: -1,
@@ -36,6 +36,7 @@ class NowPlaying extends Component {
       playing: false,
       position: 0,
       duration: 1,
+      shuffle: false,
     };
   }
 
@@ -52,20 +53,26 @@ class NowPlaying extends Component {
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const artistName = currentTrack.artists
-        .map(artist => artist.name)
+        .map((artist) => artist.name)
         .join(", ");
       const playing = !state.paused;
+      const shuffle = !state.shuffle;
       this.setState({
-        position,
-        duration,
-        trackName,
-        albumName,
-        artistName,
-        playing
+        position: position,
+        duration: duration,
+        trackName: trackName,
+        albumName: albumName,
+        artistName: artistName,
+        playing: playing,
+        shuffle: shuffle,
       });
+      console.log(state);
+      console.log(state.track_window);
     } else {
       // state was null, user might have swapped to another device
-      this.setState({ error: "Looks like you might have swapped to another device?" });
+      this.setState({
+        error: "Looks like you might have swapped to another device?",
+      });
     }
   }
 
@@ -136,12 +143,18 @@ class NowPlaying extends Component {
     this.player.nextTrack();
   }
 
-  onPlayClickIconChange(state) {
-    if (state.playing) {
-      return PlayCircleIcon;
-    } else {
-      return PauseCircleIcon;
-    }
+  onShuffleClick() {
+    // const shuffle = !this.state.shuffle;
+    // this.setState({ shuffle });
+    // this.player.shuffle = shuffle;
+    // console.log("Player: " + this.player.shuffle);
+
+    this.player.getCurrentState().then((currState) => {
+      var shuffle = !currState.shuffle;
+      console.log(shuffle);
+      this.setState({ shuffle });
+      console.log(this.player);
+    });
   }
 
   transferPlaybackHere() {
@@ -173,6 +186,8 @@ class NowPlaying extends Component {
       })
       .catch((err) => err);
   }
+
+  playSpecifiedSong(songId) {}
 
   componentDidMount() {
     this.getQueueData();
@@ -207,16 +222,19 @@ class NowPlaying extends Component {
                   this.state.queue.index != -1 &&
                   this.state.queue.songs[this.state.queue.index].album_art
                 }
+                // src={this.state.album.album_art}
               ></img>
               <h3 className="song-name-header">
-                {this.state.queue.songs.length != 0 &&
+                {/* {this.state.queue.songs.length != 0 &&
                   this.state.queue.index != -1 &&
-                  this.state.queue.songs[this.state.queue.index].song_name}
+                  this.state.queue.songs[this.state.queue.index].song_name} */}
+                {this.state.trackName}
               </h3>
               <h3 className="artist-name-header">
-                {this.state.queue.songs.length != 0 &&
+                {/* {this.state.queue.songs.length != 0 &&
                   this.state.queue.index != -1 &&
-                  this.state.queue.songs[this.state.queue.index].artist_name}
+                  this.state.queue.songs[this.state.queue.index].artist_name} */}
+                {this.state.artistName}
               </h3>
             </Col>
             <Col md="12" className="actions-div">
@@ -224,6 +242,7 @@ class NowPlaying extends Component {
                 type="image"
                 className="now-playing-icon"
                 src={ShuffleIcon}
+                onClick={() => this.onShuffleClick()}
               ></input>
               <input
                 type="image"
@@ -234,7 +253,7 @@ class NowPlaying extends Component {
               <input
                 type="image"
                 className="now-playing-icon"
-                src={this.state.playing ? PauseCircleIcon : PlayCircleIcon }
+                src={this.state.playing ? PauseCircleIcon : PlayCircleIcon}
                 onClick={() => this.onPlayClick()}
               ></input>
               <input
