@@ -15,6 +15,7 @@ import ForestDefaultIcon from "../../assets/forest.svg";
 import FastForwardIcon from "../../assets/fast_forward.svg";
 import FastRewindIcon from "../../assets/fast_rewind.svg";
 import PlayCircleIcon from "../../assets/play_circle.svg";
+import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
 
@@ -22,7 +23,8 @@ class NowPlaying extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: "INSERT YOUR TOKEN HERE :)",
+      token:
+        "BQB9z_p5VmU1dtACyRSF0TmSTX2k0QgLXSiMzhkecpQIm8cSz4CFE0P--xepz2hKYAqJsfTJnEFuE35q0XkxwBVKoWQMzcKPNVbbOYAr3kA03XZtOvSqhVobH36_ETWR21gSy2KNmYzh8VJ_50pOS89P9VLuUO3ga_Lk4_50RFkbCi8s7nYGGsc",
       queue: {
         songs: [],
         index: -1,
@@ -33,7 +35,7 @@ class NowPlaying extends Component {
       albumName: "Album Name",
       playing: false,
       position: 0,
-      duration: 1
+      duration: 1,
     };
   }
 
@@ -41,30 +43,30 @@ class NowPlaying extends Component {
   onStateChanged(state) {
     console.log("state changed");
     // // only update if we got a real state
-    // if (state !== null) {
-    //   const {
-    //     current_track: currentTrack,
-    //     position,
-    //     duration,
-    //   } = state.track_window;
-    //   const trackName = currentTrack.name;
-    //   const albumName = currentTrack.album.name;
-    //   const artistName = currentTrack.artists
-    //     .map(artist => artist.name)
-    //     .join(", ");
-    //   const playing = !state.paused;
-    //   this.setState({
-    //     position,
-    //     duration,
-    //     trackName,
-    //     albumName,
-    //     artistName,
-    //     playing
-    //   });
-    // } else {
-    //   // state was null, user might have swapped to another device
-    //   this.setState({ error: "Looks like you might have swapped to another device?" });
-    // }
+    if (state !== null) {
+      const {
+        current_track: currentTrack,
+        position,
+        duration,
+      } = state.track_window;
+      const trackName = currentTrack.name;
+      const albumName = currentTrack.album.name;
+      const artistName = currentTrack.artists
+        .map(artist => artist.name)
+        .join(", ");
+      const playing = !state.paused;
+      this.setState({
+        position,
+        duration,
+        trackName,
+        albumName,
+        artistName,
+        playing
+      });
+    } else {
+      // state was null, user might have swapped to another device
+      this.setState({ error: "Looks like you might have swapped to another device?" });
+    }
   }
 
   checkForPlayer() {
@@ -76,26 +78,36 @@ class NowPlaying extends Component {
       // create a new player
       this.player = new window.Spotify.Player({
         name: "GitHum",
-        getOAuthToken: cb => { cb(token); },
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
       });
       // problem setting up the player
-      this.player.on('initialization_error', e => { console.error(e); });
+      this.player.on("initialization_error", (e) => {
+        console.error(e);
+      });
       // problem authenticating the user.
       // either the token was invalid in the first place,
       // or it expired (it lasts one hour)
-      this.player.on('authentication_error', e => {
+      this.player.on("authentication_error", (e) => {
         console.error(e);
       });
       // currently only premium accounts can use the API
-      this.player.on('account_error', e => { console.error(e); });
+      this.player.on("account_error", (e) => {
+        console.error(e);
+      });
       // loading/playing the track failed for some reason
-      this.player.on('playback_error', e => { console.error(e); });
+      this.player.on("playback_error", (e) => {
+        console.error(e);
+      });
 
       // Playback status updates
-      this.player.on('player_state_changed', state => this.onStateChanged(state));
+      this.player.on("player_state_changed", (state) =>
+        this.onStateChanged(state)
+      );
 
       // Ready
-      this.player.on('ready', async data => {
+      this.player.on("ready", async (data) => {
         let { device_id } = data;
         console.log("Let the music play on!");
         // set the deviceId variable, then let's try
@@ -124,6 +136,14 @@ class NowPlaying extends Component {
     this.player.nextTrack();
   }
 
+  onPlayClickIconChange(state) {
+    if (state.playing) {
+      return PlayCircleIcon;
+    } else {
+      return PauseCircleIcon;
+    }
+  }
+
   transferPlaybackHere() {
     const { deviceId, token } = this.state;
     // https://beta.developer.spotify.com/documentation/web-api/reference/player/transfer-a-users-playback/
@@ -134,10 +154,10 @@ class NowPlaying extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "device_ids": [ deviceId ],
+        device_ids: [deviceId],
         // true: start playing music if it was paused on the other device
         // false: paused if paused on other device, start playing music otherwise
-        "play": true,
+        play: true,
       }),
     });
   }
@@ -160,51 +180,74 @@ class NowPlaying extends Component {
   }
 
   render() {
-    return(
+    return (
       <React.Fragment>
         <div className="component">
           <Row>
             <Col className="now-playing-header-div">
-              <h3 className="now-playing-header"><b>Now Playing</b></h3>
+              <h3 className="now-playing-header">
+                <b>Now Playing</b>
+              </h3>
             </Col>
           </Row>
           <Row className="now-playing-container">
             <Col md="12" className="playlist-name-div">
-              <h3 className="playlist-name-header"><span><Image className="playlist-icon" src={ForestDefaultIcon}/></span> Disney Bops </h3>
+              <h3 className="playlist-name-header">
+                <span>
+                  <Image className="playlist-icon" src={ForestDefaultIcon} />
+                </span>{" "}
+                Disney Bops{" "}
+              </h3>
             </Col>
             <Col md="12" className="song-container">
-              <img className="song-album-art-icon"
-                src={ this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].album_art }></img>
+              <img
+                className="song-album-art-icon"
+                src={
+                  this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].album_art
+                }
+              ></img>
               <h3 className="song-name-header">
-                    { this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].song_name }</h3>
+                {this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].song_name}
+              </h3>
               <h3 className="artist-name-header">
-                    { this.state.queue.songs.length != 0
-                   && this.state.queue.index != -1
-                   && this.state.queue.songs[this.state.queue.index].artist_name }</h3>
+                {this.state.queue.songs.length != 0 &&
+                  this.state.queue.index != -1 &&
+                  this.state.queue.songs[this.state.queue.index].artist_name}
+              </h3>
             </Col>
             <Col md="12" className="actions-div">
-              <Image
+              <input
+                type="image"
                 className="now-playing-icon"
-                src={ShuffleIcon}/>
-              <Image
+                src={ShuffleIcon}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
                 src={FastRewindIcon}
-                onClick={() => this.onPrevClick()}/>
-              <Image
+                onClick={() => this.onPrevClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
-                src={PlayCircleIcon}
-                onClick={() => this.onPlayClick()}/>
-              <Image
+                src={this.state.playing ? PauseCircleIcon : PlayCircleIcon }
+                onClick={() => this.onPlayClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
                 src={FastForwardIcon}
-                onClick={() => this.onNextClick()}/>
-              <Image
+                onClick={() => this.onNextClick()}
+              ></input>
+              <input
+                type="image"
                 className="now-playing-icon"
-                src={LoopIcon}/>
+                src={LoopIcon}
+              ></input>
             </Col>
           </Row>
         </div>
