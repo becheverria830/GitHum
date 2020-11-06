@@ -33,7 +33,7 @@ router.post("/forests/create", (req, res, err) => {
       }
     }
 
-    User.insertMany([forest_data], function(create_error, result) {
+    Forest.insertMany([forest_data], function(create_error, result) {
       if (create_error) throw create_error;
       res.status(200).send("Successfully created a new forest!");
     });
