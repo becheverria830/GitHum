@@ -20,93 +20,152 @@ import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 import AddIcon from "../../assets/add.svg";
 
-function AddFriendButton() {
-  const [show, setShow] = useState(false);
+class AddFriendButton extends Component {
+  state = {
+    show: false,
+  };
+  showModal = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+  onClose = (e) => {
+    this.props.onClose && this.props.onClose(e);
+  };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  constructor(props) {
+    super(props);
+    this.state = {
+      userUsername: "",
+      otherUsername: "",
+    };
+  }
 
-  return (
-    <div>
-      <Button className="friend-button" onClick={handleShow}>
-        Add Friend
-        <Image src={AddIcon} id="add-icon"></Image>
-      </Button>
+  sendFriendRequest(event, userId, otherUserId) {
+    event.preventDefault();
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header
-          closeButton
-          id="add-friend-modal-header"
-          className="text-center"
-        >
-          <Modal.Title id="add-friend-modal-title">Add Friend</Modal.Title>
-        </Modal.Header>
-        <Modal.Body id="add-friend-modal-body">
-          <Row>
-            <Col lg="12" md="12" sm="12" xs="12">
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Search by username"
-                  className="ml-sm-2"
-                  id="add-friend-search-bar"
-                />
-                <Button variant="dark" className="add-friend-search-icon-button">
-                  <Image className="search-button" src={SearchIcon} />
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-          <Row>
-            <Container className="add-friend-search-container">
-              <Row className="add-friend-search-items">
-                <Table className="add-friend-search-results">
-                  <tbody>
-                    <tr className="add-friend-search-item">
-                      <td>John_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Joe_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Jake_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Justin_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Jeremy_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Jae_Doe</td>
-                    </tr>
-                    <tr className="add-friend-search-item">
-                      <td>Jonn_Doe</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Row>
-              <Row>
-                <Col lg="12" md="12" sm="12" xs="12" className="center-button">
-                  <Button id="add-friend-request-button"> Send Request </Button>
-                </Col>
-                
-              </Row>
-            </Container>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-}
+    const userData = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    this.props.loginUser(userData);
+    const url = "http://localhost:9000/user/friends/sendfriendrequest";
+    // const options = {
+    //   method: 'POST',
+    //   mode: 'cors',
+    //   cache: 'no-cache',
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   })
+    // };
+    // fetch(url, options)
+    //   .then(res => [res.status, res.json()])
+    //   .then(response => {
+    //     console.log(response);
+    //     if(response[0] == 200) {
+    //       window.location.href = "http://localhost:3000/feed"
+    //     } else {
+    //       alert(response[1].message);
+    //     }
+    //   });
+  }
 
-// render(<Example />);
-
-export default AddFriendButton;
-
-class AddFriend extends Component {
-  state = {};
   render() {
-    return <AddFriendButton />;
+    return (
+      <div>
+        <Button
+          className="friend-button"
+          onClick={(e) => {
+            this.showModal();
+          }}
+        >
+          Add Friend
+          <Image src={AddIcon} id="add-icon"></Image>
+        </Button>
+
+        <Modal show={this.state.show} onHide={this.showModal}>
+          <Modal.Header
+            closeButton
+            id="add-friend-modal-header"
+            className="text-center"
+          >
+            <Modal.Title id="add-friend-modal-title">Add Friend</Modal.Title>
+          </Modal.Header>
+          <Modal.Body id="add-friend-modal-body">
+            <Row>
+              <Col lg="12" md="12" sm="12" xs="12">
+                <Form inline>
+                  <FormControl
+                    type="text"
+                    placeholder="Search by username"
+                    className="ml-sm-2"
+                    id="add-friend-search-bar"
+                  />
+                  <Button
+                    variant="dark"
+                    className="add-friend-search-icon-button"
+                  >
+                    <Image className="search-button" src={SearchIcon} />
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+            <Row>
+              <Container className="add-friend-search-container">
+                <Row className="add-friend-search-items">
+                  <Table className="add-friend-search-results">
+                    <tbody>
+                      <tr className="add-friend-search-item">
+                        <td>John_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Joe_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Jake_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Justin_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Jeremy_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Jae_Doe</td>
+                      </tr>
+                      <tr className="add-friend-search-item">
+                        <td>Jonn_Doe</td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Row>
+                <Row>
+                  <Col
+                    lg="12"
+                    md="12"
+                    sm="12"
+                    xs="12"
+                    className="center-button"
+                  >
+                    <Button id="add-friend-request-button">
+                      {" "}
+                      Send Request{" "}
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
+            </Row>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
   }
 }
+
+export default AddFriendButton;
