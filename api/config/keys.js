@@ -2,14 +2,9 @@ const MongoDB_URI = "mongodb+srv://cse416.pbdd5.mongodb.net/CSE416";
 const MongoDB_Options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-<<<<<<< HEAD
   useFindAndModify: false,
   user: 'admin',
   pass: '8N79Ytxy20PxaFY8'
-=======
-  user: "admin",
-  pass: "8N79Ytxy20PxaFY8",
->>>>>>> 39adb1f04c30a6c647d5eb05127bf95a4be06e28
 };
 const Passport_Secret = "secret";
 const Twilio_Key =
