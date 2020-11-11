@@ -17,7 +17,7 @@ router.post("/forests/create", (req, res, err) => {
   const name = req.body.name;
   const user = req.body.user;
 
-  if(name == undefined){
+  if(name == undefined || user == undefined){
     res.status(400).send("Please Give A Name With At Least 1 Character!");
   } else {
     var forest_data = {

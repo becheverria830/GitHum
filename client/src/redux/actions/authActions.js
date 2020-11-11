@@ -11,12 +11,13 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post("http://localhost:9000/user/credentials/signup", userData)
     .then(res => history.push("/login")) // re-direct to login on successful register
-    .catch(err =>
+    .catch(err => {
+      alert(err.response.data.message);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
+    });
 };
 // Login - get user token
 export const loginUser = userData => dispatch => {
@@ -34,12 +35,13 @@ export const loginUser = userData => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
-    .catch(err =>
+    .catch(err => {
+      alert(err.response.data.message);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
-    );
+    });
 };
 // Set logged in user
 export const setCurrentUser = decoded => {

@@ -57,7 +57,11 @@ class PasswordReset extends Component {
     fetch(url, options)
       .then(res => res.json())
       .then(res => {
-        alert(res.message);
+        if(res.status == 200){
+          this.props.history.push("/login");
+        } else {
+          alert(res.message);
+        }
       });
   }
 
