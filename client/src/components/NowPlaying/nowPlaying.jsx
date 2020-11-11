@@ -18,6 +18,7 @@ import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
 
+// For playTrack(songId)
 var play = ({
   spotify_uri,
   playerInstance: {
@@ -35,6 +36,7 @@ var play = ({
     });
   });
 };
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 class NowPlaying extends Component {
   constructor(props) {
@@ -42,7 +44,7 @@ class NowPlaying extends Component {
     this.onShuffleClick = this.onShuffleClick.bind(this);
     this.state = {
       token:
-        "BQDLUhpchf8gtMhSgw9XjP9sqbzAG6y4i_a6ebu02ZmZbUhObdXIMNdl9pq7MFNDgCP8clf-aGU7uiIf19sofWRCjy5cznQ5TQktgRn0Q-_WoywuiBr78_OsmNXDt7Ah0hZQMxFL-7cswiCkH-Y1l5RY4F_FZlwj9l_-l7D87QY4NmHLpVh6nZE",
+        "BQD7YEdug2-Ol5t4Ip6VCGdOy7n0uMOmIr1M-Z3Rp4Z1a1wDKMB_wsUBnQuEtLs7h8jAgLlP9LCaXc4tAuhgwDX0ncjBM3HuDkQKc3vS7WCTvx_X3oV7GjUldw--KoDPY0zxMPpmOCdB-2zZ5LfrDdQYJKwh9HaE2nfy25kJklHpBSWpZJFG_U8",
       queue: {
         songs: [],
         index: -1,
@@ -68,8 +70,6 @@ class NowPlaying extends Component {
         position,
         duration,
       } = state.track_window;
-      // console.log("hello??");
-      // console.log(state.track_window);
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const albumArt = currentTrack.album.images[0].url;
@@ -172,15 +172,24 @@ class NowPlaying extends Component {
   }
 
   onShuffleClick() {
-    // const shuffle = !this.state.shuffle;
-    // this.setState({ shuffle });
-    // this.player.shuffle = shuffle;
-    // console.log("Player: " + this.player.shuffle);
-
-    this.player.getCurrentState().then((currState) => {
-      var shuffle_change = !currState.shuffle;
-      this.setState({ shuffle: shuffle_change });
-    });
+    const { deviceId, shuffle } = this.state;
+    const oauth_token =
+      "BQA1NknGmA3TocjuKXdS2oOGl6hDBrW_alobl4rLgoBUEKjU91YhgWeNPznZIoExG5Tn-kDRp3I-X79Y5ytlIlLogViImVbQ7O9waRKy9hDJdGAHxGVkC0UjoJ3Iqqj-YMR5RUdaLVwJr0fpkGUOxR_nKOdadFf_WPA7XpEvv5y5BPP1eoWYLbelBwyWCy_ttv0qARDz1aRwiS7mzragxR32oUuxecd0fUrqeU6RuPOocczk5hxrUQbQ_pFgHtzfuGtdVBGhgv1k-sBwLlvkQ9jG5mcxwaJeb80xnBU";
+    fetch(
+      "https://api.spotify.com/v1/me/player/shuffle?state=" +
+        !shuffle +
+        "&device_id=" +
+        deviceId,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${oauth_token}`,
+          "Content-Type": "application/json",
+        },
+        state: { shuffle: shuffle },
+        device_id: [deviceId],
+      }
+    );
   }
 
   transferPlaybackHere() {
@@ -196,7 +205,7 @@ class NowPlaying extends Component {
         device_ids: [deviceId],
         // true: start playing music if it was paused on the other device
         // false: paused if paused on other device, start playing music otherwise
-        play: true,
+        play: false,
       }),
     });
   }

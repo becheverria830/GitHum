@@ -24,3 +24,7 @@
 #songTable tr:nth-child(even) {
   background: #c4c4c4;
 }
+
+.invisible {
+  display: none !important;
+}
