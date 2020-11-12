@@ -37,8 +37,8 @@ class AddFriendButton extends Component {
     super(props);
     this.state = {
       search: "",
-      userUsername: "",
-      otherUsername: "",
+      userMain: [],
+      userOther: [],
       searchResults: [],
     };
 
@@ -52,7 +52,7 @@ class AddFriendButton extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          searchResults: res,
+          searchResults: res.users,
         });
       })
       .catch((err) => err);
@@ -74,14 +74,7 @@ class AddFriendButton extends Component {
   //     .catch((err) => err);
   // }
 
-  sendFriendRequest(event, userUsername, otherUsername) {
-    event.preventDefault();
-
-    const userData = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-
+  sendFriendRequest(event) {
     const url = "http://localhost:9000/user/friends/add";
     const options = {
       method: "POST",
@@ -93,8 +86,8 @@ class AddFriendButton extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
+        userMain: this.state.userMain,
+        userOther: this.state.userOther,
       }),
     };
     // fetch(url, options)
@@ -157,6 +150,13 @@ class AddFriendButton extends Component {
                 <Row className="add-friend-search-items">
                   <Table className="add-friend-search-results">
                     <tbody>
+                      {this.state.searchResults.map((searchRes) => (
+                        <tr className="add-friend-search-item">
+                          <td>{searchRes.username}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    {/* <tbody>
                       <tr className="add-friend-search-item">
                         <td>John_Doe</td>
                       </tr>
@@ -178,7 +178,7 @@ class AddFriendButton extends Component {
                       <tr className="add-friend-search-item">
                         <td>Jonn_Doe</td>
                       </tr>
-                    </tbody>
+                    </tbody> */}
                   </Table>
                 </Row>
                 <Row>
