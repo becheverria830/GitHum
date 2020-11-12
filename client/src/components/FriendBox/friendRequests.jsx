@@ -86,9 +86,32 @@ class FriendRequests extends Component {
   }
 
   acceptRequest(event) {
-    //delete incoming request from user main
-    //delete outgoing request from user other
-    //add user other id to user main's and user other's friends list
+    //delete incoming request from user main and outgoing request from user other. Add user other id to user main's and user other's friends list
+    const url = "http://localhost:9000/user/friends/request/accept";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userMain: this.state.userMain,
+        userOther: this.state.userOther,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+        } else {
+          alert(response[1].message);
+        }
+      });
+    alert("Friend Request Accepted!");
   }
 
   declineRequest(event) {
@@ -113,7 +136,6 @@ class FriendRequests extends Component {
       .then((response) => {
         console.log(response);
         if (response[0] == 200) {
-          console.log("good.");
         } else {
           alert(response[1].message);
         }
@@ -229,7 +251,14 @@ class FriendRequests extends Component {
                     xs="6"
                     className="friend-requests-toggle-button-column"
                   >
-                    <Button id="friend-requests-accept-button">Accept</Button>
+                    <Button
+                      id="friend-requests-accept-button"
+                      onClick={() => {
+                        this.acceptRequest();
+                      }}
+                    >
+                      Accept
+                    </Button>
                   </Col>
                   <Col
                     lg="6"
