@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -20,6 +20,9 @@ import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 import AddIcon from "../../assets/add.svg";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 class AddFriendButton extends Component {
   state = {
     show: false,
@@ -37,10 +40,9 @@ class AddFriendButton extends Component {
     super(props);
     this.state = {
       search: "",
-      userMain: [],
+      userMain: props.auth.user.id,
       userOther: [],
       searchResults: [],
-      selectedResult: [],
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -64,8 +66,9 @@ class AddFriendButton extends Component {
     this.setState({ search: event.target.value });
   }
 
-  handleSelectedResult(event) {
-    this.setState({ selectedResult: event.target.value });
+  handleSelectedResult(event, searchRes) {
+    this.setState({ userOther: searchRes._id });
+    console.log(searchRes._id);
   }
 
   sendFriendRequest(event) {
@@ -84,16 +87,17 @@ class AddFriendButton extends Component {
         userOther: this.state.userOther,
       }),
     };
-    // fetch(url, options)
-    //   .then(res => [res.status, res.json()])
-    //   .then(response => {
-    //     console.log(response);
-    //     if(response[0] == 200) {
-    //       window.location.href = "http://localhost:3000/feed"
-    //     } else {
-    //       alert(response[1].message);
-    //     }
-    //   });
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+          console.log("good.");
+        } else {
+          alert(response[1].message);
+        }
+      });
+    alert("Friend Request Sent!");
   }
 
   render() {
@@ -147,7 +151,9 @@ class AddFriendButton extends Component {
                       {this.state.searchResults.map((searchRes) => (
                         <tr className="add-friend-search-item">
                           <td
-                            onClick={this.handleSelectedResult}
+                            onClick={(event) => {
+                              this.handleSelectedResult(event, searchRes);
+                            }}
                             value={searchRes.username}
                           >
                             {searchRes.username}
@@ -165,7 +171,12 @@ class AddFriendButton extends Component {
                     xs="12"
                     className="center-button"
                   >
-                    <Button id="add-friend-request-button">
+                    <Button
+                      id="add-friend-request-button"
+                      onClick={() => {
+                        this.sendFriendRequest();
+                      }}
+                    >
                       {" "}
                       Send Request{" "}
                     </Button>
@@ -180,4 +191,10 @@ class AddFriendButton extends Component {
   }
 }
 
-export default AddFriendButton;
+AddFriendButton.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps)(withRouter(AddFriendButton));
