@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -12,6 +12,11 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 
 /* Importing All Resources & Custom CSS */
 import "./startForest.css";
@@ -29,6 +34,7 @@ class StartForest extends Component {
     };
 
     this.newForest = this.newForest.bind(this);
+    
   }
   showModal = (e) => {
     this.setState({
@@ -41,6 +47,8 @@ class StartForest extends Component {
 
   newForest(event) {
     event.preventDefault();
+    console.log("sorry, one more test. Where is this code going?");
+    console.log(this.props.auth.userid);
 
     const forestData = {
       name: document.getElementById("start-forest-search-bar"),
@@ -65,14 +73,16 @@ class StartForest extends Component {
       .then((response) => {
         console.log(response);
         if (response[0] == 200) {
-          window.location.href = "http://localhost:3000/valley";
+          window.location.href = "http://localhost:3000/forests/:forestid";
         } else {
           alert(response[1].message);
+          console.log("testing, 123, are we getting to this point in the program");
         }
       });
   }
 
   createNewForest(event) {
+    console.log(event);
     this.setState({ name: event.target.value });
   }
 
@@ -107,15 +117,15 @@ class StartForest extends Component {
                     placeholder="Give your Forest a name!"
                     className="ml-sm-2"
                     id="start-forest-search-bar"
+                    value = {this.state.name}
                     onChange={StartForest.createNewForest}
                   />
-                  <Link to="/forest/create">
                     <input
+                      onClick={StartForest.newForest}
                       id="start-forest-create-link"
                       type="submit"
                       value="Create"
                     ></input>
-                  </Link>
                 </Form>
               </Col>
             </Row>
@@ -126,4 +136,13 @@ class StartForest extends Component {
   }
 }
 
-export default StartForest;
+
+StartForest.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(withRouter(StartForest));
