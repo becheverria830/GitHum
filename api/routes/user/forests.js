@@ -13,39 +13,41 @@ const User = models['user'];
 /user/forests/friends?userid=
 */
 
-router.post("/forests/create", (req, res, err) => {
+router.post("/create", (req, res, err) => {
   const name = req.body.name;
-  const user = req.body.user;
+  const userid = req.body.userid;
+  console.log(name);
+  console.log(userid);
 
-  if(name == undefined || user == undefined){
-    res.status(400).send("Please Give A Name With At Least 1 Character!");
+  if(name == undefined || userid == undefined){
+    res.status(400).json({
+      "forest": null
+    });
   } else {
     var forest_data = {
       name: name,
       icon: "",
-      active: true,
+      active: 1,
       children:[],
       depth: 1,
-      creator: user,
+      creator: userid,
       songs: [],
       settings: {
-        privacy: true
+        privacy: 0
       }
     }
-
     Forest.insertMany([forest_data], function(create_error, result) {
       if (create_error) throw create_error;
-      res.status(200).send("Successfully created a new forest!");
+      console.log(result);
+      res.status(200).json({
+        "forest": result[0]
+      });
     });
-
   }
 });
 
-router.post("/valleyView", (req, res, err) => {
-  //Get from the DB what this users Forests are
-});
-
 router.get('/forests/:userid', function(req, res, next) {
+  console.log("inside here");
   //Getting the information from the request
   const userid = req.params.userid;
 
