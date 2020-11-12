@@ -1,9 +1,15 @@
 /* Importing React & Router */
 import React, { Component } from "react";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/authActions";
+
 
 /* Importing All Resources & Custom CSS */
 import "./feed.css";
@@ -21,7 +27,7 @@ class FeedPage extends Component {
   }
 
   getFriendsForests() {
-    fetch("http://localhost:9000/user/forests/friends")
+    fetch("http://localhost:9000/user/forests/friends/" + this.props.auth.user.id)
       .then(res => res.json())
       .then(res => {
         this.forestListElement.current.updateState(res.forests);
@@ -57,7 +63,7 @@ class FeedPage extends Component {
             <Row id="friend-forest-list-div">
               <Col>
                 <div id="friend-forest-list-container">
-                  <ForestList ref={this.forestListElement}/>
+                  <ForestList ref={this.forestListElement} />
                 </div>
               </Col>
             </Row>
@@ -80,4 +86,12 @@ class FeedPage extends Component {
   }
 }
 
-export default FeedPage;
+FeedPage.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(withRouter(FeedPage));
