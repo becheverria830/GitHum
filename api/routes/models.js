@@ -72,11 +72,24 @@ let forests = new Schema(
 
 forests = mongoose.model("forests", forests);
 
+let message = new Schema(
+  {
+    from_user: mongoose.ObjectId,
+    to_user: mongoose.ObjectId,
+    timestamp: Date,
+    content: String
+  },
+  { collection: "Message" }
+)
+
+message = mongoose.model("message", message);
+
 const models = {
   'user': user,
   'resetpassword': resetpassword,
   'queue': queue,
-  'forests': forests
+  'forests': forests,
+  'message': message
 };
 
 module.exports = models;

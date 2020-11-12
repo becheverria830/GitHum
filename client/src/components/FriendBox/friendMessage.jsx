@@ -12,28 +12,93 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import PropTypes from "prop-types";
 
 /* Importing All Resources & Custom CSS */
 import "./friendMessage.css";
 import Message from "../../assets/comment.svg";
 
 class FriendMessageButton extends Component {
-  state = {
-    show: false,
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+      message: "",
+      messageList: [],
+    };
+
+    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+  }
+
+  handleMessageChange(event) {
+    this.setState({message: event.target.value});
+  }
+
+  sendMessage(event) {
+    event.preventDefault();
+    const url = "http://localhost:9000/user/messages/create";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: this.props.current_user.id,
+        receiver: this.props.other_user._id,
+        message: this.state.message
+      }),
+    };
+    fetch(url, options)
+      .then((res) => {
+        if(res.status != 200) {
+          alert("Please complete the form and try again!");
+        } else {
+          this.setState({'message':''});
+        }
+      })
+      .catch((err) => err);
+  }
+
   showModal = (e) => {
     this.setState({
       show: !this.state.show,
     });
+
+    if(this.state.show) {
+      clearInterval(this.interval);
+    } else {
+      this.interval = setInterval(() => {
+        fetch("http://localhost:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
+          .then(res => res.json())
+          .then(res => {
+            this.setState({messageList: res});
+            console.log(this.state.messageList);
+          })
+          .catch(err => err);
+      }, 1000);
+    }
   };
+
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidMount() {
+    fetch("http://localhost:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({messageList: res});
+        console.log(this.state.messageList);
+      })
+      .catch(err => err);
   }
+
   render() {
     return (
       <div>
@@ -60,7 +125,7 @@ class FriendMessageButton extends Component {
           <Modal.Body id="friend-msg-modal-body">
             <Row>
               <Col lg="12" md="12" sm="12" xs="12">
-                <p id="msg-address">@jerrherr</p>
+                <p id="msg-address">@{this.props.other_user.username}</p>
               </Col>
             </Row>
             <Row>
@@ -68,27 +133,11 @@ class FriendMessageButton extends Component {
                 <Row>
                   <Table className="friend-msg-results">
                     <tbody>
-                      <tr className="friend-msg-item">
-                        <td>@becheverria830: Hey</td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@jerrherr: Yo</td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@becheverria830: Do you like Justin Bieber?</td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@jerrherr: I'm a big fan</td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@becheverria830: Lol</td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@jerrherr: : ( </td>
-                      </tr>
-                      <tr className="friend-msg-item">
-                        <td>@becheverria830: :^) </td>
-                      </tr>
+                      {this.state.messageList.map((message) => (
+                        <tr className="friend-msg-item">
+                          <td>@{message.from_user[0].username}: {message.content}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
                 </Row>
@@ -96,9 +145,11 @@ class FriendMessageButton extends Component {
               <Container>
                 <Row>
                   <Col lg="12" md="12" sm="12" xs="12">
-                    <Form inline>
+                    <Form inline onSubmit={this.sendMessage}>
                       <FormControl
                         type="text"
+                        value={this.state.message}
+                        onChange={this.handleMessageChange}
                         placeholder="Type your message here"
                         className="ml-sm-2"
                         id="msg-input-bar"
@@ -114,7 +165,7 @@ class FriendMessageButton extends Component {
                     xs="12"
                     className="friend-msg-send-col"
                   >
-                    <Button id="friend-msg-send-button"> Send </Button>
+                    <Button onClick={this.sendMessage} id="friend-msg-send-button"> Send </Button>
                   </Col>
                 </Row>
               </Container>
@@ -125,5 +176,10 @@ class FriendMessageButton extends Component {
     );
   }
 }
+
+FriendMessageButton.propTypes = {
+  current_user: PropTypes.object.isRequired,
+  other_user: PropTypes.object.isRequired,
+};
 
 export default FriendMessageButton;

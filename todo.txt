@@ -5,9 +5,6 @@
     - Accept/Decline Friend Request
     - Switch to Friend’s Valley
 - Jeremy
-    - Message Friends
-    - Explore Friend’s Forest Currently Listening to
-        - (On feed page)
     - Check/Go to current Forest
         - Click the forest name in now playing to be redirected to that forest
 - Isabelle
@@ -15,7 +12,6 @@
     - List Favorite Songs
     - Save a Forest
     - List Saved Forests
-
 
 Leftover from 1st Benchmark
 - Isabelle
