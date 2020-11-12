@@ -32,7 +32,7 @@ export default function App() {
       </Route>
       <PrivateRoute exact path="/feed" component={FeedPage} />
       <PrivateRoute exact path="/valley/:userid" component={ValleyPage} />
-      <PrivateRoute exact path="/forest/:forestid" component={ForestPage} />
+      <PrivateRoute exact path="/forests/:forestid" component={ForestPage} />
       <PrivateRoute exact path="/search/:query" component={SearchPage} />
     </Switch>
   );

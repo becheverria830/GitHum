@@ -72,6 +72,43 @@ router.get('/forests/:userid', function(req, res, next) {
   }
 });
 
+
+router.get('/forests/:forestid', function(req, res, next) {
+  
+  var id = req.body.forestid;
+  
+  console.log("inside AAAAAA here");
+  //Getting the information from the request
+  const userid = req.params.userid;
+
+  if(userid == undefined){
+    //Throwing an exception if user didn't supply all the information.
+    res.status(400).json({
+      "forests":[]
+    });
+  } else {
+    //Finding if a user with the email exists already
+    Forest.find({'_id': id }, function (find_error, forests) {
+      if (find_error) throw find_error;
+
+      refined_forests = []
+      for(forest of forests) {
+        refined_forests.push(forest);
+        console.log("WHERE AM IIIIIIIIIIIIIIIIIIIIIII");
+      }
+      res.status(200).json({
+        "forests": refined_forests
+      });
+    })
+  }
+
+
+
+
+
+
+
+
 router.get('/saved', function(req, res, next) {
   res.json({
     "forests": [
@@ -236,34 +273,7 @@ router.get('/friends', function(req, res, next) {
   });
 });
 
-router.get('/', function(req, res, next) {
-  
-  var id = req.params.forestid;
-  
-  console.log("inside here");
-  //Getting the information from the request
-  const userid = req.params.userid;
 
-  if(userid == undefined){
-    //Throwing an exception if user didn't supply all the information.
-    res.status(400).json({
-      "forests":[]
-    });
-  } else {
-    //Finding if a user with the email exists already
-    Forest.find({'_id': id }, function (find_error, forests) {
-      if (find_error) throw find_error;
-
-      refined_forests = []
-      for(forest of forests) {
-        refined_forests.push(forest);
-        console.log("WHERE AM IIIIIIIIIIIIIIIIIIIIIII");
-      }
-      res.status(200).json({
-        "forests": refined_forests
-      });
-    })
-  }
 /*
   res.json({
     "id": 1,

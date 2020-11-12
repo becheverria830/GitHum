@@ -36,7 +36,7 @@ class ValleyForestDisplay extends Component {
           {
             this.state.forests.map(forest => (
               <Col md="6" sm="12" className="valley-forest-holder-container">
-                <Link to={"/forest/"+forest.id}>
+                <Link to={"/forests/"+forest._id}>
                   <div className="valley-forest-holder">
                     <Row>
                       <Col className="valley-forest-icon-holder">

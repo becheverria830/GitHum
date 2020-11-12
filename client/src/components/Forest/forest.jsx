@@ -60,7 +60,13 @@ class ForestPage extends Component {
   }
 
   getForestData() {
-    fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1))
+    console.log("Never reaching inside get forest data to actually run the fetch");
+    fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1),
+    {
+      body: {
+        forestid: this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1)
+      }
+    })
       .then((res) => res.json())
       .then((res) => {
         this.songListElement.current.updateState(res.songs);
@@ -72,6 +78,7 @@ class ForestPage extends Component {
   }
 
   componentDidMount() {
+    console.log("inside componentDidMount of ForestPage in forest.jsx")
     this.getForestData();
   }
 
