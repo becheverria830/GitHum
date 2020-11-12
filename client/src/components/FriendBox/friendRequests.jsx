@@ -1,26 +1,20 @@
 /* Importing React & Router */
-import React, { Component, useState } from "react";
-import { Link, Route, Switch, withRouter } from "react-router-dom";
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 /* Importing All Resources & Custom CSS */
 import "./friendRequests.css";
-import MainNavBar from "../MainNavBar/mainNavBar";
-import NowPlaying from "../NowPlaying/nowPlaying";
-import SearchIcon from "../../assets/search.svg";
 
 class FriendRequests extends Component {
   constructor(props) {
@@ -29,7 +23,8 @@ class FriendRequests extends Component {
       show: false,
       showIncoming: true,
       showOutgoing: false,
-      selectedRequest: [],
+      userMain: props.auth.user.id,
+      userOther: [],
       friends: {
         current_friends: [],
         requests: {
@@ -41,8 +36,6 @@ class FriendRequests extends Component {
     this.displayIncoming = this.displayIncoming.bind(this);
     this.displayOutgoing = this.displayOutgoing.bind(this);
     this.handleSelectedRequest = this.handleSelectedRequest.bind(this);
-    this.handleAcceptRequest = this.handleAcceptRequest.bind(this);
-    this.handleDeclineRequest = this.handleDeclineRequest.bind(this);
   }
 
   showModal = (e) => {
@@ -88,12 +81,45 @@ class FriendRequests extends Component {
   }
 
   handleSelectedRequest(event, request) {
-    this.setState({ selectedRequest: request._id });
+    this.setState({ userOther: request._id });
+    console.log(request._id);
   }
 
-  handleAcceptRequest(event) {}
+  acceptRequest(event) {
+    //delete incoming request from user main
+    //delete outgoing request from user other
+    //add user other id to user main's and user other's friends list
+  }
 
-  handleDeclineRequest(event) {}
+  declineRequest(event) {
+    //delete incoming request from user main and outgoing request from user other
+    const url = "http://localhost:9000/user/friends/request/decline";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userMain: this.state.userMain,
+        userOther: this.state.userOther,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+          console.log("good.");
+        } else {
+          alert(response[1].message);
+        }
+      });
+    alert("Friend Request Declined!");
+  }
 
   render() {
     return (
@@ -212,7 +238,14 @@ class FriendRequests extends Component {
                     xs="6"
                     className="friend-requests-toggle-button-column"
                   >
-                    <Button id="friend-requests-decline-button">Decline</Button>
+                    <Button
+                      id="friend-requests-decline-button"
+                      onClick={() => {
+                        this.declineRequest();
+                      }}
+                    >
+                      Decline
+                    </Button>
                   </Col>
                 </Row>
               </Container>
