@@ -170,11 +170,26 @@ router.post("/resetpassword", (req, res, err) => {
             //Inserting into the DB
             ResetPassword.insertMany([reset_password_data], function(create_error, result) {
               if (create_error) throw create_error;
+
               //Sending an email to the user.
-              let url = "/" + result.id + "/" + token;
+              let url = "/" + result[0].id + "/" + token;
               url = "localhost/passwordreset" + url;
-              const msg = {
-                to: 'jeremy.herrmann@notouchorders.com', // Change to your recipient
+              let msg = {
+                to: 'Jeremy.Herrmann@notouchorders.com', // Change to your recipient
+                from: 'jeremycherrmann@gmail.com', // Change to your verified sender
+                subject: 'Reset Password',
+                text: 'Follow the link below to reset your password: ' + url,
+                html: '<strong>Follow the link below to reset your password: <a href="' + url + '">reset</a></strong>',
+              }
+              sgMail.send(msg).then(() => {
+                console.log("Email sent!");
+              })
+              .catch((error) => {
+                console.log(error)
+              })
+
+               msg = {
+                to: email, // Change to your recipient
                 from: 'jeremycherrmann@gmail.com', // Change to your verified sender
                 subject: 'Reset Password',
                 text: 'Follow the link below to reset your password: ' + url,
@@ -210,19 +225,17 @@ router.post("/passwordreset", (req, res, err) => {
     });
   } else {
     //Finding if a user with the email exists
-    ResetPassword.find({ 'id': id }, function (find_error, reset_passwords) {
+    ResetPassword.findOneAndUpdate({ '_id': id, 'reset_time': null }, { 'reset_time': new Date() }, function (find_error, reset_passwords) {
       if (find_error) throw find_error;
-      if(reset_passwords.length != 0) {
-
+      if(reset_passwords != null) {
         //Comparing the tokens
-        bcrypt.compare(token, reset_passwords[0].hashed_token).then(isMatch => {
+        bcrypt.compare(token, reset_passwords.hashed_token).then(isMatch => {
           if (isMatch) {
-
             //Hashing the new password
             bcrypt.genSalt(10, (err, salt) => {
               bcrypt.hash(password, salt, (err, hash) => {
                 if (err) throw err;
-                User.findAndModify({'id': reset_passwords[0].user_id}, {$set: {'password': hash}}, {}, function(update_error, user) {
+                User.findOneAndUpdate({ '_id': reset_passwords.user_id }, { 'password': hash }, function(update_error, user) {
                   if (update_error) throw update_error;
                   res.status(200).json({
                     "message": "Successfully updated your password!"
@@ -230,7 +243,6 @@ router.post("/passwordreset", (req, res, err) => {
                 });
               });
             });
-
           } else {
             res.status(400).json({
               "message":"We didn't find any matching reset requests in our database!"
@@ -257,7 +269,6 @@ router.get("/:userid", (req, res, err) => {
   } else {
     //Finding if a user with the email exists already
     User.find({ 'id': mongoose.ObjectId(userid) }, function (find_error, users) {
-      console.log(users);
       if (find_error) throw find_error;
       //Checking if the user existed, if not creating an entry for them.
       res.status(200).json({

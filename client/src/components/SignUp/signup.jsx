@@ -76,7 +76,6 @@ class SignUp extends Component {
       password: this.state.password
     };
     this.props.registerUser(newUser, this.props.history);
-
     // const url = 'http://localhost:9000/user/credentials/signup';
     // const options = {
     //   method: 'POST',
