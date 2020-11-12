@@ -36,34 +36,67 @@ class AddFriendButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
       userUsername: "",
       otherUsername: "",
+      searchResults: [],
     };
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  sendFriendRequest(event, userId, otherUserId) {
+  search = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:9000/user/friends/search/" + this.state.search)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          searchResults: res,
+        });
+      })
+      .catch((err) => err);
+  };
+
+  handleSearchChange(event) {
+    this.setState({ search: event.target.value });
+  }
+
+  // getUser(userId) {
+  //   fetch("http://localhost:9000/user/forests/" + userId)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       this.songListElement.current.updateState(res.songs);
+  //       this.setState({
+  //         forest: res,
+  //       });
+  //     })
+  //     .catch((err) => err);
+  // }
+
+  sendFriendRequest(event, userUsername, otherUsername) {
     event.preventDefault();
 
     const userData = {
       email: this.state.email,
       password: this.state.password,
     };
-    this.props.loginUser(userData);
-    const url = "http://localhost:9000/user/friends/sendfriendrequest";
-    // const options = {
-    //   method: 'POST',
-    //   mode: 'cors',
-    //   cache: 'no-cache',
-    //   credentials: 'same-origin',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    // };
+
+    const url = "http://localhost:9000/user/friends/add";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      }),
+    };
     // fetch(url, options)
     //   .then(res => [res.status, res.json()])
     //   .then(response => {
@@ -103,11 +136,14 @@ class AddFriendButton extends Component {
                 <Form inline>
                   <FormControl
                     type="text"
+                    value={this.state.search}
+                    onChange={this.handleSearchChange}
                     placeholder="Search by username"
                     className="ml-sm-2"
                     id="add-friend-search-bar"
                   />
                   <Button
+                    onClick={this.search}
                     variant="dark"
                     className="add-friend-search-icon-button"
                   >
