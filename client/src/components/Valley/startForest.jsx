@@ -34,7 +34,7 @@ class StartForest extends Component {
     };
 
     this.newForest = this.newForest.bind(this);
-    
+    this.createNewForest = this.createNewForest.bind(this);
   }
   showModal = (e) => {
     this.setState({
@@ -47,14 +47,7 @@ class StartForest extends Component {
 
   newForest(event) {
     event.preventDefault();
-    console.log("sorry, one more test. Where is this code going?");
-    console.log(this.props.auth.userid);
-
-    const forestData = {
-      name: document.getElementById("start-forest-search-bar"),
-    };
-
-    const url = "http://localhost:9000/forests/create";
+    const url = "http://localhost:9000/user/forests/create";
     const options = {
       method: "POST",
       mode: "cors",
@@ -66,23 +59,22 @@ class StartForest extends Component {
       },
       body: JSON.stringify({
         name: this.state.name,
+        userid: this.props.auth.user.id
       }),
     };
     fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        console.log(response);
-        if (response[0] == 200) {
-          window.location.href = "http://localhost:3000/forests/:forestid";
+      .then((res) => res.json())
+      .then((res) => {
+        if(res.forest == null) {
+          alert("Please complete the form and try again!");
         } else {
-          alert(response[1].message);
-          console.log("testing, 123, are we getting to this point in the program");
+          this.props.history.push("/forests/" + res.forest._id);
         }
-      });
+      })
+      .catch((err) => err);
   }
 
   createNewForest(event) {
-    console.log(event);
     this.setState({ name: event.target.value });
   }
 
@@ -111,17 +103,17 @@ class StartForest extends Component {
           <Modal.Body id="start-forest-modal-body">
             <Row>
               <Col lg="12" md="12" sm="12" xs="12">
-                <Form inline onSubmit={StartForest.newForest}>
+                <Form inline>
                   <FormControl
                     type="text"
                     placeholder="Give your Forest a name!"
                     className="ml-sm-2"
                     id="start-forest-search-bar"
                     value = {this.state.name}
-                    onChange={StartForest.createNewForest}
+                    onChange={this.createNewForest}
                   />
                     <input
-                      onClick={StartForest.newForest}
+                      onClick={this.newForest}
                       id="start-forest-create-link"
                       type="submit"
                       value="Create"
