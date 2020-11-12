@@ -11,59 +11,17 @@ const User = models["user"];
 /user/friends/request
 */
 
-router.get("/", function (req, res, next) {
-  res.status(200).json({
-    current_friends: [
-      {
-        userid: 1,
-        username: "jeremy123",
-        firstname: "Jeremy",
-        lastname: "Herrmann",
-      },
-      {
-        userid: 2,
-        username: "isabelle123",
-        firstname: "Isabelle",
-        lastname: "Greenberg",
-      },
-      {
-        userid: 3,
-        username: "bridgett123",
-        firstname: "Bridgett",
-        lastname: "Echeverria",
-      },
-    ],
-    requests: {
-      sent: [
-        {
-          userid: 4,
-          username: "eric123",
-          firstname: "Eric",
-          lastname: "Paez",
-        },
-        {
-          userid: 5,
-          username: "rahul123",
-          firstname: "Rahul",
-          lastname: "Sohndi",
-        },
-      ],
-      received: [
-        {
-          userid: 6,
-          username: "brian123",
-          firstname: "Brian",
-          lastname: "Roberts",
-        },
-        {
-          userid: 7,
-          username: "kyle123",
-          firstname: "Kyle",
-          lastname: "Simon",
-        },
-      ],
-    },
-  });
+router.get("/:userid", function (req, res, next) {
+  const userid = req.params.userid;
+
+  User.findOne({ '_id': userid })
+    .populate('friend.list', '_id username first_name last_name')
+    .populate('friend.incoming_requests', '_id username first_name last_name')
+    .populate('friend.outgoing_requests', '_id username first_name last_name')
+    .exec(function (err, user) {
+      if (err) throw err;
+      res.status(200).json(user.friend);
+    });
 });
 
 router.post("/add", function (req, res, next) {

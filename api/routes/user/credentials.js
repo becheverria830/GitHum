@@ -282,7 +282,7 @@ router.get("/:userid", (req, res, err) => {
     });
   } else {
     //Finding if a user with the email exists already
-    User.find({ 'id': mongoose.ObjectId(userid) }, function (find_error, users) {
+    User.find({ '_id': userid }, function (find_error, users) {
       if (find_error) throw find_error;
       //Checking if the user existed, if not creating an entry for them.
       res.status(200).json({

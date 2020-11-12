@@ -40,9 +40,11 @@ class AddFriendButton extends Component {
       userMain: [],
       userOther: [],
       searchResults: [],
+      selectedResult: [],
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSelectedResult = this.handleSelectedResult.bind(this);
   }
 
   search = (e) => {
@@ -62,17 +64,9 @@ class AddFriendButton extends Component {
     this.setState({ search: event.target.value });
   }
 
-  // getUser(userId) {
-  //   fetch("http://localhost:9000/user/forests/" + userId)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       this.songListElement.current.updateState(res.songs);
-  //       this.setState({
-  //         forest: res,
-  //       });
-  //     })
-  //     .catch((err) => err);
-  // }
+  handleSelectedResult(event) {
+    this.setState({ selectedResult: event.target.value });
+  }
 
   sendFriendRequest(event) {
     const url = "http://localhost:9000/user/friends/add";
@@ -152,33 +146,15 @@ class AddFriendButton extends Component {
                     <tbody>
                       {this.state.searchResults.map((searchRes) => (
                         <tr className="add-friend-search-item">
-                          <td>{searchRes.username}</td>
+                          <td
+                            onClick={this.handleSelectedResult}
+                            value={searchRes.username}
+                          >
+                            {searchRes.username}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
-                    {/* <tbody>
-                      <tr className="add-friend-search-item">
-                        <td>John_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Joe_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jake_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Justin_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jeremy_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jae_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jonn_Doe</td>
-                      </tr>
-                    </tbody> */}
                   </Table>
                 </Row>
                 <Row>
