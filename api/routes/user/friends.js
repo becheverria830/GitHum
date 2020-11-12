@@ -66,14 +66,58 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.post("/add/:user1/:user2", function (req, res, next) {
+router.post("/add", function (req, res, next) {
   //take in id of current user and friend to add
-  var userUsername = req.body.userUsername;
-  var otherUsername = req.body.otherUsername;
-  console.log("User " + userUsername + "wants to add User " + otherUsername);
+  var userMain = req.body.userMain;
+  var userOther = req.body.userOther;
+  //Find main user
+  User.findOne({ _id: userMain }, function (err, res_usermain) {
+    if (err) {
+      console.log(err);
+    } else {
+      // Find other user
+      User.findOne({ _id: userOther }, function (err, res_userother) {
+        if (err) {
+          console.log(err);
+        } else {
+          // update main user's outgoing friend requests. How do I add to, not replace, outgoing?
+          res_usermain.friend.outgoing_requests.push(userOther);
+          User.update(
+            { _id: res_usermain.id },
+            {
+              "friend.outgoing_requests": res_usermain.friend.outgoing_requests,
+            },
+            function (err, res_update) {
+              if (err) {
+                console.log(err);
+              } else {
+                // update other user's incoming friend request
+                res_userother.friend.incoming_requests.push(userMain);
+                User.update(
+                  { _id: res_userother.id },
+                  {
+                    "friend.incoming_requests":
+                      res_userother.friend.incoming_requests,
+                  },
+                  function (err, res_update) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      res.status(200).json({});
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      });
+    }
+  });
+
   //look up for current user --> update the fields
   //look up potential friend
-  res.status(200).json({});
+
   // res.status(200);
 });
 

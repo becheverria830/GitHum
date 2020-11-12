@@ -37,12 +37,14 @@ class AddFriendButton extends Component {
     super(props);
     this.state = {
       search: "",
-      userUsername: "",
-      otherUsername: "",
+      userMain: [],
+      userOther: [],
       searchResults: [],
+      selectedResult: [],
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSelectedResult = this.handleSelectedResult.bind(this);
   }
 
   search = (e) => {
@@ -52,7 +54,7 @@ class AddFriendButton extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
-          searchResults: res,
+          searchResults: res.users,
         });
       })
       .catch((err) => err);
@@ -62,26 +64,11 @@ class AddFriendButton extends Component {
     this.setState({ search: event.target.value });
   }
 
-  // getUser(userId) {
-  //   fetch("http://localhost:9000/user/forests/" + userId)
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       this.songListElement.current.updateState(res.songs);
-  //       this.setState({
-  //         forest: res,
-  //       });
-  //     })
-  //     .catch((err) => err);
-  // }
+  handleSelectedResult(event) {
+    this.setState({ selectedResult: event.target.value });
+  }
 
-  sendFriendRequest(event, userUsername, otherUsername) {
-    event.preventDefault();
-
-    const userData = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-
+  sendFriendRequest(event) {
     const url = "http://localhost:9000/user/friends/add";
     const options = {
       method: "POST",
@@ -93,8 +80,8 @@ class AddFriendButton extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
+        userMain: this.state.userMain,
+        userOther: this.state.userOther,
       }),
     };
     // fetch(url, options)
@@ -157,27 +144,16 @@ class AddFriendButton extends Component {
                 <Row className="add-friend-search-items">
                   <Table className="add-friend-search-results">
                     <tbody>
-                      <tr className="add-friend-search-item">
-                        <td>John_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Joe_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jake_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Justin_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jeremy_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jae_Doe</td>
-                      </tr>
-                      <tr className="add-friend-search-item">
-                        <td>Jonn_Doe</td>
-                      </tr>
+                      {this.state.searchResults.map((searchRes) => (
+                        <tr className="add-friend-search-item">
+                          <td
+                            onClick={this.handleSelectedResult}
+                            value={searchRes.username}
+                          >
+                            {searchRes.username}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </Table>
                 </Row>
