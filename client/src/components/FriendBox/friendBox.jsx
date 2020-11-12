@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -9,6 +9,10 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/authActions";
 
 /* Importing All Resources & Custom CSS */
 import "./friendBox.css";
@@ -33,11 +37,17 @@ class FriendBox extends Component {
   }
 
   getFriends() {
-    fetch("http://localhost:9000/user/friends")
+    fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          friends: res,
+          friends: {
+            current_friends: res.list,
+            requests: {
+              received: res.incoming_requests,
+              sent: res.outgoing_requests,
+            }
+          },
         });
         console.log(res);
       })
@@ -69,52 +79,18 @@ class FriendBox extends Component {
                         <tr className="friend-table-row">
                           <td>
                             <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
+                              {friend.first_name} {friend.last_name}
                             </h3>
                           </td>
                           <td>
-                            <Link to="/valley/2">
+                            <Link to={"/valley/" + friend._id}>
                               <Button className="friend-visit-valley">
                                 Visit
                               </Button>
                             </Link>
                           </td>
                           <td>
-                            <FriendMessageButton />
-                          </td>
-                        </tr>
-                      ))}
-                      {this.state.friends.current_friends.map((friend) => (
-                        <tr className="friend-table-row">
-                          <td>
-                            <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
-                            </h3>
-                          </td>
-                          <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
-                          </td>
-                          <td>
-                            <FriendMessageButton />
-                          </td>
-                        </tr>
-                      ))}
-                      {this.state.friends.current_friends.map((friend) => (
-                        <tr className="friend-table-row">
-                          <td>
-                            <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
-                            </h3>
-                          </td>
-                          <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
-                          </td>
-                          <td>
-                            <FriendMessageButton />
+                            <FriendMessageButton current_user={this.props.auth.user} other_user={friend}/>
                           </td>
                         </tr>
                       ))}
@@ -138,4 +114,12 @@ class FriendBox extends Component {
   }
 }
 
-export default FriendBox;
+FriendBox.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(withRouter(FriendBox));
