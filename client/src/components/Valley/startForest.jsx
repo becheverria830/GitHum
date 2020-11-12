@@ -24,104 +24,106 @@ class StartForest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ''
-    }
+      name: "",
+      show: false,
+    };
 
     this.newForest = this.newForest.bind(this);
   }
-  
+  showModal = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+  onClose = (e) => {
+    this.props.onClose && this.props.onClose(e);
+  };
+
   newForest(event) {
     event.preventDefault();
-  
+
     const forestData = {
-      name: document.getElementById("start-forest-search-bar")
+      name: document.getElementById("start-forest-search-bar"),
     };
-  
-    const url = 'http://localhost:9000/forests/create';
+
+    const url = "http://localhost:9000/forests/create";
     const options = {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: this.state.name
-      })
-      };
-      fetch(url, options)
-      .then(res => [res.status, res.json()])
-      .then(response => {
+        name: this.state.name,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
         console.log(response);
-      if(response[0] == 200) {
-        window.location.href = "http://localhost:3000/valley"
-      } else {
-        alert(response[1].message);
-      }
-    })
+        if (response[0] == 200) {
+          window.location.href = "http://localhost:3000/valley";
+        } else {
+          alert(response[1].message);
+        }
+      });
   }
 
   createNewForest(event) {
-    this.setState({name: event.target.value});
+    this.setState({ name: event.target.value });
   }
 
   render() {
-    return <StartForestButton />;
+    return (
+      <div>
+        <Button
+          id="start-forest-button"
+          onClick={(e) => {
+            this.showModal();
+          }}
+        >
+          Start a Forest
+        </Button>
+
+        <Modal show={this.state.show} onHide={this.showModal}>
+          <Modal.Header
+            closeButton
+            id="start-forest-modal-header"
+            className="text-center"
+          >
+            <Modal.Title id="start-forest-modal-title">
+              Start a Forest
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body id="start-forest-modal-body">
+            <Row>
+              <Col lg="12" md="12" sm="12" xs="12">
+                <Form inline onSubmit={StartForest.newForest}>
+                  <FormControl
+                    type="text"
+                    placeholder="Give your Forest a name!"
+                    className="ml-sm-2"
+                    id="start-forest-search-bar"
+                    onChange={StartForest.createNewForest}
+                  />
+                  <Link to="/forest/create">
+                    <input
+                      id="start-forest-create-link"
+                      type="submit"
+                      value="Create"
+                    ></input>
+                  </Link>
+                </Form>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
   }
 }
 
-
-function StartForestButton() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <div>
-      <Button id="start-forest-button" onClick={handleShow}>
-        Start a Forest
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header
-          closeButton
-          id="start-forest-modal-header"
-          className="text-center"
-        >
-          <Modal.Title id="start-forest-modal-title">
-            Start a Forest
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body id="start-forest-modal-body">
-          <Row>
-            <Col lg="12" md="12" sm="12" xs="12">
-              <Form inline onSubmit={StartForest.newForest}>
-                <FormControl
-                  type="text"
-                  placeholder="Give your Forest a name!"
-                  className="ml-sm-2"
-                  id="start-forest-search-bar"
-                  onChange = {StartForest.createNewForest}
-                />
-                <Link to="/forest/create">
-                  <input
-                    id="start-forest-create-link"
-                    type="submit"
-                    value="Create"
-                  ></input>
-                </Link>
-              </Form>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-}
-
-export default StartForestButton;
-
-
+export default StartForest;
