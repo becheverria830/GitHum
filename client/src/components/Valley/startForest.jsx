@@ -68,8 +68,7 @@ class StartForest extends Component {
         if(res.forest == null) {
           alert("Please complete the form and try again!");
         } else {
-          //console.log(res.json());
-          this.props.history.push("/forests/" + res.forest._id);
+          this.props.history.push("/forest/" + res.forest._id);
         }
       })
       .catch((err) => err);
