@@ -12,6 +12,7 @@ const router  = express.Router();
 
 const User = models['user'];
 const ResetPassword = models['resetpassword'];
+const Queue = models['queue'];
 
 function randomString(len, charSet) {
     charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -72,8 +73,21 @@ router.post("/signup", (req, res, err) => {
             //Inserting into the DB
             User.insertMany([user_data], function(create_error, result) {
               if (create_error) throw create_error;
-              res.status(200).json({
-                "message":"Successfully created account!"
+
+              //Generating the JSON to insert into the DB
+              var queue_data = {
+                user_id: result[0].id,
+                current_forest_id: null,
+                song_list: [],
+                index: -1
+              }
+
+              //Inserting into the DB
+              Queue.insertMany([queue_data], function(create_error, result) {
+                if (create_error) throw create_error;
+                res.status(200).json({
+                  "message":"Successfully created account!"
+                });
               });
             });
           });

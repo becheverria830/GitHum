@@ -41,20 +41,33 @@ let resetpassword = new Schema(
 
 resetpassword = mongoose.model("resetpassword", resetpassword);
 
+let queue = new Schema(
+  {
+    user_id: mongoose.ObjectId,
+    current_forest_id: mongoose.ObjectId,
+    song_list: [mongoose.ObjectId],
+    index: Number
+  },
+  { collection: "Queue" }
+)
+
+queue = mongoose.model("queue", queue);
+
 let forests = new Schema(
   {
-    id: mongoose.ObjectId,
     name: String,
     icon: String,
-    active: Boolean,
-    children: Array,
+    active: Number,
+    parent: mongoose.ObjectId,
+    children: [mongoose.ObjectId],
     depth: Number,
     creator: mongoose.ObjectId,
-    songs: Array,
+    songs: [mongoose.ObjectId],
     settings: {
-      privacy: Boolean
+      privacy: Number
     }
-  }
+  },
+  { collection: "Forests" }
 )
 
 forests = mongoose.model("forests", forests);
@@ -62,6 +75,7 @@ forests = mongoose.model("forests", forests);
 const models = {
   'user': user,
   'resetpassword': resetpassword,
+  'queue': queue,
   'forests': forests
 };
 
