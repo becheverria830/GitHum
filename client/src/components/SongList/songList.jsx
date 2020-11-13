@@ -27,7 +27,6 @@ class SongList extends Component {
     };
 
     this.addFavorite = this.addFavorite.bind(this);
-
   }
 
   updateState(state) {
@@ -56,7 +55,7 @@ class SongList extends Component {
         songid: song._id,
       }),
     };
-    console.log(this.props.auth.user.id);
+    console.log(this.props.user.id);
     console.log(song._id);
     fetch(url, options)
       .then((res) => res.json())
@@ -78,7 +77,7 @@ class SongList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.auth.user.id,
+        userid: this.props.user.id,
         songid: song._id,
       }),
     };

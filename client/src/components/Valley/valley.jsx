@@ -83,6 +83,7 @@ class ValleyPage extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.songListElement.current.updateState(res.songs);
+        console.log(res.songs);
         this.setState({
           forest: res,
         });
