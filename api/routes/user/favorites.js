@@ -13,7 +13,7 @@ const Song = models["song"];
 */
 
 // Turn a song into a favorite
-router.post("/add", function (req, res, next) {
+router.post("/songs/add", function (req, res, next) {
   // Check that the strings are valid
   const userid = req.body.userid;
   const songid = req.body.songid;
