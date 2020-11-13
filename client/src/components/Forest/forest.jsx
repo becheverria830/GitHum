@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -9,6 +9,9 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 /* Importing All Resources & Custom CSS */
 import "./forest.css";
@@ -42,6 +45,7 @@ class ForestPage extends Component {
         },
       },
     };
+    this.saveForest = this.saveForest.bind(this);
   }
 
   displaySongs() {
@@ -60,8 +64,17 @@ class ForestPage extends Component {
   }
 
   getForestData() {
-    console.log(this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1));
-    fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1))
+    console.log(
+      this.props.location.pathname.substr(
+        this.props.location.pathname.lastIndexOf("/") + 1
+      )
+    );
+    fetch(
+      "http://localhost:9000/user/forests/" +
+        this.props.location.pathname.substr(
+          this.props.location.pathname.lastIndexOf("/") + 1
+        )
+    )
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -70,6 +83,41 @@ class ForestPage extends Component {
         this.songListElement.current.updateState(res.forests.songs);
       })
       .catch((err) => err);
+  }
+
+  handleSaveButton() {
+    // this.setState({ userOther: request._id });
+    // console.log(request._id);
+  }
+
+  saveForest(event) {
+    console.log(this.state);
+    const url = "http://localhost:9000/user/forests/save";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        forestid: this.state.forest._id,
+        fcreator: "",
+        userid: this.props.auth.user.id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+        } else {
+          alert(response[1].message);
+        }
+      });
+    alert("Forest Saved!");
   }
 
   componentDidMount() {
@@ -135,7 +183,7 @@ class ForestPage extends Component {
                     </Button>
                   </Col>
                   <Col md="12">
-                    <BranchForest/>
+                    <BranchForest />
                   </Col>
                   <Col md="12">
                     <div className={this.props.myForest ? null : "hidden"}>
@@ -143,7 +191,16 @@ class ForestPage extends Component {
                     </div>
                   </Col>
                   <Col md="12">
-                    {this.props.myForest ? <Deforest/> : <Button className="button forest-action-button">Save Forest</Button>}
+                    {this.props.myForest ? (
+                      <Deforest />
+                    ) : (
+                      <Button
+                        className="button forest-action-button"
+                        onClick={this.saveForest}
+                      >
+                        Save Forest
+                      </Button>
+                    )}
                   </Col>
                 </Row>
               </Col>
@@ -160,4 +217,10 @@ class ForestPage extends Component {
   }
 }
 
-export default ForestPage;
+ForestPage.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps)(withRouter(ForestPage));

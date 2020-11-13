@@ -1,6 +1,6 @@
-var express = require('express');
-var mongoose = require('mongoose');
-const models  = require("../models");
+var express = require("express");
+var mongoose = require("mongoose");
+const models = require("../models");
 
 var router = express.Router();
 
@@ -56,21 +56,21 @@ router.post("/byId/:fid/add", function (req, res, next) {
     res.status(400).json({
       forest: null,
     });
-  }
-  else {
-    Forest.findOneAndUpdate({_id : uid}, { $push: {'songs': sid} }, function (err, result) {
+  } else {
+    Forest.findOneAndUpdate({ _id: uid }, { $push: { songs: sid } }, function (
+      err,
+      result
+    ) {
       if (err) throw err;
       res.status(200).json({});
     });
   }
-
 });
 
-
-
-router.post("/byId/:fid/save", function (req, res, next) {
+router.post("/save", function (req, res, next) {
   const fid = req.body.forestid;
-  const fcreator = req.body.creator;
+  // const fcreator = req.body.creator;
+  const fcreator = ""; //FIX LATER
   const uid = req.body.userid;
   console.log(fid);
   console.log(uid);
@@ -79,20 +79,23 @@ router.post("/byId/:fid/save", function (req, res, next) {
     res.status(400).json({
       forest: null,
     });
-  }
-  else if (fcreator == uid) {
-    console.log("You already have this Forest in your library - You made it in the first place!")
+  } else if (fcreator == uid) {
+    console.log(
+      "You already have this Forest in your library - You made it in the first place!"
+    );
     res.status(400).json({
       forest: null,
     });
+  } else {
+    User.findOneAndUpdate(
+      { _id: uid },
+      { $push: { "library.saved_forests": fid } },
+      function (err, result) {
+        if (err) throw err;
+        res.status(200).json({});
+      }
+    );
   }
-  else {
-    User.findOneAndUpdate({'_id' : uid}, { $push: {'library.saved': fid} }, function (err, result) {
-      if (err) throw err;
-      res.status(200).json({});
-    });
-  }
-
 });
 
 router.get("/forests/:userid", function (req, res, next) {
@@ -122,6 +125,7 @@ router.get("/forests/:userid", function (req, res, next) {
 });
 
 router.get("/:forestid", function (req, res, next) {
+  console.log("GREAT");
   var id = req.params.forestid;
 
   if (id == undefined) {
@@ -131,18 +135,16 @@ router.get("/:forestid", function (req, res, next) {
     });
   } else {
     Forest.findOne({ _id: id })
-      .populate('songs')
+      .populate("songs")
       .exec(function (err, forest) {
         if (err) throw err;
         console.log(forest);
         res.status(200).json({
-          forests: forest
+          forests: forest,
         });
       });
   }
 });
-
-
 
 router.get("/saved", function (req, res, next) {
   var uid = req.params.userid;
@@ -152,12 +154,13 @@ router.get("/saved", function (req, res, next) {
     res.status(400).json({
       forests: [],
     });
-  }
-  else {
+  } else {
     User.find({ _id: uid }, function (find_error, user) {
       if (find_error) throw find_error;
 
-      user_saved = users[0].library.saved.list.map(saved => mongoose.Types.ObjectId(saved));
+      user_saved = users[0].library.saved.list.map((saved) =>
+        mongoose.Types.ObjectId(saved)
+      );
 
       /*
       Forest.aggregate([
@@ -196,52 +199,57 @@ router.get("/saved", function (req, res, next) {
   }
 });
 
-router.get('/friends/:userid', function(req, res, next) {
+router.get("/friends/:userid", function (req, res, next) {
   //Get all the friends of the user
   const userid = req.params.userid;
 
-  if(userid == undefined){
+  if (userid == undefined) {
     res.status(200).json({
-      "forests":[]
+      forests: [],
     });
   } else {
-    User.find({ '_id': userid }, function (find_error, users) {
+    User.find({ _id: userid }, function (find_error, users) {
       if (find_error) throw find_error;
       //Checking if the user existed, if not creating an entry for them.
-      if(users.length == 0) {
+      if (users.length == 0) {
         res.status(200).json({
-          "forests":[]
+          forests: [],
         });
       } else {
         //Getting all the friends for the current user
-        updated_friends_list = users[0].friend.list.map(friend => mongoose.Types.ObjectId(friend));
-        Forest.aggregate([
-          {
-            $match : {
-              "creator": { $in: updated_friends_list }
-            }
-          },
-          {
-            $lookup : {
-              "from": "Users",
-              "localField": "creator",
-              "foreignField": "_id",
-              "as": "creator"
-            }
-          },
-          {
-            $project: {
-              "creator.friend": 0,
-              "creator.library": 0,
-              "creator.credentials": 0,
-              "creator.icon": 0
-            }
+        updated_friends_list = users[0].friend.list.map((friend) =>
+          mongoose.Types.ObjectId(friend)
+        );
+        Forest.aggregate(
+          [
+            {
+              $match: {
+                creator: { $in: updated_friends_list },
+              },
+            },
+            {
+              $lookup: {
+                from: "Users",
+                localField: "creator",
+                foreignField: "_id",
+                as: "creator",
+              },
+            },
+            {
+              $project: {
+                "creator.friend": 0,
+                "creator.library": 0,
+                "creator.credentials": 0,
+                "creator.icon": 0,
+              },
+            },
+          ],
+          function (err, forests) {
+            res.status(200).json({ forests: forests });
           }
-        ], function(err, forests) {
-          res.status(200).json({"forests":forests});
-        });
+        );
       }
-    })
+    });
   }
 });
 
