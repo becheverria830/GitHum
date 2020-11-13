@@ -57,13 +57,13 @@ class SongList extends Component {
                 <td>{song.name}</td>
                 <td>{song.artist_id}</td>
                 <td>
-                  <Image src={Queue}></Image>
+                  <input type="image" className="" src={Queue}></input>
                 </td>
                 <td>
-                  <Image src={Tree}></Image>
+                  <input type="image" className="" src={Tree}></input>
                 </td>
                 <td>
-                  <Image src={Flower}></Image>
+                  <input type="image" className="" src={Flower}></input>
                 </td>
               </tr>
             ))}
