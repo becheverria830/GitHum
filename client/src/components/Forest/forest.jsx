@@ -61,18 +61,14 @@ class ForestPage extends Component {
 
   getForestData() {
     console.log(this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1));
-    fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1),
-    {
-      body: {
-        forestid: this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1)
-      }
-    })
+    fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1))
       .then((res) => res.json())
       .then((res) => {
-        this.songListElement.current.updateState(res.songs);
         this.setState({
-          forest: res,
+          forest: res.forests[0],
         });
+        this.songListElement.current.updateState(res.forests[0].songs);
+        console.log(this.songListElement.current);
       })
       .catch((err) => err);
   }

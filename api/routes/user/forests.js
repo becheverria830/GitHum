@@ -1,6 +1,6 @@
-var express = require("express");
-
-const models = require("../models");
+var express = require('express');
+var mongoose = require('mongoose');
+const models  = require("../models");
 
 var router = express.Router();
 
@@ -185,103 +185,53 @@ router.get("/saved", function (req, res, next) {
   });
 });
 
-router.get("/friends", function (req, res, next) {
-  res.json({
-    forests: [
-      {
-        id: 1,
-        name: "My First Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
+router.get('/friends/:userid', function(req, res, next) {
+  //Get all the friends of the user
+  const userid = req.params.userid;
+
+  if(userid == undefined){
+    res.status(200).json({
+      "forests":[]
+    });
+  } else {
+    User.find({ '_id': userid }, function (find_error, users) {
+      if (find_error) throw find_error;
+      //Checking if the user existed, if not creating an entry for them.
+      if(users.length == 0) {
+        res.status(200).json({
+          "forests":[]
+        });
+      } else {
+        //Getting all the friends for the current user
+        updated_friends_list = users[0].friend.list.map(friend => mongoose.Types.ObjectId(friend));
+        Forest.aggregate([
           {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
+            $match : {
+              "creator": { $in: updated_friends_list }
+            }
           },
           {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
+            $lookup : {
+              "from": "Users",
+              "localField": "creator",
+              "foreignField": "_id",
+              "as": "creator"
+            }
           },
           {
-            id: 3,
-            song_name: "San Francisco",
-            artist_name: "The Mowgli's",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
-        },
-      },
-      {
-        id: 2,
-        name: "My Second Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
-          {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
-        },
-      },
-      {
-        id: 3,
-        name: "My Third Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
-          {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 3,
-            song_name: "San Francisco",
-            artist_name: "The Mowgli's",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
-        },
-      },
-    ],
-  });
+            $project: {
+              "creator.friend": 0,
+              "creator.library": 0,
+              "creator.credentials": 0,
+              "creator.icon": 0
+            }
+          }
+        ], function(err, forests) {
+          res.status(200).json({"forests":forests});
+        });
+      }
+    })
+  }
 });
 
 /*
