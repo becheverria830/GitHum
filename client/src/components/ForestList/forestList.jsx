@@ -20,6 +20,7 @@ class ForestList extends Component {
   }
 
   updateState(state) {
+    console.log(state);
     this.setState({
       forests: state
     });
@@ -43,7 +44,7 @@ class ForestList extends Component {
             <div className="forest-container">
               <Row>
                 <Col>
-                  <h3 className="forest-container-header">Jeremy Herrmann is listening to <i><b>{forest.name}</b></i></h3>
+                  <h3 className="forest-container-header">{forest.creator[0].first_name} {forest.creator[0].last_name} is listening to <i><b>{forest.name}</b></i></h3>
                 </Col>
               </Row>
               <Row>
@@ -53,7 +54,7 @@ class ForestList extends Component {
               </Row>
               <Row>
                 <Col>
-                  <Link to={"/forest/" + forest._id}><Button className="explore-forest-button">Explore This Forest</Button></Link>
+                  <Link to={"/forests/" + forest._id}><Button className="explore-forest-button">Explore This Forest</Button></Link>
                 </Col>
               </Row>
             </div>
