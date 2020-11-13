@@ -35,6 +35,28 @@ class SongList extends Component {
     this.np.playTrack(song.id);
   }
 
+  addFavorite(event) {
+    event.preventDefault();
+    const url = "http://localhost:9000/user/favorites/songs/add";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        songlink: song._id,
+        userid: this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .catch((err) => err);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -63,7 +85,9 @@ class SongList extends Component {
                   <input type="image" className="" src={Tree}></input>
                 </td>
                 <td>
-                  <input type="image" className="" src={Flower}></input>
+                  <input type="image" className="" src={Flower}
+                    onClick={this.addFavorite}
+                  ></input>
                 </td>
               </tr>
             ))}

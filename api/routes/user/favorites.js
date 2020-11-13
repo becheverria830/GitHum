@@ -1,4 +1,5 @@
 var express = require("express");
+var mongoose = require('mongoose');
 const models = require("../models");
 
 var router = express.Router();
@@ -10,7 +11,7 @@ const User = models["user"];
 */
 
 // Turn a song into a favorite
-router.post("/songs/add", function (req, res, next) {
+router.post("/add", function (req, res, next) {
   // Check that the strings are valid
   const userid = req.body.userid;
   const songlink = req.body.songlink;
@@ -23,6 +24,14 @@ router.post("/songs/add", function (req, res, next) {
       user: null,
     });
   } else {
+    User.findOneAndUpdate({_id : userid}, { $push: {favorites: songlink} }, function (create_error, result) {
+      if (create_error) throw create_error;
+      console.log(result);
+      res.status(200).json({
+        user: result,
+      });
+    });
+    
     res.status(200).json({});
   }
   // Check if song has an object already
