@@ -1,5 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -17,6 +18,9 @@ import PlayCircleIcon from "../../assets/play_circle.svg";
 import PauseCircleIcon from "../../assets/pause_circle.svg";
 import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // For playTrack(songId)
 var play = ({
@@ -39,162 +43,136 @@ var play = ({
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 class NowPlaying extends Component {
+
   constructor(props) {
     super(props);
-    this.onShuffleClick = this.onShuffleClick.bind(this);
+    /* Get your access token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/# */
     this.state = {
-      token:
-        "BQD7YEdug2-Ol5t4Ip6VCGdOy7n0uMOmIr1M-Z3Rp4Z1a1wDKMB_wsUBnQuEtLs7h8jAgLlP9LCaXc4tAuhgwDX0ncjBM3HuDkQKc3vS7WCTvx_X3oV7GjUldw--KoDPY0zxMPpmOCdB-2zZ5LfrDdQYJKwh9HaE2nfy25kJklHpBSWpZJFG_U8",
+      token: "BQBL52I6w3LY99_nU6Z6cLHBrluaspOIC1e4NWVc3iWlCStum_rONfwjbttZjAleb5ed9sgLAzMftOlXz95zua9a_1fbcbHAmOxrISVLGLmg_AVsH91u-GWuY5-Texba0eQPrSAKxwI8q1NvFEyNV2N-HO26Hgv7GZY",
       queue: {
-        songs: [],
+        song_list: [],
         index: -1,
+        current_forest_id: null
       },
       deviceId: "",
-      trackName: "Track Name",
-      artistName: "Artist Name",
-      albumName: "Album Name",
       playing: false,
       position: 0,
-      duration: 1,
-      shuffle: false,
+      duration: 1
     };
-  }
 
-  // when we receive a new update from the player
-  onStateChanged(state) {
-    console.log("state changed");
-    // // only update if we got a real state
-    if (state !== null) {
-      const {
-        current_track: currentTrack,
-        position,
-        duration,
-      } = state.track_window;
-      const trackName = currentTrack.name;
-      const albumName = currentTrack.album.name;
-      const albumArt = currentTrack.album.images[0].url;
-      const artistName = currentTrack.artists
-        .map((artist) => artist.name)
-        .join(", ");
-      const playing = !state.paused;
-      const shuffle = state.shuffle;
-      this.setState({
-        current_track: currentTrack,
-        position: position,
-        duration: duration,
-        trackName: trackName,
-        albumName: albumName,
-        albumArt: albumArt,
-        artistName: artistName,
-        playing: playing,
-        shuffle: shuffle,
-      });
-    } else {
-      // state was null, user might have swapped to another device
-      this.setState({
-        error: "Looks like you might have swapped to another device?",
-      });
+    //TEMP STATIC FOREST TO ALLOW USER TO VISIT THEIR FOREST FROM NOW PLAYING
+    this.current_forest_id = {
+      "_id": "5fae5aeb48d08f64ae32db6c",
+      "name": "My Current Forest!"
+
     }
+
+    this.onPrevClick = this.onPrevClick.bind(this);
+    this.onPlayClick = this.onPlayClick.bind(this);
+    this.onNextClick = this.onNextClick.bind(this);
+    this.onShuffleClick = this.onShuffleClick.bind(this);
   }
 
-  checkForPlayer() {
-    const { token } = this.state;
-    // if the Spotify SDK has loaded
-    if (window.Spotify !== undefined) {
-      // cancel the interval
-      clearInterval(this.playerCheckInterval);
-      // create a new player
-      this.player = new window.Spotify.Player({
-        name: "GitHum",
-        getOAuthToken: (cb) => {
-          cb(token);
-        },
-      });
-      // problem setting up the player
-      this.player.on("initialization_error", (e) => {
-        console.error(e);
-      });
-      // problem authenticating the user.
-      // either the token was invalid in the first place,
-      // or it expired (it lasts one hour)
-      this.player.on("authentication_error", (e) => {
-        console.error(e);
-      });
-      // currently only premium accounts can use the API
-      this.player.on("account_error", (e) => {
-        console.error(e);
-      });
-      // loading/playing the track failed for some reason
-      this.player.on("playback_error", (e) => {
-        console.error(e);
-      });
-
-      // Playback status updates
-      this.player.on("player_state_changed", (state) =>
-        this.onStateChanged(state)
-      );
-
-      // Ready
-      this.player.on("ready", async (data) => {
-        let { device_id } = data;
-        console.log("Let the music play on!");
-        // set the deviceId variable, then let's try
-        // to swap music playback to *our* player!
-        await this.setState({ deviceId: device_id });
-        this.transferPlaybackHere();
-      });
-
-      // finally, connect!
-      this.player.connect();
-    }
-  }
-
-  playTrack(songId) {
+  playSong(spotifyId){
     play({
       playerInstance: this.player,
-      spotify_uri: "spotify:track:" + songId,
+      spotify_uri: spotifyId,
     });
   }
 
   onPrevClick() {
-    console.log("prev");
-    this.player.previousTrack();
+    const url = "http://localhost:9000/user/queue/rewind";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          queue:res.queue
+        });
+        this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
+      });
   }
 
   onPlayClick() {
-    console.log("play");
     this.player.togglePlay();
   }
 
   onNextClick() {
-    console.log("next");
-    this.player.nextTrack();
+    const url = "http://localhost:9000/user/queue/skip";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          queue:res.queue
+        });
+        this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
+      });
   }
 
   onShuffleClick() {
-    const { deviceId, shuffle } = this.state;
-    const oauth_token =
-      "BQA1NknGmA3TocjuKXdS2oOGl6hDBrW_alobl4rLgoBUEKjU91YhgWeNPznZIoExG5Tn-kDRp3I-X79Y5ytlIlLogViImVbQ7O9waRKy9hDJdGAHxGVkC0UjoJ3Iqqj-YMR5RUdaLVwJr0fpkGUOxR_nKOdadFf_WPA7XpEvv5y5BPP1eoWYLbelBwyWCy_ttv0qARDz1aRwiS7mzragxR32oUuxecd0fUrqeU6RuPOocczk5hxrUQbQ_pFgHtzfuGtdVBGhgv1k-sBwLlvkQ9jG5mcxwaJeb80xnBU";
-    fetch(
-      "https://api.spotify.com/v1/me/player/shuffle?state=" +
-        !shuffle +
-        "&device_id=" +
-        deviceId,
-      {
-        method: "PUT",
-        headers: {
-          authorization: `Bearer ${oauth_token}`,
-          "Content-Type": "application/json",
-        },
-        state: { shuffle: shuffle },
-        device_id: [deviceId],
-      }
-    );
+    const url = "http://localhost:9000/user/queue/shuffle";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          queue:res.queue
+        });
+        this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
+      });
   }
 
-  transferPlaybackHere() {
+  getCurrentQueue() {
+    const url = "http://localhost:9000/user/queue/" + this.props.auth.user.id;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          queue: res.queue
+        });
+      });
+  }
+
+  transferPlayback() {
     const { deviceId, token } = this.state;
-    // https://beta.developer.spotify.com/documentation/web-api/reference/player/transfer-a-users-playback/
+
     fetch("https://api.spotify.com/v1/me/player", {
       method: "PUT",
       headers: {
@@ -203,38 +181,86 @@ class NowPlaying extends Component {
       },
       body: JSON.stringify({
         device_ids: [deviceId],
-        // true: start playing music if it was paused on the other device
-        // false: paused if paused on other device, start playing music otherwise
         play: false,
       }),
     });
   }
 
-  getQueueData() {
-    fetch("http://localhost:9000/user/queue")
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          queue: res,
-        });
-        console.log(this.state);
-      })
-      .catch((err) => err);
+  checkForPlayer() {
+    const { token } = this.state;
+
+    // If the Spotify SDK has loaded
+    if (window.Spotify !== undefined) {
+      // Cancel the periodic checking and make a new player
+      clearInterval(this.playerCheckInterval);
+      this.player = new window.Spotify.Player({
+        name: "GitHum",
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
+      });
+
+      //Adding event handlers
+      this.player.on("initialization_error", (e) => {
+        //If there was a problem setting up the player
+        console.error(e);
+      });
+
+      this.player.on("authentication_error", (e) => {
+        //If there was a problem authenticating the user(Token was invalid / expired)
+        console.error(e);
+      });
+
+      this.player.on("account_error", (e) => {
+        //??
+        console.error(e);
+      });
+
+      this.player.on("playback_error", (e) => {
+        //If playing a track failed for some reason
+        console.error(e);
+      });
+
+      this.player.on("player_state_changed", (state) => {
+        //If there are any changes to the player state
+        console.log(state);
+        // if (
+        //     this.state
+        //     && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id)
+        //     && !this.state.paused
+        //     && state.paused
+        //     ) {
+        //     this.onNextClick();
+        //   }
+        // this.state = state;
+      });
+
+      this.player.on("ready", async (data) => {
+        //Making the player
+        let { device_id } = data;
+        await this.setState({ deviceId: device_id });
+
+        this.transferPlayback();
+      });
+
+      //Connecting!
+      this.player.connect();
+    }
   }
 
   componentDidMount() {
-    if (this.player != null) {
-      console.log("player exists");
-      return;
+    if (this.player == null) {
+      this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
     }
-    this.getQueueData();
-    this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 1000);
+    this.getCurrentQueue();
   }
 
+  /*
   // Prevents overlapping music but makes it choppy when going to different pages
-  // componentWillUnmount() {
-  //   this.player.disconnect();
-  // }
+  componentWillUnmount() {
+    this.player.disconnect();
+  }
+  */
 
   render() {
     return (
@@ -248,21 +274,26 @@ class NowPlaying extends Component {
             </Col>
           </Row>
           <Row className="now-playing-container">
-            <Col md="12" className="playlist-name-div">
-              <h3 className="playlist-name-header">
-                <span>
-                  <Image className="playlist-icon" src={ForestDefaultIcon} />
-                </span>{" "}
-                Disney Bops{" "}
-              </h3>
-            </Col>
+            {
+              this.current_forest_id != null &&
+              <Col md="12" className="playlist-name-div">
+                <Link to={"/forests/" + this.current_forest_id._id}>
+                  <h3 className="playlist-name-header">
+                    <span>
+                      <Image className="playlist-icon" src={ForestDefaultIcon} />
+                      { this.current_forest_id.name }
+                    </span>
+                  </h3>
+                </Link>
+              </Col>
+            }
             <Col md="12" className="song-container">
               <img
                 className="song-album-art-icon"
-                src={this.state.albumArt}
+                src={this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].album_art}
               ></img>
-              <h3 className="song-name-header">{this.state.trackName}</h3>
-              <h3 className="artist-name-header">{this.state.artistName}</h3>
+              <h3 className="song-name-header">{this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].name}</h3>
+              <h3 className="artist-name-header">{this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].artist_name}</h3>
             </Col>
             <Col md="12" className="actions-div">
               <input
@@ -302,4 +333,12 @@ class NowPlaying extends Component {
   }
 }
 
-export default NowPlaying;
+NowPlaying.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(withRouter(NowPlaying));
