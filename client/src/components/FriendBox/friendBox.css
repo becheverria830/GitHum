@@ -63,13 +63,20 @@ button.friend-list-action-button {
 }
 
 .friend-table td:nth-child(1) {
-  width: 60%;
+  /* padding-left: 20%; */
+  padding-right: 10%;
 }
 .friend-table td:nth-child(2) {
-  width: 30%;
+  padding-left: 10%;
+  padding-right: -5%;
 }
 .friend-table td:nth-child(3) {
-  width: 10%;
+  /* padding-left: 5%; */
+  /* padding-right: 10%; */
+}
+.friend-table td:nth-child(4) {
+  /* padding-left: 5%; */
+  /* padding-right: 15%; */
 }
 
 .friend-visit-valley {
@@ -77,6 +84,10 @@ button.friend-list-action-button {
   border: none;
   color: #000000;
   border-radius: 0.25vw;
+  width: 5vw;
+  height: 3vw;
+  font-size: 1.3vw;
+  text-align: center;
 }
 
 .friend-name-text {
@@ -84,84 +95,11 @@ button.friend-list-action-button {
 }
 
 .message-icon {
-  width: 2vw;
-  height: 2vw;
+  width: 1.7vw;
+  height: 1.7vw;
 }
 
 .delete-friend-button {
-  width: 2vw;
-  height: 2vw;
+  width: 1.7vw;
+  height: 1.7vw;
 }
-
-/* FRIEND CONTAINER CSS */
-/*
-#friend-box-title {
-  text-align: center;
-  font-weight: bold;
-}
-
-#friend-list-container {
-  height: 15vw;
-  overflow-y: scroll;
-}
-
-#friend-action-container {
-  background-color: #c4c4c4;
-  display: flex;
-  border-radius: 10% 10% 10% 10%;
-  margin: 0 0 0 20%;
-  height: 25vw;
-  width: 28vw;
-  align-items: center;
-  vertical-align: center;
-}
-
-table.friend-list-table {
-  table-layout: fixed;
-  width: 18vw;
-}
-
-.friend-list-item {
-  background-color: #fedbff;
-  width: 10vw;
-  font-size: 1.4vw;
-}
-
-th.friend-list-item,
-td.friend-list-item {
-  text-align: left;
-  padding: 8px;
-  width: 10vw;
-  overflow: hidden;
-}
-
-tr.friend-list-item:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-button.friend-list-action-button {
-  color: #000000;
-  background-color: #fedbff;
-  border: none;
-  margin: 0 0 30% 0;
-  white-space: nowrap;
-  width: 9vw;
-  height: 3.1vw;
-  max-width: 10em;
-  max-height: 5em;
-  font-size: 1vw;
-  text-align: center;
-  align-items: center;
-}
-
-button.friend-list-action-button:hover {
-  background-color: #e7c3e8;
-}
-
-#add-friend-button {
-  margin: 10% 0 0 -20%;
-}
-
-#friend-requests-button {
-  margin: 10% 0 0 5%;
-} */
