@@ -54,8 +54,8 @@ class SongList extends Component {
                     onClick={() => this.songListPlayTrack(song)}
                   ></input>
                 </td>
-                <td>{song.song_name}</td>
-                <td>{song.artist_name}</td>
+                <td>{song.name}</td>
+                <td>{song.artist_id}</td>
                 <td>
                   <Image src={Queue}></Image>
                 </td>
