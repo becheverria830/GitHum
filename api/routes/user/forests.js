@@ -146,57 +146,26 @@ router.get("/:forestid", function (req, res, next) {
   }
 });
 
-router.get("/saved", function (req, res, next) {
-  var uid = req.params.userid;
+router.get("/saved/:userid", function (req, res, next) {
+  var userid = req.params.userid;
 
-  if (uid == undefined) {
+  if (userid == undefined) {
     //Throwing an exception if user didn't supply all the information.
     res.status(400).json({
       forests: [],
     });
   } else {
-    User.find({ _id: uid }, function (find_error, user) {
-      if (find_error) throw find_error;
-
-      user_saved = users[0].library.saved.list.map((saved) =>
-        mongoose.Types.ObjectId(saved)
-      );
-
-      /*
-      Forest.aggregate([
-        {
-          $match : {
-            "_id": { $in: user_saved }
-          }
-        },
-        {
-          $lookup : {
-            "from": "Users",
-            "localField": "creator",
-            "foreignField": "_id",
-            "as": "creator"
-          }
-        },
-        {
-          $project: {
-            "creator.friend": 0,
-            "creator.library": 0,
-            "creator.credentials": 0,
-            "creator.icon": 0
-          }
-        }
-      ]
-*/
-
-      refined_forests = [];
-      for (forest of forests) {
-        refined_forests.push(forest);
-      }
-      res.status(200).json({
-        forests: refined_forests,
+    //Finding if a user with the email exists already
+    User.findOne({ _id: userid })
+      .populate("library.saved_forests")
+      .exec(function (err, user) {
+        if (err) throw err;
+        res.status(200).json({
+          forests: user.library.saved_forests,
+        });
       });
-    });
   }
+
 });
 
 router.get("/friends/:userid", function (req, res, next) {

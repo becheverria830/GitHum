@@ -78,14 +78,23 @@ class ValleyPage extends Component {
     });
   }
 
+  getSavedForests(userid) {
+    console.log(userid);
+    fetch("http://localhost:9000/user/forests/saved/" + userid)
+      .then((res) => res.json())
+      .then((res) => {
+        this.savedForestElement.current.updateState(res.forests);
+      })
+      .catch((err) => err);
+  }
+
   getFavoriteSongs(userid) {
     fetch("http://localhost:9000/user/favorites/songs/" + userid)
       .then((res) => res.json())
       .then((res) => {
+        console.log("test");
+        console.log(res);
         this.songListElement.current.updateState(res.songs);
-        this.setState({
-          forest: res,
-        });
       })
       .catch((err) => err);
   }
@@ -95,9 +104,6 @@ class ValleyPage extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.forestElement.current.updateState(res.forests);
-        this.setState({
-          forest: res,
-        });
       })
       .catch((err) => err);
   }
@@ -124,9 +130,10 @@ class ValleyPage extends Component {
 
 
   componentDidMount() {
-    this.getFavoriteSongs();
+    this.getFavoriteSongs(this.props.match.params.userid);
     this.getForests(this.props.match.params.userid);
     this.getValleyInformation(this.props.match.params.userid);
+    this.getSavedForests(this.props.match.params.userid);
   }
 
   render() {
@@ -202,7 +209,7 @@ class ValleyPage extends Component {
                     <ValleyForestDisplay ref={this.forestElement} />
                   </div>
                   <div className={this.state.showSavedForests ? null : "hidden"}>
-                    <ValleyForestDisplay />
+                    <ValleyForestDisplay ref={this.savedForestElement}/>
                   </div>
                 </div>
                 <div className={this.state.showForests ? null : "invisible"}>

@@ -37,7 +37,7 @@ router.post("/remove", function (req, res, next) {
 });
 
 //Populate the favorite songs
-router.get("/:userid", function (req, res, next) {
+router.get("/songs/:userid", function (req, res, next) {
   var userid = req.params.userid;
 
   if (userid == undefined) {
@@ -46,10 +46,9 @@ router.get("/:userid", function (req, res, next) {
     });
   } else {
     User.findOne({ _id: userid })
-      .populate('songs')
+      .populate('library.favorites')
       .exec(function (err, result) {
         if (err) throw err;
-        console.log(forest);
         res.status(200).json({
           songs: result.library.favorites
         });
