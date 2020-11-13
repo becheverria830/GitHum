@@ -18,6 +18,7 @@ import { logoutUser } from "../../redux/actions/authActions";
 import "./friendBox.css";
 import ForestDefaultIcon from "../../assets/forest.svg";
 import Message from "../../assets/comment.svg";
+import DeleteIcon from "../../assets/delete.svg";
 import FriendMessageButton from "./friendMessage";
 import AddFriendButton from "./addFriend";
 import FriendRequestsButton from "./friendRequests";
@@ -26,6 +27,8 @@ class FriendBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userMain: props.auth.user.id,
+      userOther: [],
       friends: {
         current_friends: [],
         requests: {
@@ -34,6 +37,7 @@ class FriendBox extends Component {
         },
       },
     };
+    this.handleSelectedFriend = this.handleSelectedFriend.bind(this);
   }
 
   getFriends() {
@@ -46,12 +50,40 @@ class FriendBox extends Component {
             requests: {
               received: res.incoming_requests,
               sent: res.outgoing_requests,
-            }
+            },
           },
         });
         console.log(res);
       })
       .catch((err) => err);
+  }
+
+  handleSelectedFriend(event, request) {
+    const url = "http://localhost:9000/user/friends/remove";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userMain: this.state.userMain,
+        userOther: request._id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+        } else {
+          alert(response[1].message);
+        }
+      });
+    alert("Friend Removed!");
   }
 
   componentDidMount() {
@@ -90,7 +122,20 @@ class FriendBox extends Component {
                             </Link>
                           </td>
                           <td>
-                            <FriendMessageButton current_user={this.props.auth.user} other_user={friend}/>
+                            <FriendMessageButton
+                              current_user={this.props.auth.user}
+                              other_user={friend}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="image"
+                              className="delete-friend-button"
+                              src={DeleteIcon}
+                              onClick={(event) => {
+                                this.handleSelectedFriend(event, friend); //need to make a promise for this?? is remove friend being called too early?
+                              }}
+                            ></input>
                           </td>
                         </tr>
                       ))}
@@ -117,9 +162,7 @@ class FriendBox extends Component {
 FriendBox.propTypes = {
   auth: PropTypes.object.isRequired,
 };
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
-export default connect(
-  mapStateToProps
-)(withRouter(FriendBox));
+export default connect(mapStateToProps)(withRouter(FriendBox));

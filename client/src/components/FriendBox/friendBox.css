@@ -18,7 +18,7 @@
 }
 
 .friend-buttons {
-  text-align:center;
+  text-align: center;
   padding-top: 5%;
 }
 
@@ -37,13 +37,12 @@
   background-color: #e7c3e8;
 }
 
-
 button.friend-list-action-button {
   align-items: center;
 }
 
 .friend-table {
-  height:30vh;
+  height: 30vh;
   overflow-y: scroll;
 }
 
@@ -74,10 +73,10 @@ button.friend-list-action-button {
 }
 
 .friend-visit-valley {
-  background-color: #C8E6C9 !important;
+  background-color: #c8e6c9 !important;
   border: none;
   color: #000000;
-  border-radius: .25vw;
+  border-radius: 0.25vw;
 }
 
 .friend-name-text {
@@ -89,6 +88,10 @@ button.friend-list-action-button {
   height: 2vw;
 }
 
+.delete-friend-button {
+  width: 2vw;
+  height: 2vw;
+}
 
 /* FRIEND CONTAINER CSS */
 /*

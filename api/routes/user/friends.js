@@ -73,8 +73,56 @@ router.post("/add", function (req, res, next) {
   });
 });
 
-router.delete("/remove", function (req, res, next) {
-  res.status(200);
+router.post("/remove", function (req, res, next) {
+  var userMain = req.body.userMain;
+  var userOther = req.body.userOther;
+  //Find main user
+  User.findOne({ _id: userMain }, function (err, res_usermain) {
+    if (err) {
+      console.log(err);
+    } else {
+      //Get User Other
+      User.findOne({ _id: userOther }, function (err, res_userother) {
+        if (err) {
+          console.log(err);
+        } else {
+          //Update User Main's friends list w/o User Other
+          console.log("res_userother: " + res_userother);
+          var index = res_usermain.friend.list.indexOf(userOther);
+          res_usermain.friend.list.splice(index, 1);
+          User.update(
+            { _id: res_usermain.id },
+            {
+              "friend.list": res_usermain.friend.list,
+            },
+            function (err, res_update) {
+              if (err) {
+                console.log(err);
+              } else {
+                //Update User Other's friends list w/o User Main
+                console.log("res_userother: " + res_userother);
+                var index = res_userother.friend.list.indexOf(userMain); //friend is null here
+                res_userother.friend.list.splice(index, 1);
+                User.update(
+                  { _id: res_userother.id },
+                  {
+                    "friend.list": res_userother.friend.list,
+                  },
+                  function (err, res_update) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      res.status(200).json({});
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      });
+    }
+  });
 });
 
 router.post("/request/decline", function (req, res, next) {
