@@ -60,7 +60,7 @@ class ForestPage extends Component {
   }
 
   getForestData() {
-    console.log("Never reaching inside get forest data to actually run the fetch");
+    console.log(this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1));
     fetch("http://localhost:9000/user/forests/"+this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf("/")+1),
     {
       body: {
@@ -78,7 +78,7 @@ class ForestPage extends Component {
   }
 
   componentDidMount() {
-    console.log("inside componentDidMount of ForestPage in forest.jsx")
+    console.log("inside componentDidMount of ForestPage in forest.jsx");
     this.getForestData();
   }
 

@@ -1,5 +1,9 @@
 var express = require('express');
+const models  = require("../models");
+
 var router = express.Router();
+
+const User = models['user'];
 
 /*
 /user/favorites/songs
@@ -8,12 +12,22 @@ var router = express.Router();
 
 // Turn a song into a favorite
 router.post("/songs/add", function (req, res, next) {
-  // Check that the string for the song info is valid
-
+  // Check that the strings are valid
+  const userid = req.body.userid;
+  const songlink = req.body.songlink;
 
   // If not then return with e
-  
-  // Check if song has an object already
+  if(songlink == undefined || userid == undefined){
+    res.status(400).json({
+      "user": null
+    });
+  } else {
+    res.status(400).json({
+      "user": null
+    });
+  }
+    // Check if song has an object already
+    
 
   // If So, then just add that _id to user.library.favorites
 

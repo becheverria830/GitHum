@@ -75,7 +75,7 @@ router.get('/forests/:userid', function(req, res, next) {
 
 router.get('/forests/:forestid', function(req, res, next) {
   
-  var id = req.body.forestid;
+  var id = req.params.forestid;
   
   console.log("inside AAAAAA here");
   //Getting the information from the request

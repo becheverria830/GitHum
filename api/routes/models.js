@@ -84,12 +84,27 @@ let message = new Schema(
 
 message = mongoose.model("message", message);
 
+let song = new Schema(
+  {
+    name: String,
+    artist_id: String,
+    album_art: String,
+    spotify_id: String,
+    genre_id: String
+  },
+  { collection: "Song" }
+)
+
+song = mongoose.model("song", song);
+
+
 const models = {
   'user': user,
   'resetpassword': resetpassword,
   'queue': queue,
   'forests': forests,
-  'message': message
+  'message': message,
+  'song': song
 };
 
 module.exports = models;
