@@ -164,7 +164,7 @@ class ForestPage extends Component {
               <Col id="song-list-div">
                 <div id="song-container">
                   <div className={this.state.showSongList ? null : "hidden"}>
-                    <SongList ref={this.songListElement} />
+                    <SongList ref={this.songListElement} user={this.props.auth.user}/>
                   </div>
                   <div className={this.state.showForestInfo ? null : "hidden"}>
                     <ForestInfo />

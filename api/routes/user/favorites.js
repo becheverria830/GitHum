@@ -5,6 +5,7 @@ const models = require("../models");
 var router = express.Router();
 
 const User = models["user"];
+const Forest = models["forests"];
 const Song = models["song"];
 
 /*
@@ -35,6 +36,25 @@ router.post("/add", function (req, res, next) {
 
 router.post("/remove", function (req, res, next) {
 });
+
+/*
+router.get("/songlist/:fid", function (req, res, next) {
+  var fid = req.params.fid;
+
+  if (fid == undefined) {
+    res.status(400).json({
+      songs: [],
+    });
+  } else {
+    Forest.findOne({'_id': fid})
+    .exec(function(err, songList) {
+      if (err) throw err;
+
+
+    })
+  }
+});
+*/
 
 //Populate the favorite songs
 router.get("/songs/:userid", function (req, res, next) {
