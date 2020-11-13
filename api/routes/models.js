@@ -13,14 +13,14 @@ let user = new Schema(
     },
     icon: String,
     friend: {
-      list: [mongoose.ObjectId],
-      incoming_requests: [mongoose.ObjectId],
-      outgoing_requests: [mongoose.ObjectId]
+      list: [{ type: mongoose.ObjectId, ref: 'users' }],
+      incoming_requests: [{ type: mongoose.ObjectId, ref: 'users' }],
+      outgoing_requests: [{ type: mongoose.ObjectId, ref: 'users' }]
     },
     library: {
-      favorites: [mongoose.ObjectId],
-      my_forests: [mongoose.ObjectId],
-      saved_forests: [mongoose.ObjectId]
+      favorites: [{ type: mongoose.ObjectId, ref: 'song' }],
+      my_forests: [{ type: mongoose.ObjectId, ref: 'forests' }],
+      saved_forests: [{ type: mongoose.ObjectId, ref: 'forests' }]
     }
   },
   { collection: "Users" }
@@ -30,7 +30,7 @@ user = mongoose.model("users", user);
 
 let resetpassword = new Schema(
   {
-    user_id: mongoose.ObjectId,
+    user_id: { type: mongoose.ObjectId, ref: 'users' },
     hashed_token: String,
     request_time: Date,
     expiration_time: Date,
@@ -43,9 +43,9 @@ resetpassword = mongoose.model("resetpassword", resetpassword);
 
 let queue = new Schema(
   {
-    user_id: mongoose.ObjectId,
-    current_forest_id: mongoose.ObjectId,
-    song_list: [mongoose.ObjectId],
+    user_id: { type: mongoose.ObjectId, ref: 'users' },
+    current_forest_id: { type: mongoose.ObjectId, ref: 'forests' },
+    song_list: [{ type: mongoose.ObjectId, ref: 'song' }],
     index: Number
   },
   { collection: "Queue" }
@@ -58,11 +58,11 @@ let forests = new Schema(
     name: String,
     icon: String,
     active: Number,
-    parent: mongoose.ObjectId,
-    children: [mongoose.ObjectId],
+    parent: { type: mongoose.ObjectId, ref: 'forests' },
+    children: [{ type: mongoose.ObjectId, ref: 'forests' }],
     depth: Number,
-    creator: mongoose.ObjectId,
-    songs: [mongoose.ObjectId],
+    creator: { type: mongoose.ObjectId, ref: 'users' },
+    songs: [{ type: mongoose.ObjectId, ref: 'song' }],
     settings: {
       privacy: Number
     }
@@ -74,8 +74,8 @@ forests = mongoose.model("forests", forests);
 
 let message = new Schema(
   {
-    from_user: mongoose.ObjectId,
-    to_user: mongoose.ObjectId,
+    from_user: { type: mongoose.ObjectId, ref: 'users' },
+    to_user: { type: mongoose.ObjectId, ref: 'users' },
     timestamp: Date,
     content: String
   },
@@ -96,7 +96,6 @@ let song = new Schema(
 )
 
 song = mongoose.model("song", song);
-
 
 const models = {
   'user': user,
