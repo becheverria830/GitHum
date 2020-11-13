@@ -77,7 +77,7 @@ class SongList extends Component {
                   ></input>
                 </td>
                 <td>{song.name}</td>
-                <td>{song.artist_id}</td>
+                <td>{song.artist_name}</td>
                 <td>
                   <input type="image" className="" src={Queue}></input>
                 </td>

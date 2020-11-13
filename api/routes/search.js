@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
     for(song of tracks.body.tracks.items) {
       refined_song = {
         "id": song.id,
-        "song_name": song.name,
+        "name": song.name,
         "artist_name": song.artists[0].name,
         "album_art": song.album.images[0].url,
         "uri": song.uri,
