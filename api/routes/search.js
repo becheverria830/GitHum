@@ -4,6 +4,9 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var keys = require('../config/keys');
 var router = express.Router();
 
+const models  = require("./models");
+const Song = models["song"];
+
 // credentials are optional
 var spotifyApi = new SpotifyWebApi({
   clientId: keys.Spotify_Client_ID,
@@ -21,18 +24,21 @@ router.get('/', function(req, res, next) {
   .then(function(tracks) {
     refined_songs = []
     for(song of tracks.body.tracks.items) {
-      refined_song = {
-        "id": song.id,
-        "name": song.name,
-        "artist_name": song.artists[0].name,
-        "album_art": song.album.images[0].url,
-        "uri": song.uri,
-        "href": song.href
+      var song_data = {
+        name: song.name,
+        artist_name: song.artists[0].name,
+        album_art: song.album.images[0].url,
+        spotify_uri: song.uri,
+        genre_id: ""
       }
-      refined_songs.push(refined_song);
+      refined_songs.push(song_data);
     }
-    res.status(200).json({
-      "songs": refined_songs
+    Song.insertMany(refined_songs, function(create_error, result) {
+      if (create_error) throw create_error;
+      console.log(result);
+      res.status(200).json({
+        "songs": result
+      });
     });
   }, function(err) {
     console.error(err);
