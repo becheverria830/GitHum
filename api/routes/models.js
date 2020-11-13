@@ -87,9 +87,9 @@ message = mongoose.model("message", message);
 let song = new Schema(
   {
     name: String,
-    artist_id: String,
+    artist_name: String,
     album_art: String,
-    spotify_id: String,
+    spotify_uri: String,
     genre_id: String
   },
   { collection: "Song" }
