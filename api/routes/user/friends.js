@@ -262,18 +262,24 @@ router.post("/request/accept", function (req, res, next) {
 });
 
 router.get("/search/:username", function (req, res, next) {
-  User.find(
-    { username: { $regex: req.params.username, $options: "i" } },
-    function (err, docs) {
-      if (err) {
-        throw err;
-      } else {
-        res.status(200).json({
-          users: docs,
-        });
+  if(req.params.username == undefined || req.params.username == ""){
+    res.status(200).json({
+      users: [],
+    });
+  } else {
+    User.find(
+      { username: { $regex: req.params.username, $options: "i" } },
+      function (err, docs) {
+        if (err) {
+          throw err;
+        } else {
+          res.status(200).json({
+            users: docs,
+          });
+        }
       }
-    }
-  );
+    );
+  }
 });
 
 module.exports = router;
