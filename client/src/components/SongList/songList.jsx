@@ -23,7 +23,7 @@ class SongList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      songs: [],
+      songs: []
     };
 
     this.addFavorite = this.addFavorite.bind(this);
@@ -52,7 +52,7 @@ class SongList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.auth.user.id,
+        userid: this.props.user.id,
         songid: song._id,
       }),
     };
@@ -88,7 +88,11 @@ class SongList extends Component {
       })
       .catch((err) => err);
   }
-
+/*
+  componentDidMount() {
+    this.updateState();
+  }
+*/
   render() {
     return (
       <React.Fragment>
@@ -133,11 +137,14 @@ class SongList extends Component {
 }
 
 SongList.propTypes = {
-  auth: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
+/*
 const mapStateToProps = state => ({
   auth: state.auth
 });
 export default connect(
   mapStateToProps,
 )(withRouter(SongList));
+*/
+export default SongList;
