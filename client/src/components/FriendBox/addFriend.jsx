@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component, useState } from "react";
-import { Link, Route, Switch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -15,8 +15,6 @@ import FormControl from "react-bootstrap/FormControl";
 
 /* Importing All Resources & Custom CSS */
 import "./addFriend.css";
-import MainNavBar from "../MainNavBar/mainNavBar";
-import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 import AddIcon from "../../assets/add.svg";
 
@@ -43,23 +41,54 @@ class AddFriendButton extends Component {
       userMain: props.auth.user.id,
       userOther: [],
       searchResults: [],
+      friends: {
+        current_friends: [],
+        requests: {
+          received: [],
+          sent: [],
+        },
+      },
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSelectedResult = this.handleSelectedResult.bind(this);
   }
 
+  // getFriends() {
+  //   console.log("GetFriends called");
+  //   fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       console.log("Res: " + res);
+  //       this.setState({
+  //         friends: {
+  //           current_friends: res.list,
+  //           requests: {
+  //             received: res.incoming_requests,
+  //             sent: res.outgoing_requests,
+  //           },
+  //         },
+  //       });
+  //       console.log(res);
+  //     })
+  //     .catch((err) => err);
+  // }
+
   search = (e) => {
     e.preventDefault();
-    fetch("http://localhost:9000/user/friends/search/" + this.state.search)
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          searchResults: res.users,
-        });
-      })
-      .catch((err) => err);
+    if (this.state.search == "") {
+      return;
+    } else {
+      fetch("http://localhost:9000/user/friends/search/" + this.state.search)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          this.setState({
+            searchResults: res.users,
+          });
+        })
+        .catch((err) => err);
+    }
   };
 
   handleSearchChange(event) {
@@ -72,32 +101,81 @@ class AddFriendButton extends Component {
   }
 
   sendFriendRequest(event) {
-    const url = "http://localhost:9000/user/friends/add";
-    const options = {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userMain: this.state.userMain,
-        userOther: this.state.userOther,
-      }),
-    };
-    fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        console.log(response);
-        if (response[0] == 200) {
-          console.log("good.");
+    // getFriend()
+    fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          friends: {
+            current_friends: res.list,
+            requests: {
+              received: res.incoming_requests,
+              sent: res.outgoing_requests,
+            },
+          },
+        });
+
+        // CHECK if request is to yourself
+        if (this.state.userMain === this.state.userOther) {
+          alert("You can't send a friend request to yourself!");
+          return;
         } else {
-          alert(response[1].message);
+          // CHECK if request has been sent already
+          var outgoing_reqs = this.state.friends.requests.sent;
+          outgoing_reqs.forEach((req) => {
+            console.log(req._id);
+            if (req._id == this.state.userOther) {
+              alert("You have sent this user a friend request already!");
+              return;
+            }
+          });
+          // CHECK if request has been received already
+          var incoming_reqs = this.state.friends.requests.received;
+          incoming_reqs.forEach((req) => {
+            if (req._id == this.state.userOther) {
+              alert("This user has already sent you a friend request!");
+              return;
+            }
+          });
+          // CHECK if the user is your friend already
+          var current_friends = this.state.friends.current_friends;
+          current_friends.forEach((friend) => {
+            if (friend._id == this.state.userOther) {
+              alert("This user is your friend already!");
+              return;
+            }
+          });
+
+          // Send Friend Request
+          const url = "http://localhost:9000/user/friends/add";
+          const options = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userMain: this.state.userMain,
+              userOther: this.state.userOther,
+            }),
+          };
+          fetch(url, options)
+            .then((res) => [res.status, res.json()])
+            .then((response) => {
+              console.log(response);
+              if (response[0] == 200) {
+                console.log("good.");
+              } else {
+                alert(response[1].message);
+              }
+            });
+          alert("Friend Request Sent!");
         }
-      });
-    alert("Friend Request Sent!");
+      })
+      .catch((err) => err);
   }
 
   render() {
