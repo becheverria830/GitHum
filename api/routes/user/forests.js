@@ -46,6 +46,55 @@ router.post("/create", (req, res, err) => {
   }
 });
 
+router.post("/byId/:fid/add", function (req, res, next) {
+  const fid = req.body.forestid;
+  const sid = req.body.userid;
+  console.log(fid);
+  console.log(sid);
+
+  if (fid == undefined || sid == undefined) {
+    res.status(400).json({
+      forest: null,
+    });
+  }
+  else {
+    Forest.findOneAndUpdate({_id : uid}, { $push: {'songs': sid} }, function (err, result) {
+      if (err) throw err;
+      res.status(200).json({});
+    });
+  }
+
+});
+
+
+
+router.post("/byId/:fid/save", function (req, res, next) {
+  const fid = req.body.forestid;
+  const fcreator = req.body.creator;
+  const uid = req.body.userid;
+  console.log(fid);
+  console.log(uid);
+
+  if (fid == undefined || uid == undefined) {
+    res.status(400).json({
+      forest: null,
+    });
+  }
+  else if (fcreator == uid) {
+    console.log("You already have this Forest in your library - You made it in the first place!")
+    res.status(400).json({
+      forest: null,
+    });
+  }
+  else {
+    User.findOneAndUpdate({'_id' : uid}, { $push: {'library.saved': fid} }, function (err, result) {
+      if (err) throw err;
+      res.status(200).json({});
+    });
+  }
+
+});
+
 router.get("/forests/:userid", function (req, res, next) {
   console.log("inside here");
   //Getting the information from the request
@@ -92,89 +141,59 @@ router.get("/:forestid", function (req, res, next) {
       });
   }
 });
+
+
+
 router.get("/saved", function (req, res, next) {
-  res.json({
-    forests: [
-      {
-        id: 1,
-        name: "My First Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
-          {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
+  var uid = req.params.userid;
+
+  if (uid == undefined) {
+    //Throwing an exception if user didn't supply all the information.
+    res.status(400).json({
+      forests: [],
+    });
+  }
+  else {
+    User.find({ _id: uid }, function (find_error, user) {
+      if (find_error) throw find_error;
+
+      user_saved = users[0].library.saved.list.map(saved => mongoose.Types.ObjectId(saved));
+
+      /*
+      Forest.aggregate([
+        {
+          $match : {
+            "_id": { $in: user_saved }
+          }
         },
-      },
-      {
-        id: 2,
-        name: "My Second Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
-          {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
+        {
+          $lookup : {
+            "from": "Users",
+            "localField": "creator",
+            "foreignField": "_id",
+            "as": "creator"
+          }
         },
-      },
-      {
-        id: 3,
-        name: "My Third Forest",
-        icon:
-          "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-        active: 1,
-        songs: [
-          {
-            id: 1,
-            song_name: "Piano Man",
-            artist_name: "Billy Joel",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-          {
-            id: 2,
-            song_name: "Up Town Funk",
-            artist_name: "Bruno Mars",
-            album_art:
-              "https://i.scdn.co/image/ab67616d00001e02814cbc4746358a25c84c62e7",
-          },
-        ],
-        settings: {
-          privacy: 1,
-        },
-      },
-    ],
-  });
+        {
+          $project: {
+            "creator.friend": 0,
+            "creator.library": 0,
+            "creator.credentials": 0,
+            "creator.icon": 0
+          }
+        }
+      ]
+*/
+
+      refined_forests = [];
+      for (forest of forests) {
+        refined_forests.push(forest);
+      }
+      res.status(200).json({
+        forests: refined_forests,
+      });
+    });
+  }
 });
 
 router.get('/friends/:userid', function(req, res, next) {
