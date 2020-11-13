@@ -12,7 +12,7 @@ const Song = models["song"];
 */
 
 // Turn a song into a favorite
-router.post("/songs/add", function (req, res, next) {
+router.post("/add", function (req, res, next) {
   // Check that the strings are valid
   const userid = req.body.userid;
   const songid = req.body.songid;
@@ -33,21 +33,27 @@ router.post("/songs/add", function (req, res, next) {
   // and as the object is being made, save the ID for it
 });
 
-router.post("/songs/remove", function (req, res, next) {
+router.post("/remove", function (req, res, next) {
 });
 
 //Populate the favorite songs
-router.get("/songs/:userid", function (req, res, next) {
-  const userid = req.params.userid;
+router.get("/:userid", function (req, res, next) {
+  var userid = req.params.userid;
 
   if (userid == undefined) {
     res.status(400).json({
       songs: [],
     });
   } else {
-    res.status(200).json({
-      songs: [],
-    });
+    User.findOne({ _id: userid })
+      .populate('songs')
+      .exec(function (err, result) {
+        if (err) throw err;
+        console.log(forest);
+        res.status(200).json({
+          songs: result.library.favorites
+        });
+      });
   }
 });
 
