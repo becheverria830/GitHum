@@ -16,6 +16,8 @@ import Queue from "../../assets/queue.svg";
 import Flower from "../../assets/flower.svg";
 import NowPlaying from "../NowPlaying/nowPlaying";
 
+import PropTypes from "prop-types";
+
 class SongList extends Component {
   constructor(props) {
     super(props);
@@ -25,18 +27,16 @@ class SongList extends Component {
   }
 
   updateState(state) {
-    console.log(state);
     this.setState({
       songs: state,
     });
   }
 
   songListPlayTrack(song) {
-    this.np.playTrack(song.id);
+    this.np.playTrack(song.spotify_uri);
   }
 
-  addFavorite(event) {
-    event.preventDefault();
+  addFavorite(song) {
     const url = "http://localhost:9000/user/favorites/songs/add";
     const options = {
       method: "POST",
@@ -48,12 +48,38 @@ class SongList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        songlink: song._id,
-        userid: this.props.auth.user.id
+        userid: this.props.user.id,
+        songid: song._id,
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => err);
+  }
+
+  queueSong(song) {
+    const url = "http://localhost:9000/user/queue/add_song";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+      })
       .catch((err) => err);
   }
 
@@ -79,14 +105,16 @@ class SongList extends Component {
                 <td>{song.name}</td>
                 <td>{song.artist_name}</td>
                 <td>
-                  <input type="image" className="" src={Queue}></input>
+                  <input type="image" className="" src={Queue}
+                    onClick={() => this.queueSong(song)}
+                  ></input>
                 </td>
                 <td>
                   <input type="image" className="" src={Tree}></input>
                 </td>
                 <td>
                   <input type="image" className="" src={Flower}
-                    onClick={this.addFavorite}
+                    onClick={() => this.addFavorite(song)}
                   ></input>
                 </td>
               </tr>
@@ -98,4 +126,7 @@ class SongList extends Component {
   }
 }
 
+SongList.propTypes = {
+  user: PropTypes.object.isRequired
+};
 export default SongList;

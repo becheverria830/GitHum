@@ -7,6 +7,9 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 /* Importing All Resources & Custom CSS */
 import "./search.css";
 import MainNavBar from "../MainNavBar/mainNavBar";
@@ -26,8 +29,7 @@ class SearchPage extends Component {
     fetch("http://localhost:9000/search?query=" + this.props.match.params.query)
       .then(res => res.json())
       .then(res => {
-        console.log("song list:");
-        console.log(res);
+        console.log(res.songs);
         this.songListElement.current.updateState(res.songs);
       })
       .catch(err => err);
@@ -52,7 +54,7 @@ class SearchPage extends Component {
             <Row>
               <Col id="song-list-div">
                 <div id="song-container">
-                  <SongList ref={this.songListElement}/>
+                  <SongList ref={this.songListElement} user={this.props.auth.user} />
                 </div>
               </Col>
             </Row>
@@ -78,4 +80,13 @@ class SearchPage extends Component {
   }
 }
 
-export default withRouter(SearchPage);
+
+SearchPage.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(withRouter(SearchPage));
