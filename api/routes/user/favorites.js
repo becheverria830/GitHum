@@ -37,8 +37,18 @@ router.post("/songs/remove", function (req, res, next) {
 });
 
 //Populate the favorite songs
-router.get("/songs", function (req, res, next) {
-  // replace with db request
+router.get("/songs/:userid", function (req, res, next) {
+  const userid = req.params.userid;
+
+  if (userid == undefined) {
+    res.status(400).json({
+      songs: [],
+    });
+  } else {
+    res.status(200).json({
+      songs: [],
+    });
+  }
 });
 
 module.exports = router;

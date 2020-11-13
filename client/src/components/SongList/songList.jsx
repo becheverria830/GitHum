@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter} from "react-router-dom";
 // import ReactDOM from "react-dom";
 
 /* Importing All Bootstrap Components */
@@ -17,6 +17,7 @@ import Flower from "../../assets/flower.svg";
 import NowPlaying from "../NowPlaying/nowPlaying";
 
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class SongList extends Component {
   constructor(props) {
@@ -24,6 +25,9 @@ class SongList extends Component {
     this.state = {
       songs: [],
     };
+
+    this.addFavorite = this.addFavorite.bind(this);
+
   }
 
   updateState(state) {
@@ -48,10 +52,12 @@ class SongList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.user.id,
+        userid: this.props.auth.user.id,
         songid: song._id,
       }),
     };
+    console.log(this.props.auth.user.id);
+    console.log(song._id);
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
@@ -72,7 +78,7 @@ class SongList extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.user.id,
+        userid: this.props.auth.user.id,
         songid: song._id,
       }),
     };
@@ -127,6 +133,11 @@ class SongList extends Component {
 }
 
 SongList.propTypes = {
-  user: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
-export default SongList;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(withRouter(SongList));

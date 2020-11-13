@@ -78,8 +78,8 @@ class ValleyPage extends Component {
     });
   }
 
-  getFavoriteSongs() {
-    fetch("http://localhost:9000/user/favorites/songs")
+  getFavoriteSongs(userid) {
+    fetch("http://localhost:9000/user/favorites/songs/" + userid)
       .then((res) => res.json())
       .then((res) => {
         this.songListElement.current.updateState(res.songs);
