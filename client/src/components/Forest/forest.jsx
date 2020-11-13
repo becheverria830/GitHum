@@ -65,10 +65,9 @@ class ForestPage extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          forest: res.forests[0],
+          forest: res.forests,
         });
-        this.songListElement.current.updateState(res.forests[0].songs);
-        console.log(this.songListElement.current);
+        this.songListElement.current.updateState(res.forests.songs);
       })
       .catch((err) => err);
   }
