@@ -40,6 +40,7 @@ class AddFriendButton extends Component {
       search: "",
       userMain: props.auth.user.id,
       userOther: [],
+      userOtherName: "",
       searchResults: [],
       friends: {
         current_friends: [],
@@ -96,7 +97,10 @@ class AddFriendButton extends Component {
   }
 
   handleSelectedResult(event, searchRes) {
-    this.setState({ userOther: searchRes._id });
+    this.setState({
+      userOther: searchRes._id,
+      userOtherName: searchRes.username,
+    });
     console.log(searchRes._id);
   }
 
@@ -222,45 +226,56 @@ class AddFriendButton extends Component {
               </Col>
             </Row>
             <Row>
-              <Container className="add-friend-search-container">
-                <Row className="add-friend-search-items">
-                  <Table className="add-friend-search-results">
-                    <tbody>
-                      {this.state.searchResults.map((searchRes) => (
-                        <tr className="add-friend-search-item">
-                          <td
-                            onClick={(event) => {
-                              this.handleSelectedResult(event, searchRes);
-                            }}
-                            value={searchRes.username}
-                          >
-                            {searchRes.username}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
-                </Row>
-                <Row>
-                  <Col
-                    lg="12"
-                    md="12"
-                    sm="12"
-                    xs="12"
-                    className="center-button"
-                  >
-                    <Button
-                      id="add-friend-request-button"
-                      onClick={() => {
-                        this.sendFriendRequest();
-                      }}
+              <Col>
+                <Container className="add-friend-search-container">
+                  <Row>
+                    <Col>
+                      <h2 id="currently-selected">
+                        Selected: {this.state.userOtherName}
+                      </h2>
+                    </Col>
+                  </Row>
+                  <Row className="add-friend-search-items">
+                    <Col>
+                      <Table className="add-friend-search-results">
+                        <tbody>
+                          {this.state.searchResults.map((searchRes) => (
+                            <tr className="add-friend-search-item">
+                              <td
+                                onClick={(event) => {
+                                  this.handleSelectedResult(event, searchRes);
+                                }}
+                                value={searchRes.username}
+                              >
+                                {searchRes.username}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col
+                      lg="12"
+                      md="12"
+                      sm="12"
+                      xs="12"
+                      className="center-button"
                     >
-                      {" "}
-                      Send Request{" "}
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
+                      <Button
+                        id="add-friend-request-button"
+                        onClick={() => {
+                          this.sendFriendRequest();
+                        }}
+                      >
+                        {" "}
+                        Send Request{" "}
+                      </Button>
+                    </Col>
+                  </Row>
+                </Container>
+              </Col>
             </Row>
           </Modal.Body>
         </Modal>

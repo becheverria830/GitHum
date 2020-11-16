@@ -25,6 +25,7 @@ class FriendRequests extends Component {
       showOutgoing: false,
       userMain: props.auth.user.id,
       userOther: [],
+      userOtherName: "",
       friends: {
         current_friends: [],
         requests: {
@@ -81,7 +82,7 @@ class FriendRequests extends Component {
   }
 
   handleSelectedRequest(event, request) {
-    this.setState({ userOther: request._id });
+    this.setState({ userOther: request._id, userOtherName: request.username });
     console.log(request._id);
   }
 
@@ -208,86 +209,105 @@ class FriendRequests extends Component {
               </Col>
             </Row>
             <Row>
-              <Container className="friend-requests-container">
-                <Row className="friend-requests-items">
-                  <div className={this.state.showOutgoing ? null : "hidden"}>
-                    <Table className="friend-requests-results">
-                      <tbody>
-                        {this.state.friends.requests.sent.map((outgoingRes) => (
-                          <tr className="friend-requests-item">
-                            <td
-                              value={outgoingRes.username}
-                              onClick={(event) => {
-                                this.handleSelectedRequest(event, outgoingRes);
-                              }}
-                            >
-                              {outgoingRes.username}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </div>
-                  <div className={this.state.showIncoming ? null : "hidden"}>
-                    <Table className="friend-requests-results">
-                      <tbody>
-                        {this.state.friends.requests.received.map(
-                          (incomingRes) => (
-                            <tr className="friend-requests-item">
-                              <td
-                                value={incomingRes.username}
-                                onClick={(event) => {
-                                  this.handleSelectedRequest(
-                                    event,
-                                    incomingRes
-                                  );
-                                }}
-                              >
-                                {incomingRes.username}
-                              </td>
-                            </tr>
-                          )
-                        )}
-                      </tbody>
-                    </Table>
-                  </div>
-                </Row>
+              <Col>
+                <Container className="friend-requests-container">
+                  <Row>
+                    <Col>
+                      <div>
+                        <h2
+                          className={this.state.showIncoming ? null : "hide"}
+                          id="currently-selected-req"
+                        >
+                          Selected: {this.state.userOtherName}
+                        </h2>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row className="friend-requests-items">
+                    <div className={this.state.showOutgoing ? null : "hidden"}>
+                      <Table className="friend-requests-results">
+                        <tbody>
+                          {this.state.friends.requests.sent.map(
+                            (outgoingRes) => (
+                              <tr className="friend-requests-item">
+                                <td
+                                  value={outgoingRes.username}
+                                  onClick={(event) => {
+                                    this.handleSelectedRequest(
+                                      event,
+                                      outgoingRes
+                                    );
+                                  }}
+                                >
+                                  {outgoingRes.username}
+                                </td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </Table>
+                    </div>
+                    <div className={this.state.showIncoming ? null : "hidden"}>
+                      <Table className="friend-requests-results">
+                        <tbody>
+                          {this.state.friends.requests.received.map(
+                            (incomingRes) => (
+                              <tr className="friend-requests-item">
+                                <td
+                                  value={incomingRes.username}
+                                  onClick={(event) => {
+                                    this.handleSelectedRequest(
+                                      event,
+                                      incomingRes
+                                    );
+                                  }}
+                                >
+                                  {incomingRes.username}
+                                </td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </Table>
+                    </div>
+                  </Row>
 
-                <Row className={this.state.showIncoming ? null : "hidden"}>
-                  <Col
-                    lg="6"
-                    md="6"
-                    sm="6"
-                    xs="6"
-                    className="friend-requests-toggle-button-column"
-                  >
-                    <Button
-                      id="friend-requests-accept-button"
-                      onClick={() => {
-                        this.acceptRequest();
-                      }}
+                  <Row className={this.state.showIncoming ? null : "hidden"}>
+                    <Col
+                      lg="6"
+                      md="6"
+                      sm="6"
+                      xs="6"
+                      className="friend-requests-toggle-button-column"
                     >
-                      Accept
-                    </Button>
-                  </Col>
-                  <Col
-                    lg="6"
-                    md="6"
-                    sm="6"
-                    xs="6"
-                    className="friend-requests-toggle-button-column"
-                  >
-                    <Button
-                      id="friend-requests-decline-button"
-                      onClick={() => {
-                        this.declineRequest();
-                      }}
+                      <Button
+                        id="friend-requests-accept-button"
+                        onClick={() => {
+                          this.acceptRequest();
+                        }}
+                      >
+                        Accept
+                      </Button>
+                    </Col>
+                    <Col
+                      lg="6"
+                      md="6"
+                      sm="6"
+                      xs="6"
+                      className="friend-requests-toggle-button-column"
                     >
-                      Decline
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
+                      <Button
+                        id="friend-requests-decline-button"
+                        onClick={() => {
+                          this.declineRequest();
+                        }}
+                      >
+                        Decline
+                      </Button>
+                    </Col>
+                  </Row>
+                </Container>
+              </Col>
             </Row>
           </Modal.Body>
         </Modal>
