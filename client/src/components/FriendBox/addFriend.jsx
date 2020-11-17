@@ -122,6 +122,11 @@ class AddFriendButton extends Component {
         });
 
         // CHECK if request is to yourself
+        if (this.state.userOther == "") {
+          alert("Please select a username for the friend request!");
+          return;
+        }
+        // CHECK if request is to yourself
         if (this.state.userMain === this.state.userOther) {
           alert("You can't send a friend request to yourself!");
           return;
