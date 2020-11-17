@@ -52,6 +52,8 @@ class FriendRequests extends Component {
     this.setState({
       showIncoming: true,
       showOutgoing: false,
+      userOther: [],
+      userOtherName: "",
     });
   }
 
@@ -59,6 +61,8 @@ class FriendRequests extends Component {
     this.setState({
       showIncoming: false,
       showOutgoing: true,
+      userOther: [],
+      userOtherName: "",
     });
   }
 
@@ -220,6 +224,12 @@ class FriendRequests extends Component {
                         >
                           Selected: {this.state.userOtherName}
                         </h2>
+                        {/* <h2
+                          className={this.state.showOutgoing ? null : "hide"}
+                          id="currently-selected-req"
+                        >
+                          Selected: {this.state.userOtherName}
+                        </h2> */}
                       </div>
                     </Col>
                   </Row>

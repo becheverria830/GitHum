@@ -104,6 +104,8 @@ class AddFriendButton extends Component {
     console.log(searchRes._id);
   }
 
+  displayError(error_message) {}
+
   sendFriendRequest(event) {
     // getFriend()
     fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
@@ -126,30 +128,43 @@ class AddFriendButton extends Component {
         } else {
           // CHECK if request has been sent already
           var outgoing_reqs = this.state.friends.requests.sent;
+          var error_bool = false;
           outgoing_reqs.forEach((req) => {
-            console.log(req._id);
             if (req._id == this.state.userOther) {
-              alert("You have sent this user a friend request already!");
-              return;
+              error_bool = true;
             }
           });
+          if (error_bool) {
+            alert("You have sent this user a friend request already!");
+            return;
+          }
+
+          error_bool = false;
           // CHECK if request has been received already
           var incoming_reqs = this.state.friends.requests.received;
           incoming_reqs.forEach((req) => {
             if (req._id == this.state.userOther) {
-              alert("This user has already sent you a friend request!");
-              return;
+              error_bool = true;
             }
           });
+          if (error_bool) {
+            alert("This user has already sent you a friend request!");
+            return;
+          }
+
+          error_bool = false;
           // CHECK if the user is your friend already
           var current_friends = this.state.friends.current_friends;
           current_friends.forEach((friend) => {
             if (friend._id == this.state.userOther) {
-              alert("This user is your friend already!");
+              error_bool = true;
               return;
             }
           });
-
+          if (error_bool) {
+            alert("This user is your friend already!");
+            return;
+          }
           // Send Friend Request
           const url = "http://localhost:9000/user/friends/add";
           const options = {
