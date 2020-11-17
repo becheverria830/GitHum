@@ -28,3 +28,13 @@
 .invisible {
   display: none !important;
 }
+
+.dropdown-toggle {
+  background-color: transparent;
+  border: none;
+}
+
+.dropdown-toggle:hover {
+  background-color: transparent;
+  border: none;
+}

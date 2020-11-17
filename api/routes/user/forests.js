@@ -98,6 +98,30 @@ router.post("/save", function (req, res, next) {
   }
 });
 
+router.post("/addToForest", function (req, res, next) { // WORKS!
+  const song_id = req.body.song_id;
+  const forest_id = req.body.forest_id;
+
+  Forest.findOne({ _id: forest_id }, function (err, res_find_forest) {
+    if (err) {
+      console.log(err);
+    } else {
+      res_find_forest.songs.push(song_id);
+      Forest.update(
+        { _id: forest_id },
+        { songs: res_find_forest.songs },
+        function (err, res_update_forest) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.status(200).json({});
+          }
+        }
+      );
+    }
+  });
+});
+
 router.get("/forests/:userid", function (req, res, next) {
   console.log("inside here");
   //Getting the information from the request
@@ -125,7 +149,6 @@ router.get("/forests/:userid", function (req, res, next) {
 });
 
 router.get("/:forestid", function (req, res, next) {
-  console.log("GREAT");
   var id = req.params.forestid;
 
   if (id == undefined) {
@@ -165,7 +188,6 @@ router.get("/saved/:userid", function (req, res, next) {
         });
       });
   }
-
 });
 
 router.get("/friends/:userid", function (req, res, next) {
