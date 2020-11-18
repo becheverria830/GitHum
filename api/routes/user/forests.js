@@ -98,7 +98,8 @@ router.post("/save", function (req, res, next) {
   }
 });
 
-router.post("/addToForest", function (req, res, next) { // WORKS!
+router.post("/addToForest", function (req, res, next) {
+  // WORKS!
   const song_id = req.body.song_id;
   const forest_id = req.body.forest_id;
 
@@ -120,6 +121,65 @@ router.post("/addToForest", function (req, res, next) { // WORKS!
       );
     }
   });
+});
+
+router.post("/branchForest", function (req, res, next) {
+  const branch_forest_name = req.body.branch_forest_name;
+  const parent_forest_id = req.body.parent_forest_id;
+  const user_id = req.body.user_id;
+
+  // Get Parent Forest
+  if (parent_forest_id == undefined) {
+    res.status(400).json({
+      forests: [],
+    });
+  } else {
+    Forest.findOne({ _id: parent_forest_id }, function (err, res_find_parent) {
+      var parent_forest_songs = res_find_parent.songs;
+      var branch_depth = res_find_parent.depth + 1;
+      var branch_forest_data = {
+        name: branch_forest_name,
+        icon: "",
+        active: true,
+        children: [],
+        depth: branch_depth,
+        creator: user_id,
+        songs: parent_forest_songs,
+        settings: {
+          privacy: false,
+        },
+      };
+      //
+      // Create Branch Forest (Forest.insertMany)
+      Forest.insertMany([branch_forest_data], function (
+        create_error,
+        res_insert_forest
+      ) {
+        if (create_error) {
+          throw create_error;
+        } else {
+          //
+          // Update Parent.children
+          res_find_parent.children.push(res_insert_forest[0]._id);
+          Forest.update(
+            { _id: res_find_parent.id },
+            {
+              children: res_find_parent.children,
+            },
+            function (err, res_update_children) {
+              if (create_error) {
+                throw create_error;
+              } else {
+                res.status(200).json({});
+              }
+            }
+          );
+        }
+      });
+    });
+  }
+
+  //
 });
 
 router.get("/forests/:userid", function (req, res, next) {
