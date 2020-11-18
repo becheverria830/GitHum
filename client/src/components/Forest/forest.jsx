@@ -164,7 +164,10 @@ class ForestPage extends Component {
               <Col id="song-list-div">
                 <div id="song-container">
                   <div className={this.state.showSongList ? null : "hidden"}>
-                    <SongList ref={this.songListElement} user={this.props.auth.user}/>
+                    <SongList
+                      ref={this.songListElement}
+                      user={this.props.auth.user}
+                    />
                   </div>
                   <div className={this.state.showForestInfo ? null : "hidden"}>
                     <ForestInfo />
@@ -183,7 +186,7 @@ class ForestPage extends Component {
                     </Button>
                   </Col>
                   <Col md="12">
-                    <BranchForest />
+                    <BranchForest forest_id = {this.state.forest._id} />
                   </Col>
                   <Col md="12">
                     <div className={this.props.myForest ? null : "hidden"}>

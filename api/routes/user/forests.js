@@ -35,6 +35,7 @@ router.post("/create", (req, res, err) => {
       settings: {
         privacy: false,
       },
+      times_saved: 0,
     };
     Forest.insertMany([forest_data], function (create_error, result) {
       if (create_error) throw create_error;
@@ -91,8 +92,23 @@ router.post("/save", function (req, res, next) {
       { _id: uid },
       { $push: { "library.saved_forests": fid } },
       function (err, result) {
-        if (err) throw err;
-        res.status(200).json({});
+        if (err) {
+          throw err;
+        } else {
+          // Times Saved + 1
+          Forest.findOneAndUpdate(
+            { _id: fid },
+            { $inc: { times_saved: 1 } },
+            { new: true },
+            function (err, res_updated_times_saved) {
+              if (err) {
+                throw err;
+              } else {
+                res.status(200).json({});
+              }
+            }
+          );
+        }
       }
     );
   }
@@ -144,10 +160,12 @@ router.post("/branchForest", function (req, res, next) {
         children: [],
         depth: branch_depth,
         creator: user_id,
+        parent: parent_forest_id,
         songs: parent_forest_songs,
         settings: {
           privacy: false,
         },
+        times_saved: 0,
       };
       //
       // Create Branch Forest (Forest.insertMany)
@@ -162,7 +180,7 @@ router.post("/branchForest", function (req, res, next) {
           // Update Parent.children
           res_find_parent.children.push(res_insert_forest[0]._id);
           Forest.update(
-            { _id: res_find_parent.id },
+            { _id: parent_forest_id },
             {
               children: res_find_parent.children,
             },

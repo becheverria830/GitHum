@@ -1,14 +1,14 @@
 /* Importing React & Router */
 import React, { Component, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 /* Importing All Bootstrap Components */
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
@@ -16,64 +16,127 @@ import FormControl from "react-bootstrap/FormControl";
 /* Importing All Resources & Custom CSS */
 import "./branchForest.css";
 
-function BranchForestButton() {
-  const [show, setShow] = useState(false);
+class BranchForest extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user_id: props.auth.user.id,
+      branch_name_input: "",
+      show: false,
+      forestid: -1,
+    };
+    this.handleCreateBranch = this.handleCreateBranch.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+  }
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  showModal = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+  onClose = (e) => {
+    this.props.onClose && this.props.onClose(e);
+  };
 
-  return (
-    <div>
-      <Button
-        className="button forest-action-button"
-        id="branch-forest-button"
-        onClick={handleShow}
-      >
-        Branch from Forest
-      </Button>
+  handleNameChange(event) {
+    this.setState({ branch_name_input: event.target.value });
+  }
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header
-          closeButton
-          id="branch-forest-modal-header"
-          className="text-center"
+  handleCreateBranch(event) {
+    event.preventDefault();
+
+    // AJAX
+    const url = "http://localhost:9000/user/forests/branchForest";
+
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        branch_forest_name: this.state.branch_name_input,
+        parent_forest_id: this.props.forest_id,
+        user_id: this.state.user_id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        console.log(response);
+        if (response[0] == 200) {
+        } else {
+          alert(response[1].message);
+        }
+      });
+
+    // Link to Branch Forest
+  }
+
+  updateState(state) {
+    this.setState({
+      forestid: state,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Button
+          className="button forest-action-button"
+          id="branch-forest-button"
+          onClick={(e) => {
+            this.showModal();
+          }}
         >
-          <Modal.Title id="branch-forest-modal-title">
-            Branch from Forest
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body id="branch-forest-modal-body">
-          <Row>
-            <Col lg="12" md="12" sm="12" xs="12">
-              <Form inline>
-                <FormControl
-                  type="text"
-                  placeholder="Give the Branched Forest a name!"
-                  className="ml-sm-2"
-                  id="branch-forest-name-bar"
-                />
-                <Link to="/forest/1">
+          Branch from Forest
+        </Button>
+
+        <Modal show={this.state.show} onHide={this.showModal}>
+          <Modal.Header
+            closeButton
+            id="branch-forest-modal-header"
+            className="text-center"
+          >
+            <Modal.Title id="branch-forest-modal-title">
+              Branch from Forest
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body id="branch-forest-modal-body">
+            <Row>
+              <Col lg="12" md="12" sm="12" xs="12">
+                <Form inline>
+                  <FormControl
+                    type="text"
+                    placeholder="Give the Branched Forest a name!"
+                    className="ml-sm-2"
+                    id="branch-forest-name-bar"
+                    onChange={this.handleNameChange}
+                  />
                   <input
                     id="branch-forest-create-link"
                     type="submit"
                     value="Create"
-                    onClick={handleClose}
+                    onClick={this.handleCreateBranch}
                   ></input>
-                </Link>
-              </Form>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-}
-
-export default BranchForestButton;
-
-class BranchForest extends Component {
-  state = {};
-  render() {
-    return <BranchForestButton />;
+                </Form>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
   }
 }
+
+BranchForest.propTypes = {
+  auth: PropTypes.object.isRequired,
+  forest_id: PropTypes.string.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps)(withRouter(BranchForest));
