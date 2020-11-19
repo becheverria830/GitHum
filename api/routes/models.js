@@ -1,5 +1,6 @@
 const { introspectSchema } = require("apollo-server");
 const mongoose = require("mongoose");
+const mongoose_auto_populate = require('mongoose-autopopulate');
 const Schema = mongoose.Schema;
 
 let user = new Schema(
@@ -73,6 +74,25 @@ let forests = new Schema(
 
 forests = mongoose.model("forests", forests);
 
+let hierarchy = new Schema(
+  {
+    name: String,
+    icon: String,
+    active: Number,
+    parent: { type: mongoose.ObjectId, ref: 'hierarchy' },
+    children: [{ type: mongoose.ObjectId, ref: 'hierarchy', autopopulate: true }],
+    depth: Number,
+    creator: { type: mongoose.ObjectId, ref: 'users', autopopulate: true },
+    songs: [{ type: mongoose.ObjectId, ref: 'song' }],
+    settings: {
+      privacy: Number
+    }
+  },
+  { collection: "Forests" }
+)
+hierarchy.plugin(mongoose_auto_populate);
+hierarchy = mongoose.model("hierarchy", hierarchy);
+
 let message = new Schema(
   {
     from_user: { type: mongoose.ObjectId, ref: "users" },
@@ -99,12 +119,13 @@ let song = new Schema(
 song = mongoose.model("song", song);
 
 const models = {
-  user: user,
-  resetpassword: resetpassword,
-  queue: queue,
-  forests: forests,
-  message: message,
-  song: song,
+  'user': user,
+  'resetpassword': resetpassword,
+  'queue': queue,
+  'forests': forests,
+  'hierarchy': hierarchy,
+  'message': message,
+  'song': song
 };
 
 module.exports = models;

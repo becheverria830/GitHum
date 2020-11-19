@@ -5,6 +5,7 @@ const models = require("../models");
 var router = express.Router();
 
 const Forest = models["forests"];
+const Hierarchy = models["hierarchy"];
 const User = models["user"];
 
 /*
@@ -12,6 +13,20 @@ const User = models["user"];
 /user/forests/saved?userid=
 /user/forests/friends?userid=
 */
+
+function filterRoot(parent) {
+  var refinedParent = {
+    "name": parent.name,
+    "children": [],
+    "attributes": {
+      "creator": parent.creator.first_name + " " + parent.creator.last_name
+    }
+  }
+  for(var childIndex in parent.children) {
+    refinedParent.children.push(filterRoot(parent.children[childIndex]));
+  }
+  return refinedParent;
+}
 
 router.post("/create", (req, res, err) => {
   const name = req.body.name;
@@ -217,6 +232,67 @@ router.get("/forests/:userid", function (req, res, next) {
         forests: refined_forests,
       });
     });
+  }
+});
+
+
+/* Can add maxDepth to graphLookup to limit our search based on the users plan */
+router.get("/:forestid/hierarchy", function (req, res, next) {
+  var id = req.params.forestid;
+
+  if (id == undefined) {
+    //Throwing an exception if user didn't supply all the information.
+    res.status(400).json({
+      hierarchy: {},
+    });
+  } else {
+    //Getting the root node
+    Forest.findOne({ _id: mongoose.Types.ObjectId(id) })
+      .populate("creator")
+      .exec(function(err, results) {
+        if(err) throw err;
+        if(results.depth == 1) {
+          res.status(200).json({
+            hierarchy: filterRoot(results),
+          });
+        } else {
+          Forest.aggregate(
+            [
+              {
+                $match: {
+                  _id: mongoose.Types.ObjectId(id),
+                },
+              },
+              {
+                $graphLookup: {
+                  from: 'Forests',
+                  startWith: '$parent',
+                  connectFromField: 'parent',
+                  connectToField: '_id',
+                  as: 'root',
+                  restrictSearchWithMatch: { "parent": { "$ne": null } }
+                }
+              },
+            ],
+            function (err, results) {
+              if(err) throw err;
+              //Finding the parent node in the list of results
+              var parent = null;
+              for(var i in results[0].root){
+                if(results[0].root[i].depth == 1) {
+                  parent = results[0].root[i];
+                }
+              }
+
+              Hierarchy.findOne({ _id: parent._id }, function(error, parent) {
+                res.status(200).json({
+                  hierarchy: filterRoot(parent),
+                });
+              });
+            }
+          );
+        }
+      });
   }
 });
 

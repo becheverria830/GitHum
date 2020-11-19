@@ -26,6 +26,7 @@ class ForestPage extends Component {
   constructor(props) {
     super(props);
     this.songListElement = React.createRef();
+    this.forestInfoElement = React.createRef();
 
     this.displaySongs = this.displaySongs.bind(this);
     this.displayInfo = this.displayInfo.bind(this);
@@ -55,7 +56,6 @@ class ForestPage extends Component {
       showSongList: true,
       showForestInfo: false,
     });
-    console.log(this.songListElement);
   }
 
   displayInfo() {
@@ -66,23 +66,23 @@ class ForestPage extends Component {
   }
 
   getForestData() {
-    console.log(
-      this.props.location.pathname.substr(
-        this.props.location.pathname.lastIndexOf("/") + 1
-      )
-    );
-    fetch(
-      "http://localhost:9000/user/forests/" +
-        this.props.location.pathname.substr(
-          this.props.location.pathname.lastIndexOf("/") + 1
-        )
-    )
+    fetch("http://localhost:9000/user/forests/" + this.props.match.params.forestid)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
           forest: res.forests,
         });
         this.songListElement.current.updateState(res.forests.songs);
+        this.forestInfoElement.current.updateForestInfo(res.forests);
+      })
+      .catch((err) => err);
+  }
+
+  getHierarchyData() {
+    fetch("http://localhost:9000/user/forests/" + this.props.match.params.forestid + "/hierarchy")
+      .then((res) => res.json())
+      .then((res) => {
+        this.forestInfoElement.current.updateHierarchy(res.hierarchy);
       })
       .catch((err) => err);
   }
@@ -156,6 +156,7 @@ class ForestPage extends Component {
   componentDidMount() {
     console.log("inside componentDidMount of ForestPage in forest.jsx");
     this.getForestData();
+    this.getHierarchyData();
   }
 
   render() {
@@ -224,7 +225,7 @@ class ForestPage extends Component {
                     />
                   </div>
                   <div className={this.state.showForestInfo ? null : "hidden"}>
-                    <ForestInfo />
+                    <ForestInfo ref={this.forestInfoElement} />
                   </div>
                 </div>
               </Col>

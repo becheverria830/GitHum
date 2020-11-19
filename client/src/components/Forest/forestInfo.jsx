@@ -15,23 +15,17 @@ import { connect } from "react-redux";
 
 /* Importing All Resources & Custom CSS */
 import "./forestInfo.css";
-import HierarchyButtom from "../Hierarchy/hierarchy";
-
-
+import HierarchyButton from "../Hierarchy/hierarchy";
 
 class ForestInfo extends Component {
   constructor(props) {
     super(props);
 
-    //this.getForestData = this.getForestData.bind(this);
-    //this.getUserData = this.getUserData.bind(this);
-
-
     this.state = {
       creator_information: {
-        username: ''
+        id: -1,
+        username: ""
       },
-      creatorId: -1,
       forest: {
         id: -1,
         name: "",
@@ -44,59 +38,41 @@ class ForestInfo extends Component {
         },
       },
     };
+
+    this.hierarchyref = React.createRef();
   }
-  
-  getForestData() {
-    console.log(
-      this.props.location.pathname.substr(
-        this.props.location.pathname.lastIndexOf("/") + 1
-      )
-    );
-    fetch(
-      "http://localhost:9000/user/forests/" +
-        this.props.location.pathname.substr(
-          this.props.location.pathname.lastIndexOf("/") + 1
-        )
-    )
+
+  getUserData(id) {
+    fetch("http://localhost:9000/user/credentials/" + id)
       .then((res) => res.json())
       .then((res) => {
+        console.log("user");
+        console.log(res);
         this.setState({
-          forest: res.forests,
-          creatorId: res.forests.creator
+          creator_information: {
+            id: id,
+            username: res.user.username
+          }
         });
       })
       .catch((err) => err);
   }
 
-  getUserData() {
-    console.log(this.state.creatorId);
-    if (this.state.creatorId != -1) {
-      console.log("inside the if: " + this.state.creatorId);
-      fetch(
-        "http://localhost:9000/user/credentials/" + this.state.creatorId
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          this.setState({
-            creator_information: res.user
-          });
-        })
-        .catch((err) => err);
-        console.log(this.state.creator_information);
-    }
+  updateForestInfo(state) {
+    this.setState({
+      forest: state,
+    });
+    this.getUserData(state.creator);
   }
 
-  componentDidMount() {
-    this.getForestData();
-    this.getUserData();
+  updateHierarchy(state) {
+    this.setState({
+      hierarchy: state
+    });
+    this.hierarchyref.current.updateState(state);
   }
-  
+
   render() {
-
-    if (this.state.creator_information.username == '') {
-      this.getUserData();
-    }
-
     return (
       <React.Fragment>
         <Row>
@@ -174,11 +150,7 @@ class ForestInfo extends Component {
             <div className="info-holder">
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <HierarchyButtom/>
-                  {/* <h3 className="valley-forest-title">
-                    {" "}
-                    S E E <br></br> H I E R A R C H Y
-                  </h3> */}
+                  <HierarchyButton ref={this.hierarchyref}/>
                 </Col>
               </Row>
             </div>
@@ -190,10 +162,4 @@ class ForestInfo extends Component {
 }
 
 
-ForestInfo.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-export default connect(mapStateToProps)(withRouter(ForestInfo));
+export default ForestInfo;
