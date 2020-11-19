@@ -1,21 +1,14 @@
-2nd Benchmark
-- Brit
-    - Add Friend
-    - Delete Friend
-    - Accept/Decline Friend Request
-    - Switch to Friend’s Valley
-- Jeremy
-    - Check/Go to current Forest
-        - Click the forest name in now playing to be redirected to that forest
-- Isabelle
-    - Favorite a Song
-    - List Favorite Songs
-    - Save a Forest
-    - List Saved Forests
+5fae4ee8de926c51a44d5a81
+5fae4ee8de926c51a44d5a82
+5fae4ee8de926c51a44d5a83
+5fae4ee8de926c51a44d5a84
+5fae4ee8de926c51a44d5a85
+5fae4ee8de926c51a44d5a86
+5fae4ee8de926c51a44d5a87
+5fae4ee8de926c51a44d5a88
 
-Leftover from 1st Benchmark
-- Isabelle
-    - Create New Forest
-    - List My Forest
-* Use Case 2.30 (Start New Forest Off Listed Song)
-    * This wasn’t the initial purpose of clicking the tree icon in a listed song. The intended purpose was to provide an option to add the song to an existing forest that is in a user’s My Forest
+
+
+EXAMPLE USERS:
+jeremycherrmann@gmail.com
+testing

@@ -34,9 +34,11 @@ class ForestInfo extends Component {
         depth: 1,
         songs: [],
         times_saved: 0,
+        children: [],
         settings: {
           privacy: 1,
         },
+        children: []
       },
     };
 
@@ -106,7 +108,7 @@ class ForestInfo extends Component {
               <Row>
                 <Col className="valley-forest-title-holder">
                   <h3 className="valley-forest-title">
-                    <b> {this.state.forest.depth} </b>
+                    <b>{this.state.forest.children.length}</b>
                   </h3>
                 </Col>
               </Row>
