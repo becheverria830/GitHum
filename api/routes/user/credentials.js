@@ -30,7 +30,7 @@ router.post("/signup", (req, res, err) => {
   //Getting the information from the request
   const firstname = req.body.fname;
   const lastname  = req.body.lname;
-  const email     = req.body.email;
+  const email     = req.body.email.toLowerCase();
   const username  = req.body.username;
   const password  = req.body.password;
 
@@ -103,7 +103,7 @@ router.post("/signup", (req, res, err) => {
 
 router.post("/login", (req, res, err) => {
   //Getting the information from the request
-  const email    = req.body.email;
+  const email    = req.body.email.toLowerCase();
   const password = req.body.password;
 
   if(email == undefined || password == undefined){
@@ -154,7 +154,7 @@ router.post("/login", (req, res, err) => {
 
 router.post("/resetpassword", (req, res, err) => {
   //Getting the information from the request
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
 
   if(email == undefined){
     //Throwing an exception if user didn't supply all the information.

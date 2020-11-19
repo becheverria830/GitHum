@@ -19,9 +19,6 @@ import SongList from "../SongList/songList";
 class SearchPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      query: ""
-    }
     this.songListElement = React.createRef();
   }
 
@@ -39,6 +36,13 @@ class SearchPage extends Component {
     this.getSearchResults();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps == undefined) {
+        return false
+    }
+    this.getSearchResults();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -48,7 +52,7 @@ class SearchPage extends Component {
             <Row>
               <Col id="search-text-div">
                 <h1 id="searching-for-text">Search Results For: </h1>
-                <h4 id="search-input"><b>{this.state.query}</b></h4>
+                <h4 id="search-input"><b>{this.props.match.params.query}</b></h4>
               </Col>
             </Row>
             <Row>
