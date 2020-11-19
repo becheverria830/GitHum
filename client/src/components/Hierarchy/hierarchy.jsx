@@ -17,52 +17,57 @@ import FormControl from "react-bootstrap/FormControl";
 import "./hierarchy.css";
 import HierarchySample from "../../assets/hierarchy-pic.png";
 
-function HierarchyButton() {
-  const [show, setShow] = useState(false);
+import Tree from 'react-d3-tree';
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+class HierarchyButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hierarchy: {},
+      show: false
+    };
+  }
 
-  return (
-    <div>
-      <Button variant="primary" onClick={handleShow} id="hierarchy-button">
-        S E E <br/> H I E R A R C H Y
-      </Button>
+  showModal = (e) => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+  onClose = (e) => {
+    this.props.onClose && this.props.onClose(e);
+  };
 
-      <Modal show={show} onHide={handleClose} id="hierarchy-modal">
-        <Modal.Header
-          closeButton
-          id="hierarchy-modal-header"
-          className="text-center"
-        >
-          <Modal.Title id="hierarchy-modal-title">Hierarchy</Modal.Title>
-        </Modal.Header>
-        <Modal.Body id="hierarchy-modal-body">
-          <Row>
-            <Col lg="12" md="12" sm="12" xs="12">
-              <p id="hierarchy-forest-title">Meme Songs</p>
-            </Col>
-          </Row>
-          <Row>
-            <Container className="hierarchy-container">
-              <Row>
-                <Col lg="12" md="12" sm="12" xs="12">
-                  <Image id="hierarchy-view" src={HierarchySample}></Image>
-                </Col>
-              </Row>
-            </Container>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
+  updateState(state) {
+    this.setState({
+      hierarchy: state
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Button variant="primary" onClick={(e) => { this.showModal(); }} id="hierarchy-button">
+          SEE<br/>HIERARCHY
+        </Button>
+
+        <Modal show={this.state.show} onHide={this.showModal} id="hierarchy-modal">
+          <Modal.Header closeButton id="hierarchy-modal-header" className="text-center" >
+            <Modal.Title id="hierarchy-modal-title">Hierarchy</Modal.Title>
+          </Modal.Header>
+          <Modal.Body id="hierarchy-modal-body">
+            <Row>
+              <Col lg="12" md="12" sm="12" xs="12">
+                <p id="hierarchy-forest-title">Meme Songs</p>
+              </Col>
+            </Row>
+            <div id="treeWrapper" style={{width: '100%', height: '100%'}}>
+              <Tree data={this.state.hierarchy} />
+            </div>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 }
 
 export default HierarchyButton;
-
-class Hierarchy extends Component {
-  state = {};
-  render() {
-    return <HierarchyButton />;
-  }
-}
