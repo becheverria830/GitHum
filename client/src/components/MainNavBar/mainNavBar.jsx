@@ -56,7 +56,7 @@ class MainNavBar extends Component {
                 GitHum
               </Navbar.Brand>
             </Link>
-            <Form inline>
+            <Form inline onSubmit={this.search}>
               <FormControl
                 type="text"
                 value={this.state.search}
