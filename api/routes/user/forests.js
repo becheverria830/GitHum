@@ -165,7 +165,7 @@ router.post("/branchForest", function (req, res, next) {
       var branch_depth = res_find_parent.depth + 1;
       var branch_forest_data = {
         name: branch_forest_name,
-        icon: "",
+        icon: "/static/media/forest.ff62ca20.svg",
         active: true,
         children: [],
         depth: branch_depth,
@@ -266,12 +266,12 @@ router.get("/:forestid/hierarchy", function (req, res, next) {
               },
               {
                 $graphLookup: {
-                  from: 'Forests',
-                  startWith: '$parent',
-                  connectFromField: 'parent',
-                  connectToField: '_id',
-                  as: 'root'
-                }
+                  from: "Forests",
+                  startWith: "$parent",
+                  connectFromField: "parent",
+                  connectToField: "_id",
+                  as: "root",
+                },
               },
             ],
             function (err, results) {

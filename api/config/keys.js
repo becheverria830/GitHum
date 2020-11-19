@@ -12,7 +12,7 @@ const Twilio_Key =
 const Spotify_Client_ID = "f052d98613e44dd1bcff5da4fa1b2c0a";
 const Spotify_Client_Secret = "3f079d1cede8444a88627e4dfa2ab161";
 const Spotify_OAuth_Token =
-  "BQBBnmeAVh1md6ZmSZ0IgO1gsvTe59RFo0KSlYn1mDR5ATK5mJkP3qIkuWZIT5vRAEY58ulfHf-YrKvjI7bgn3N8U-2OR7OUItj2cx5wpX9a9vVrUZJwgSq9sX65eeQ6M8eTTPxNWmMONu0";
+  "BQAp9CtDw55dS_2kV-2wzAIgWR4O5R-FEmtyternKrJsaLvAMU-mmoUEfE1dwqXAyZlB6S2l7VKonQJkAUvr8JFq1GlP7WKqgm4lYOu5-ig6dcAM7KPzSDdefpCWrNLOKgO35GxH-DPrw1DPc8OaYxencAy-THLiu3E";
 
 module.exports = {
   MongoDB_URI: MongoDB_URI,
