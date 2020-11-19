@@ -22,6 +22,7 @@ import SongList from "../SongList/songList";
 import Deforest from "./deforest";
 import BranchForest from "./branchForest";
 import ForestSettings from "./forestSettings";
+import ShareForest from "./shareForest";
 
 class ForestPage extends Component {
   constructor(props) {
@@ -181,12 +182,10 @@ class ForestPage extends Component {
               <Col className="forest-options-div">
                 <Row>
                   <Col md="12">
-                    <Button className="button forest-action-button">
-                      Share Forest
-                    </Button>
+                    <ShareForest forest_id={this.state.forest._id} />
                   </Col>
                   <Col md="12">
-                    <BranchForest forest_id = {this.state.forest._id} />
+                    <BranchForest forest_id={this.state.forest._id} />
                   </Col>
                   <Col md="12">
                     <div className={this.props.myForest ? null : "hidden"}>
