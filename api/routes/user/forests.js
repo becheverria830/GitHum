@@ -264,13 +264,12 @@ router.get("/:forestid/hierarchy", function (req, res, next) {
               },
               {
                 $graphLookup: {
-                  from: "Forests",
-                  startWith: "$parent",
-                  connectFromField: "parent",
-                  connectToField: "_id",
-                  as: "root",
-                  restrictSearchWithMatch: { parent: { $ne: null } },
-                },
+                  from: 'Forests',
+                  startWith: '$parent',
+                  connectFromField: 'parent',
+                  connectToField: '_id',
+                  as: 'root'
+                }
               },
             ],
             function (err, results) {

@@ -22,9 +22,17 @@ import Tree from 'react-d3-tree';
 class HierarchyButton extends Component {
   constructor(props) {
     super(props);
+
+    this.treeContainer = React.createRef();
+
     this.state = {
       hierarchy: {},
-      show: false
+      forest: {},
+      show: false,
+      translate: {
+        x: window.innerWidth * .9 / 2,
+        y: 50
+      }
     };
   }
 
@@ -37,10 +45,33 @@ class HierarchyButton extends Component {
     this.props.onClose && this.props.onClose(e);
   };
 
-  updateState(state) {
+  updateHierarchy(state) {
     this.setState({
-      hierarchy: state
+      hierarchy: state,
     });
+  }
+
+  updateForest(state) {
+    this.setState({
+      forest: state,
+    });
+  }
+
+  handleResize = (e) => {
+    this.setState({
+      translate: {
+        x: window.innerWidth * .9 / 2,
+        y: 50
+      }
+    });
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnMount() {
+    window.addEventListener("resize", this.handleResize);
   }
 
   render() {
@@ -57,11 +88,11 @@ class HierarchyButton extends Component {
           <Modal.Body id="hierarchy-modal-body">
             <Row>
               <Col lg="12" md="12" sm="12" xs="12">
-                <p id="hierarchy-forest-title">Meme Songs</p>
+                <p id="hierarchy-forest-title">{this.state.forest.name}</p>
               </Col>
             </Row>
-            <div id="treeWrapper" style={{width: '100%', height: '100%'}}>
-              <Tree data={this.state.hierarchy} />
+            <div ref={this.treeContainer} id="treeWrapper" style={{width: '100%', height: '500px'}}>
+              <Tree orientation="vertical" translate={this.state.translate} data={this.state.hierarchy} />
             </div>
           </Modal.Body>
         </Modal>
