@@ -39,6 +39,8 @@ class ForestPage extends Component {
         name: "",
         icon: "",
         active: 1,
+        creator: [],
+        times_saved: -1,
         songs: [],
         settings: {
           privacy: 1,
@@ -46,6 +48,7 @@ class ForestPage extends Component {
       },
     };
     this.saveForest = this.saveForest.bind(this);
+    // this.getSavedForests = this.getSavedForests.bind(this);
   }
 
   displaySongs() {
@@ -86,34 +89,70 @@ class ForestPage extends Component {
       .catch((err) => err);
   }
 
+  getSavedForests(userid) {
+    fetch("http://localhost:9000/user/forests/saved/" + userid)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.forests);
+        return res.forests;
+      })
+      .catch((err) => err);
+  }
+
   saveForest(event) {
     console.log(this.state);
-    const url = "http://localhost:9000/user/forests/save";
-    const options = {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        forestid: this.state.forest._id,
-        fcreator: "",
-        userid: this.props.auth.user.id,
-      }),
-    };
-    fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        console.log(response);
-        if (response[0] == 200) {
-        } else {
-          alert(response[1].message);
-        }
-      });
-    alert("Forest Saved!");
+    // Check if forest / user id is non-null
+    if (this.state.forest._id === null || this.props.auth.user.id === null) {
+      console.log("Null forest or user");
+    }
+    // Check if user id == creator id
+    else if (this.props.auth.user.id === this.state.forest.creator) {
+      alert("You own this Forest!");
+    }
+    // Check if it has been saved already
+    else {
+      fetch(
+        "http://localhost:9000/user/forests/saved/" + this.props.auth.user.id
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.forests);
+          for (var i = 0; i < res.forests.length; i++) {
+            if (res.forests[i]._id === this.state.forest._id) {
+              alert("You saved this Forest already!");
+              return;
+            }
+          }
+          // Save Forest
+          const url = "http://localhost:9000/user/forests/save";
+          const options = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              forest_id: this.state.forest._id,
+              forest_creator: this.state.forest.creator,
+              user_id: this.props.auth.user.id,
+            }),
+          };
+          fetch(url, options)
+            .then((res) => [res.status, res.json()])
+            .then((response) => {
+              console.log(response);
+              if (response[0] == 200) {
+              } else {
+                alert(response[1].message);
+              }
+            });
+          alert("Forest Saved!");
+        })
+        .catch((err) => err);
+    }
   }
 
   componentDidMount() {
