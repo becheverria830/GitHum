@@ -69,25 +69,20 @@ router.post("/byId/:fid/add", function (req, res, next) {
 });
 
 router.post("/save", function (req, res, next) {
-  const fid = req.body.forestid;
-  // const fcreator = req.body.creator;
-  const fcreator = ""; //FIX LATER
-  const uid = req.body.userid;
-  console.log(fid);
-  console.log(uid);
+  const fid = req.body.forest_id;
+  const fcreator = req.body.forest_creator_id; //FIX LATER
+  const uid = req.body.user_id;
 
   if (fid == undefined || uid == undefined) {
     res.status(400).json({
       forest: null,
     });
   } else if (fcreator == uid) {
-    console.log(
-      "You already have this Forest in your library - You made it in the first place!"
-    );
     res.status(400).json({
       forest: null,
     });
   } else {
+    // Add to user's saved forests
     User.findOneAndUpdate(
       { _id: uid },
       { $push: { "library.saved_forests": fid } },
@@ -201,7 +196,6 @@ router.post("/branchForest", function (req, res, next) {
 });
 
 router.get("/forests/:userid", function (req, res, next) {
-  console.log("inside here");
   //Getting the information from the request
   const userid = req.params.userid;
 
