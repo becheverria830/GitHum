@@ -64,16 +64,15 @@ class BranchForest extends Component {
       }),
     };
     fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        console.log(response);
-        if (response[0] == 200) {
+      .then((res) => res.json())
+      .then((res) => {
+        if(res.forest == null) {
+          alert("Please complete the form and try again!");
         } else {
-          alert(response[1].message);
+          this.props.history.push("/forests/" + res.forest._id);
+          window.location.reload(false);
         }
-      });
-
-    // Link to Branch Forest
+      })
   }
 
   updateState(state) {

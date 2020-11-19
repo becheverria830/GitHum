@@ -157,7 +157,7 @@ router.post("/branchForest", function (req, res, next) {
   // Get Parent Forest
   if (parent_forest_id == undefined) {
     res.status(400).json({
-      forests: [],
+      forest: null,
     });
   } else {
     Forest.findOne({ _id: parent_forest_id }, function (err, res_find_parent) {
@@ -195,11 +195,11 @@ router.post("/branchForest", function (req, res, next) {
               children: res_find_parent.children,
             },
             function (err, res_update_children) {
-              if (create_error) {
-                throw create_error;
-              } else {
-                res.status(200).json({});
-              }
+              if (create_error) throw create_error;
+              console.log(res_insert_forest);
+              res.status(200).json({
+                forest: res_insert_forest[0],
+              });
             }
           );
         }

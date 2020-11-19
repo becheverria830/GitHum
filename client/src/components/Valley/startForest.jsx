@@ -69,6 +69,7 @@ class StartForest extends Component {
           alert("Please complete the form and try again!");
         } else {
           this.props.history.push("/forests/" + res.forest._id);
+          window.location.reload(false);
         }
       })
       .catch((err) => err);
