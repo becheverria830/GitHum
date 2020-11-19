@@ -22,10 +22,17 @@ import Tree from 'react-d3-tree';
 class HierarchyButton extends Component {
   constructor(props) {
     super(props);
+
+    this.treeContainer = React.createRef();
+
     this.state = {
       hierarchy: {},
       forest: {},
-      show: false
+      show: false,
+      translate: {
+        x: window.innerWidth * .9 / 2,
+        y: 50
+      }
     };
   }
 
@@ -50,6 +57,23 @@ class HierarchyButton extends Component {
     });
   }
 
+  handleResize = (e) => {
+    this.setState({
+      translate: {
+        x: window.innerWidth * .9 / 2,
+        y: 50
+      }
+    });
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
   render() {
     return (
       <div>
@@ -67,8 +91,8 @@ class HierarchyButton extends Component {
                 <p id="hierarchy-forest-title">{this.state.forest.name}</p>
               </Col>
             </Row>
-            <div id="treeWrapper" style={{width: '100%', height: '100%'}}>
-              <Tree data={this.state.hierarchy} />
+            <div ref={this.treeContainer} id="treeWrapper" style={{width: '100%', height: '500px'}}>
+              <Tree orientation="vertical" translate={this.state.translate} data={this.state.hierarchy} />
             </div>
           </Modal.Body>
         </Modal>
