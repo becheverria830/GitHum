@@ -63,13 +63,14 @@ class ForestInfo extends Component {
       forest: state,
     });
     this.getUserData(state.creator);
+    this.hierarchyref.current.updateForest(state);
   }
 
   updateHierarchy(state) {
     this.setState({
       hierarchy: state
     });
-    this.hierarchyref.current.updateState(state);
+    this.hierarchyref.current.updateHierarchy(state);
   }
 
   render() {

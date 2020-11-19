@@ -24,6 +24,7 @@ class HierarchyButton extends Component {
     super(props);
     this.state = {
       hierarchy: {},
+      forest: {},
       show: false
     };
   }
@@ -37,9 +38,15 @@ class HierarchyButton extends Component {
     this.props.onClose && this.props.onClose(e);
   };
 
-  updateState(state) {
+  updateHierarchy(state) {
     this.setState({
-      hierarchy: state
+      hierarchy: state,
+    });
+  }
+
+  updateForest(state) {
+    this.setState({
+      forest: state,
     });
   }
 
@@ -57,7 +64,7 @@ class HierarchyButton extends Component {
           <Modal.Body id="hierarchy-modal-body">
             <Row>
               <Col lg="12" md="12" sm="12" xs="12">
-                <p id="hierarchy-forest-title">Meme Songs</p>
+                <p id="hierarchy-forest-title">{this.state.forest.name}</p>
               </Col>
             </Row>
             <div id="treeWrapper" style={{width: '100%', height: '100%'}}>

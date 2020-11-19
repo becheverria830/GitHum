@@ -274,8 +274,7 @@ router.get("/:forestid/hierarchy", function (req, res, next) {
                   startWith: '$parent',
                   connectFromField: 'parent',
                   connectToField: '_id',
-                  as: 'root',
-                  restrictSearchWithMatch: { "parent": { "$ne": null } }
+                  as: 'root'
                 }
               },
             ],

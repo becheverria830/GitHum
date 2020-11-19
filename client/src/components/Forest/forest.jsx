@@ -79,6 +79,8 @@ class ForestPage extends Component {
     fetch("http://localhost:9000/user/forests/" + this.props.match.params.forestid + "/hierarchy")
       .then((res) => res.json())
       .then((res) => {
+        console.log("HIERARCHY");
+        console.log(res.hierarchy);
         this.forestInfoElement.current.updateHierarchy(res.hierarchy);
       })
       .catch((err) => err);
