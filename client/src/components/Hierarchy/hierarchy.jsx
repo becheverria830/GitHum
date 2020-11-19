@@ -77,7 +77,7 @@ class HierarchyButton extends Component {
   render() {
     return (
       <div>
-        <Button variant="primary" onClick={(e) => { this.showModal(); }} id="hierarchy-button">
+        <Button  onClick={(e) => { this.showModal(); }} id="hierarchy-button">
           SEE<br/>HIERARCHY
         </Button>
 

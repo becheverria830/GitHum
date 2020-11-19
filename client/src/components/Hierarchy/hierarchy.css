@@ -1,4 +1,4 @@
-#hierarchy-button{
+#hierarchy-button {
   background-color: #fedbff;
   color: #ffffff;
   border: none;
@@ -6,30 +6,27 @@
   font-size: 1.5em;
   box-shadow: #000000;
 }
-#hierarchy-button:hover{
+#hierarchy-button:hover {
   border: none;
 }
 
-
-@media (min-width: 576px)
-{
-  .modal-dialog {
+@media (min-width: 576px) {
+  #hierarchy-modal {
     max-width: 90%;
   }
 }
-/* #hierarchy-modal {
+
+#hierarchy-modal {
   position: relative;
   text-align: center;
-  margin: 0 0 0 15%;
 }
 
-
-
 #hierarchy-modal-header {
-  min-width: 30em;
+  /* min-width: 30em;
   min-height: 3em;
   width: 60em;
   height: 4em;
+  max-width: 100%; */
   text-align: center;
   align-items: center;
   background-color: #fedbff;
@@ -38,17 +35,17 @@
 #hierarchy-modal-title {
   text-align: center;
   align-items: center;
-  padding: 0 0 0 42%;
+  padding: 0 0 0 44%;
   font-weight: bold;
   font-size: 2em;
 }
 
 #hierarchy-modal-body {
   background-color: #2e2621;
-  height: 40em;
+  /* height: 40em;
   width: 60em;
+  max-width: 100%; */
 }
-
 
 #hierarchy-forest-title {
   font-size: 2em;
@@ -56,13 +53,3 @@
   font-style: italic;
   margin: 0 0 0 0;
 }
-
-.hierarchy-container {
-  height: 45vw;
-}
-
-#hierarchy-view {
-  margin: 5% 0 0 0;
-  width: 50em;
-  height: 20em;
-} */
