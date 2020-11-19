@@ -1,6 +1,6 @@
 #hierarchy-button {
   background-color: #fedbff;
-  color: #ffffff;
+  color: #000000;
   border: none;
   font-weight: bold;
   font-size: 1.5em;
@@ -22,11 +22,6 @@
 }
 
 #hierarchy-modal-header {
-  /* min-width: 30em;
-  min-height: 3em;
-  width: 60em;
-  height: 4em;
-  max-width: 100%; */
   text-align: center;
   align-items: center;
   background-color: #fedbff;
@@ -41,7 +36,7 @@
 }
 
 #hierarchy-modal-body {
-  background-color: #2e2621;
+  background-color: #ffffff;
   /* height: 40em;
   width: 60em;
   max-width: 100%; */
@@ -49,7 +44,7 @@
 
 #hierarchy-forest-title {
   font-size: 2em;
-  color: #ffffff;
+  color: #000000;
   font-style: italic;
   margin: 0 0 0 0;
 }
