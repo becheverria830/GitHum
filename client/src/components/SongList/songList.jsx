@@ -24,11 +24,16 @@ import { connect } from "react-redux";
 class SongList extends Component {
   constructor(props) {
     super(props);
+    
+    this.forestElement = React.createRef();
+    
+    
     this.state = {
       songs: [],
     };
 
     this.addFavorite = this.addFavorite.bind(this);
+    this.getForests = this.getForests.bind(this);
   }
 
   updateState(state) {
@@ -39,6 +44,15 @@ class SongList extends Component {
 
   songListPlayTrack(song) {
     this.np.playTrack(song.spotify_uri);
+  }
+
+  getForests(userid) {
+    fetch("http://localhost:9000/user/forests/forests/" + userid)
+      .then((res) => res.json())
+      .then((res) => {
+        this.forestElement.current.updateState(res.forests);
+      })
+      .catch((err) => err);
   }
 
   addFavorite(song) {
@@ -115,9 +129,9 @@ class SongList extends Component {
   }
   /*
   componentDidMount() {
-    this.updateState();
+    this.getForests(this.props.auth.user.id);
   }
-*/
+  */
   render() {
     return (
       <React.Fragment>
@@ -153,7 +167,6 @@ class SongList extends Component {
                     <Dropdown.Toggle type="image" src={Tree}>
                       <Image src={Tree}></Image>
                     </Dropdown.Toggle>
-
                     <Dropdown.Menu>
                       <Dropdown.Item href="#/action-1">Forest 1</Dropdown.Item>
                       <Dropdown.Item href="#/action-2">
@@ -185,12 +198,14 @@ class SongList extends Component {
 SongList.propTypes = {
   user: PropTypes.object.isRequired,
 };
-// /*
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
-// export default connect(
-//   mapStateToProps,
-// )(withRouter(SongList));
-// */
+
+/*
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(withRouter(SongList));
+*/
+
 export default SongList;
