@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -10,12 +10,93 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 /* Importing All Resources & Custom CSS */
 import "./forestInfo.css";
 import HierarchyButtom from "../Hierarchy/hierarchy";
 
+
+
 class ForestInfo extends Component {
+  constructor(props) {
+    super(props);
+
+    //this.getForestData = this.getForestData.bind(this);
+    //this.getUserData = this.getUserData.bind(this);
+
+
+    this.state = {
+      creator_information: {
+        username: ''
+      },
+      creatorId: -1,
+      forest: {
+        id: -1,
+        name: "",
+        icon: "",
+        active: 1,
+        depth: 1,
+        songs: [],
+        settings: {
+          privacy: 1,
+        },
+      },
+    };
+  }
+  
+  getForestData() {
+    console.log(
+      this.props.location.pathname.substr(
+        this.props.location.pathname.lastIndexOf("/") + 1
+      )
+    );
+    fetch(
+      "http://localhost:9000/user/forests/" +
+        this.props.location.pathname.substr(
+          this.props.location.pathname.lastIndexOf("/") + 1
+        )
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          forest: res.forests,
+          creatorId: res.forests.creator
+        });
+      })
+      .catch((err) => err);
+  }
+
+  getUserData() {
+    console.log(this.state.creatorId);
+    if (this.state.creatorId != -1) {
+      console.log("inside the if: " + this.state.creatorId);
+      fetch(
+        "http://localhost:9000/user/credentials/" + this.state.creatorId
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({
+            creator_information: res.user
+          });
+        })
+        .catch((err) => err);
+        console.log(this.state.creator_information);
+    }
+  }
+
+  componentDidMount() {
+    this.getForestData();
+    this.getUserData();
+  }
+  
   render() {
+
+    if (this.state.creator_information.username == '') {
+      this.getUserData();
+    }
+
     return (
       <React.Fragment>
         <Row>
@@ -29,7 +110,7 @@ class ForestInfo extends Component {
               <Row>
                 <Col className="valley-forest-title-holder">
                   <h3 className="valley-forest-title">
-                    <b>becheverria830</b>
+                    {this.state.creator_information.username}
                   </h3>
                 </Col>
               </Row>
@@ -106,89 +187,13 @@ class ForestInfo extends Component {
       </React.Fragment>
     );
   }
-
-  //
-  // render() {
-  //   return (
-  //           <Col>
-  //             <Container className="forest-info-panel" id="owner-panel">
-  //               <Row>
-  //                 <Col>
-  //                   <h3>Forest Owner</h3>
-  //                 </Col>
-  //               </Row>
-  //               <Row>
-  //                 <Col>
-  //                   <p>becheverria830</p>
-  //                 </Col>
-  //               </Row>
-  //               <Row></Row>
-  //             </Container>
-  //           </Col>
-  //           <Col>
-  //             <Container
-  //               className="forest-info-panel"
-  //               id="number-branched-panel"
-  //             >
-  //               <Row>
-  //                 <Col>
-  //                   <h3>Number of Branched Forests</h3>
-  //                 </Col>
-  //               </Row>
-  //               <Row>
-  //                 <Col>
-  //                   <p>12</p>
-  //                 </Col>
-  //               </Row>
-  //               <Row></Row>
-  //             </Container>
-  //           </Col>
-  //           <Col>
-  //             <Container
-  //               className="forest-info-panel"
-  //               id="original-forest-panel"
-  //             >
-  //               <Row>
-  //                 <Col>
-  //                   <h3> Root Forest Owner </h3>
-  //                 </Col>
-  //               </Row>
-  //               <Row>
-  //                 <Col>
-  //                   <p>forest_master_5000</p>
-  //                 </Col>
-  //               </Row>
-  //               <Row></Row>
-  //             </Container>
-  //           </Col>
-  //           <Col>
-  //             <Container
-  //               className="forest-info-panel"
-  //               id="number-saved-panel"
-  //             >
-  //               <Row>
-  //                 <Col>
-  //                   <h3>Number of Times Saved</h3>
-  //                 </Col>
-  //               </Row>
-  //               <Row>
-  //                 <Col>
-  //                   <p>5</p>
-  //                 </Col>
-  //               </Row>
-  //               <Row></Row>
-  //             </Container>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //             <Col>
-  //               <Button id="see-hierarchy-button"> S E E <br></br>   H I E R A R C H Y</Button>
-  //             </Col>
-  //         </Row>
-  //       </Container>
-  //     </React.Fragment>
-  //   );
-  // }
 }
 
-export default ForestInfo;
+
+ForestInfo.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps)(withRouter(ForestInfo));
