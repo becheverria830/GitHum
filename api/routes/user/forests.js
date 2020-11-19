@@ -251,7 +251,7 @@ router.get("/:forestid/hierarchy", function (req, res, next) {
       .exec(function (err, results) {
         if (err) throw err;
         if (results.depth == 1) {
-          Hierarchy.findOne({ _id: _id }, function (error, parent) {
+          Hierarchy.findOne({ _id: id }, function (error, parent) {
             res.status(200).json({
               hierarchy: filterRoot(parent),
             });

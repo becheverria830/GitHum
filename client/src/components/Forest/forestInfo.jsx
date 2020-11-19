@@ -35,6 +35,7 @@ class ForestInfo extends Component {
         songs: [],
         times_saved: 0,
         children: [],
+        parent: -1,
         settings: {
           privacy: 1,
         },
@@ -114,8 +115,10 @@ class ForestInfo extends Component {
               </Row>
             </div>
           </Col>
+          {/*
           <Col md="6" sm="12" className="info-holder-container">
             <div className="info-holder">
+              
               <Row>
                 <Col className="valley-forest-title-holder">
                   <h3 className="valley-forest-title">
@@ -123,6 +126,7 @@ class ForestInfo extends Component {
                   </h3>
                 </Col>
               </Row>
+              
               <Row>
                 <Col className="valley-forest-title-holder">
                   <h3 className="valley-forest-title"></h3>
@@ -130,6 +134,7 @@ class ForestInfo extends Component {
               </Row>
             </div>
           </Col>
+          */}
           <Col md="6" sm="12" className="info-holder-container">
             <div className="info-holder">
               <Row>
@@ -149,7 +154,7 @@ class ForestInfo extends Component {
           <Col
             md="6"
             sm="12"
-            className="offset-md-3 offset-sm-0 info-holder-container"
+            className="info-holder-container"
           >
             <div className="info-holder">
               <Row>
