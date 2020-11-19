@@ -19,7 +19,6 @@ spotifyApi.setAccessToken(keys.Spotify_OAuth_Token);
 */
 
 router.get('/', function(req, res, next) {
-  console.log(req.query.query);
   spotifyApi.searchTracks(req.query.query)
   .then(function(tracks) {
     refined_songs = []
