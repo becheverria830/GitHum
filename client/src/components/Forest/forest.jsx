@@ -1,14 +1,12 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -86,11 +84,6 @@ class ForestPage extends Component {
       .catch((err) => err);
   }
 
-  handleSaveButton() {
-    // this.setState({ userOther: request._id });
-    // console.log(request._id);
-  }
-
   saveForest(event) {
     console.log(this.state);
     const url = "http://localhost:9000/user/forests/save";
@@ -133,16 +126,37 @@ class ForestPage extends Component {
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
-              <Col className="forest-title-div">
-                <h1 className="forest-title-text">
-                  <span>
-                    <Image
-                      className="forest-icon"
-                      src={this.state.forest.icon}
-                    ></Image>
-                  </span>
-                  {this.state.forest.name}
-                </h1>
+              <Col
+                xl="2"
+                lg="2"
+                md="2"
+                sm="2"
+                xs="2"
+                className="forest-title-div"
+              >
+                <Image
+                  className="forest-icon"
+                  src={this.state.forest.icon}
+                ></Image>
+              </Col>
+              <Col
+                xl="6"
+                lg="6"
+                md="6"
+                sm="6"
+                xs="6"
+                className="forest-title-play-col"
+              >
+                <Row>
+                  <Col>
+                    <h2>{this.state.forest.name} </h2>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xl="6" lg="6" md="6" sm="6" xs="6">
+                    <Button className="forest-play-button"> PLAY </Button>
+                  </Col>
+                </Row>
               </Col>
             </Row>
             <Row>
