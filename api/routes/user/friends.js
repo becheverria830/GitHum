@@ -262,7 +262,7 @@ router.post("/request/accept", function (req, res, next) {
 });
 
 router.get("/search/:username", function (req, res, next) {
-  if(req.params.username == undefined || req.params.username == ""){
+  if (req.params.username == undefined || req.params.username == "") {
     res.status(200).json({
       users: [],
     });
@@ -280,6 +280,36 @@ router.get("/search/:username", function (req, res, next) {
       }
     );
   }
+});
+
+router.post("/mutualFriends", function (req, res, next) {
+  var userMain = req.body.userMain;
+  var userOther = req.body.userOther;
+  // Find main user
+  User.findOne({ _id: userMain }, function (err, res_usermain) {
+    if (err) {
+      console.log(err);
+    } else {
+      // Find User Other
+      User.findOne({ _id: userOther }, function (err, res_userother) {
+        if (err) {
+          console.log(err);
+        } else {
+          var userMainFriends = res_usermain.friend.list;
+          var userOtherFriends = res_userother.friend.list;
+
+          // Get intersection of Friends Lists
+          var mutualFriends = userMainFriends.filter((value) =>
+            userOtherFriends.includes(value)
+          );
+          console.log(mutualFriends);
+          res.status(200).json({
+            mutualFriends: mutualFriends,
+          });
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;
