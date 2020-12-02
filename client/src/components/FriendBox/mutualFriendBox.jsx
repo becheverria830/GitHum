@@ -1,51 +1,60 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 /* Importing All Resources & Custom CSS */
 import "./friendBox.css";
-import ForestDefaultIcon from "../../assets/forest.svg";
 import Message from "../../assets/comment.svg";
 import FriendMessageButton from "./friendMessage";
 import AddFriendButton from "./addFriend";
 import FriendRequestsButton from "./friendRequests";
 
-class FriendBox extends Component {
+class MutualFriendBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: {
-        current_friends: [],
-        requests: {
-          received: [],
-          sent: [],
-        },
-      },
+      userMain: props.auth.user.id,
+      userOther: "",
+      mutualFriends: [],
     };
   }
 
-  getFriends() {
-    fetch("http://localhost:9000/user/friends")
+  getMutualFriends() {
+    // Get Mutual Friends
+    const url = "http://localhost:9000/user/friends/mutualFriends";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userMain: this.state.userMain,
+        userOther: this.props.userOther,
+      }),
+    };
+    fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          friends: res,
-        });
-        console.log(res);
-      })
-      .catch((err) => err);
+      .then((response) => {
+        console.log(response);
+        this.setState({ mutualFriends: response.mutualFriends });
+      });
   }
 
   componentDidMount() {
-    this.getFriends();
+    this.getMutualFriends();
   }
 
   render() {
@@ -65,11 +74,11 @@ class FriendBox extends Component {
                 <Col md="12">
                   <Table>
                     <tbody>
-                      {this.state.friends.current_friends.map((friend) => (
+                      {this.state.mutualFriends.map((friend) => (
                         <tr className="friend-table-row">
                           <td>
                             <h3 className="friend-name-text">
-                              {friend.firstname} {friend.lastname}
+                              {friend.first_name} {friend.last_name}
                             </h3>
                           </td>
                           <td>
@@ -78,20 +87,15 @@ class FriendBox extends Component {
                             </Button>
                           </td>
                           <td>
-                            <FriendMessageButton />
+                            <FriendMessageButton
+                              current_user={this.props.auth.user}
+                              other_user={friend}
+                            />
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </Table>
-                </Col>
-              </Row>
-              <Row className="friend-buttons">
-                <Col lg="6" md="6" sm="6" xs="6">
-                  <AddFriendButton />
-                </Col>
-                <Col lg="6" md="6" sm="6" xs="6">
-                  <FriendRequestsButton />
                 </Col>
               </Row>
             </Col>
@@ -102,4 +106,11 @@ class FriendBox extends Component {
   }
 }
 
-export default FriendBox;
+MutualFriendBox.propTypes = {
+  auth: PropTypes.object.isRequired,
+  userOther: PropTypes.string.isRequired,
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps)(withRouter(MutualFriendBox));

@@ -302,10 +302,16 @@ router.post("/mutualFriends", function (req, res, next) {
           var mutualFriends = userMainFriends.filter((value) =>
             userOtherFriends.includes(value)
           );
-          console.log(mutualFriends);
-          res.status(200).json({
-            mutualFriends: mutualFriends,
-          });
+
+          // Return mutual friend objects
+          User.find()
+            .where("_id")
+            .in(mutualFriends)
+            .exec((err, res_find_friends_objects) => {
+              res.status(200).json({
+                mutualFriends: res_find_friends_objects,
+              });
+            });
         }
       });
     }
