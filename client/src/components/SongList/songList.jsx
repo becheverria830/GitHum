@@ -1,14 +1,10 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { Link, Route, Switch, withRouter, useState } from "react-router-dom";
-// import ReactDOM from "react-dom";
 
 /* Importing All Bootstrap Components */
 import Table from "react-bootstrap/Table";
 import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 
 /* Importing All Resources & Custom CSS */
 import "./songList.css";
@@ -19,21 +15,19 @@ import Flower from "../../assets/flower.svg";
 import NowPlaying from "../NowPlaying/nowPlaying";
 
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 class SongList extends Component {
   constructor(props) {
     super(props);
-    
-    this.forestElement = React.createRef();
-    
-    
     this.state = {
       songs: [],
+      myForests: [],
+      selectedForest: "",
     };
 
     this.addFavorite = this.addFavorite.bind(this);
     this.getForests = this.getForests.bind(this);
+    this.addToForest = this.addToForest.bind(this);
   }
 
   updateState(state) {
@@ -50,7 +44,7 @@ class SongList extends Component {
     fetch("http://localhost:9000/user/forests/forests/" + userid)
       .then((res) => res.json())
       .then((res) => {
-        this.forestElement.current.updateState(res.forests);
+        this.setState({ myForests: res.forests });
       })
       .catch((err) => err);
   }
@@ -71,8 +65,6 @@ class SongList extends Component {
         songid: song._id,
       }),
     };
-    console.log(this.props.user.id);
-    console.log(song._id);
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
@@ -81,7 +73,7 @@ class SongList extends Component {
       .catch((err) => err);
   }
 
-  addToForest(song) {
+  addToForest(song, forest) {
     const url = "http://localhost:9000/user/forests/addToForest";
     const options = {
       method: "POST",
@@ -94,15 +86,12 @@ class SongList extends Component {
       },
       body: JSON.stringify({
         song_id: song._id,
-        forest_id: "",
+        forest_id: forest._id,
       }),
     };
-    console.log(song._id);
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => err);
   }
 
@@ -127,11 +116,11 @@ class SongList extends Component {
       .then((res) => {})
       .catch((err) => err);
   }
-  /*
+
   componentDidMount() {
-    this.getForests(this.props.auth.user.id);
+    this.getForests(this.props.user.id);
   }
-  */
+
   render() {
     return (
       <React.Fragment>
@@ -162,19 +151,22 @@ class SongList extends Component {
                   ></input>
                 </td>
                 <td>
-                  {/* <input type="image" className="" src={Tree}></input> */}
                   <Dropdown>
                     <Dropdown.Toggle type="image" src={Tree}>
                       <Image src={Tree}></Image>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Forest 1</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">
-                        Forest 2
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">
-                        Forest 3
-                      </Dropdown.Item>
+                      {this.state.myForests.map((forest) => {
+                        return (
+                          <Dropdown.Item
+                            onClick={() => {
+                              this.addToForest(song, forest);
+                            }}
+                          >
+                            {forest.name}
+                          </Dropdown.Item>
+                        );
+                      })}
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -198,14 +190,5 @@ class SongList extends Component {
 SongList.propTypes = {
   user: PropTypes.object.isRequired,
 };
-
-/*
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(
-  mapStateToProps,
-)(withRouter(SongList));
-*/
 
 export default SongList;

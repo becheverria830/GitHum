@@ -46,11 +46,11 @@ class ValleyPage extends Component {
       showSongs: false,
       showForests: true,
       showSavedForests: false,
-      userid: '',
+      userid: "",
       user_information: {
-        username: '',
-        firstname: ''
-      }
+        username: "",
+        firstname: "",
+      },
     };
   }
 
@@ -116,7 +116,7 @@ class ValleyPage extends Component {
           user_information: res.user,
         });
 
-        if(userid === this.props.auth.user.id) {
+        if (userid === this.props.auth.user.id) {
           this.setState({
             myValley: true,
             showSongs: true,
@@ -127,7 +127,6 @@ class ValleyPage extends Component {
       })
       .catch((err) => err);
   }
-
 
   componentDidMount() {
     this.getFavoriteSongs(this.props.match.params.userid);
@@ -151,27 +150,32 @@ class ValleyPage extends Component {
                   <Image id="valley-githum-logo" src={Logo}></Image>
                 </Col>
                 <Col lg="3" md="3" sm="3" xs="3">
-                  <p id="valley-username">@{this.state.user_information.username}</p>
+                  <p id="valley-username">
+                    @{this.state.user_information.username}
+                  </p>
                   <br></br>
-                  <h1 id="valley-title">{this.state.user_information.first_name}'s Valley</h1>
+                  <h1 id="valley-title">
+                    {this.state.user_information.first_name}'s Valley
+                  </h1>
                 </Col>
                 <Col lg="6" md="6" sm="6" xs="6"></Col>
               </Container>
             </Row>
             <Row className="valley-toggle-button-container-div">
-              {this.state.myValley && <Col md="4" className="valley-toggle-button-container">
-                <Button
-                  onClick={this.displaySongs}
-                  className="valley-toggle-button"
-                >
-                  {" "}
-                  Favorites{" "}
-                  <span>
-                    <Image className="icon" src={Flower}></Image>
-                  </span>
-                </Button>
-              </Col>
-              }
+              {this.state.myValley && (
+                <Col md="4" className="valley-toggle-button-container">
+                  <Button
+                    onClick={this.displaySongs}
+                    className="valley-toggle-button"
+                  >
+                    {" "}
+                    Favorites{" "}
+                    <span>
+                      <Image className="icon" src={Flower}></Image>
+                    </span>
+                  </Button>
+                </Col>
+              )}
               <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displayForests}
@@ -196,20 +200,24 @@ class ValleyPage extends Component {
                   </span>
                 </Button>
               </Col>
-              {!this.state.myValley && <Col md="4"/>
-              }
+              {!this.state.myValley && <Col md="4" />}
             </Row>
             <Row>
               <Col id="valley-content-div">
                 <div id="valley-content-container">
                   <div className={this.state.showSongs ? null : "hidden"}>
-                    <SongList ref={this.songListElement} />
+                    <SongList
+                      ref={this.songListElement}
+                      user={this.props.auth.user}
+                    />
                   </div>
                   <div className={this.state.showForests ? null : "hidden"}>
                     <ValleyForestDisplay ref={this.forestElement} />
                   </div>
-                  <div className={this.state.showSavedForests ? null : "hidden"}>
-                    <ValleyForestDisplay ref={this.savedForestElement}/>
+                  <div
+                    className={this.state.showSavedForests ? null : "hidden"}
+                  >
+                    <ValleyForestDisplay ref={this.savedForestElement} />
                   </div>
                 </div>
                 <div className={this.state.showForests ? null : "invisible"}>
@@ -225,7 +233,14 @@ class ValleyPage extends Component {
           <Col xl="4" lg="4" md="4" sm="12" xs="12">
             <Row>
               <Col>
-                { this.state.myValley ? <FriendBox ref={this.friendListElement}/> : <MutualFriendBox ref={this.friendListElement}/>}
+                {this.state.myValley ? (
+                  <FriendBox ref={this.friendListElement} />
+                ) : (
+                  <MutualFriendBox
+                    ref={this.friendListElement}
+                    userOther={this.props.match.params.userid}
+                  />
+                )}
               </Col>
             </Row>
             <Row>
@@ -241,11 +256,9 @@ class ValleyPage extends Component {
 }
 
 ValleyPage.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
-export default connect(
-  mapStateToProps,
-)(withRouter(ValleyPage));
+export default connect(mapStateToProps)(withRouter(ValleyPage));
