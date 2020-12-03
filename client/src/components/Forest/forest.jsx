@@ -34,6 +34,7 @@ class ForestPage extends Component {
     this.state = {
       showSongList: true,
       showForestInfo: false,
+      myForest: false,
       forest: {
         id: -1,
         name: "",
@@ -66,7 +67,9 @@ class ForestPage extends Component {
   }
 
   getForestData() {
-    fetch("http://localhost:9000/user/forests/" + this.props.match.params.forestid)
+    fetch(
+      "http://localhost:9000/user/forests/" + this.props.match.params.forestid
+    )
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -74,12 +77,25 @@ class ForestPage extends Component {
         });
         this.songListElement.current.updateState(res.forests.songs);
         this.forestInfoElement.current.updateForestInfo(res.forests);
+
+        // set myForest
+        if (this.props.auth.user.id === res.forests.creator) {
+          console.log("hola");
+          this.setState({ myForest: true });
+        } else {
+          console.log("ohayo");
+          this.setState({ myForest: false });
+        }
       })
       .catch((err) => err);
   }
 
   getHierarchyData() {
-    fetch("http://localhost:9000/user/forests/" + this.props.match.params.forestid + "/hierarchy")
+    fetch(
+      "http://localhost:9000/user/forests/" +
+        this.props.match.params.forestid +
+        "/hierarchy"
+    )
       .then((res) => res.json())
       .then((res) => {
         console.log("HIERARCHY");
@@ -244,12 +260,12 @@ class ForestPage extends Component {
                     <BranchForest forest_id={this.state.forest._id} />
                   </Col>
                   <Col md="12">
-                    <div className={this.props.myForest ? null : "hidden"}>
+                    <div className={this.state.myForest ? null : "hidden"}>
                       <ForestSettings />
                     </div>
                   </Col>
                   <Col md="12">
-                    {this.props.myForest ? (
+                    {this.state.myForest ? (
                       <Deforest />
                     ) : (
                       <Button
