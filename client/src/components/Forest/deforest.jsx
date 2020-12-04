@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, withRouter } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Container from "react-bootstrap/Container";
@@ -13,6 +13,9 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 /* Importing All Resources & Custom CSS */
 import "./deforest.css";
 
@@ -20,13 +23,40 @@ class Deforest extends Component {
   
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      forestid: -1
+    };
 
     this.deforestButton = this.deforestButton.bind(this);
+    this.onConfirm = this.onConfirm.bind(this);
   }
 
   onConfirm(event) {
     event.preventDefault();
+
+    console.log(this.props.match.params.forestid);
+
+    const url = "http://localhost:9000/user/forests/deforest";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        forest_id: this.props.match.params.forestid,
+        //userid: this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        this.props.history.push("/forests/:userid" + this.props.auth.user.id);
+      })
+      .catch((err) => err);
   };
 
   deforestButton() {
@@ -63,7 +93,7 @@ class Deforest extends Component {
                     Once your Forest is deleted, you will no longer have access to
                     its contents, but it's name will remain in the hierarchy.
                   </h6>
-                  <Link to="/feed" class="btn forest-action-button deforest-link-button" role="button">Deforest</Link>
+                  <Link to="/feed" class="btn forest-action-button deforest-link-button" onClick={this.onConfirm} role="button">Deforest</Link>
                 </Container>
               </Col>
             </Row>
@@ -78,5 +108,14 @@ class Deforest extends Component {
   }
 }
 
-export default Deforest;
+Deforest.propTypes = {
+  auth: PropTypes.object.isRequired,
+  forest_id: PropTypes.string.isRequired,
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+)(withRouter(Deforest));
 

@@ -210,6 +210,34 @@ router.post("/branchForest", function (req, res, next) {
   //
 });
 
+router.post("/deforest", function (req, res, next) {
+  const fid = req.body.forest_id;
+  console.log(fid);
+  //const fname = req.body.name;
+  //const user_id = req.body.user_id;
+
+  if (fid == undefined) {
+    res.status(400).json({
+      fid: -1
+    });
+  } 
+  else {
+    Forest.findOneAndUpdate(
+      { _id: fid },
+      {$set: {'creator': null}},
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        else {
+          res.status(200).json({});
+        }
+      }
+    )
+  }
+});
+
 router.get("/forests/:userid", function (req, res, next) {
   //Getting the information from the request
   const userid = req.params.userid;
