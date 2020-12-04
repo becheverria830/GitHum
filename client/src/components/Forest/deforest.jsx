@@ -16,54 +16,67 @@ import FormControl from "react-bootstrap/FormControl";
 /* Importing All Resources & Custom CSS */
 import "./deforest.css";
 
-function DeforestButton() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <div>
-      <Button
-        className="button forest-action-button danger"
-        id="deforest-button"
-        onClick={handleShow}
-      >
-        Deforest
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header
-          closeButton
-          id="deforest-modal-header"
-          className="text-center"
-        >
-          <Modal.Title id="deforest-modal-title">Deforest</Modal.Title>
-        </Modal.Header>
-        <Modal.Body id="deforest-modal-body">
-          <Row>
-            <Col lg="12" md="12" sm="12" xs="12">
-              <Container id="deforest-warning-container">
-                <h1> Are you sure you want to delete this Forest? </h1>
-                <h6>
-                  Once your Forest is deleted, you will no longer have access to
-                  its contents, but it's name will remain in the hierarchy.
-                </h6>
-                <Link to="/feed" class="btn forest-action-button deforest-link-button" role="button">Deforest</Link>
-              </Container>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-}
-
-export default DeforestButton;
-
 class Deforest extends Component {
-  state = {};
+  
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    this.deforestButton = this.deforestButton.bind(this);
+  }
+
+  onConfirm(event) {
+    event.preventDefault();
+  };
+
+  deforestButton() {
+    
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    return (
+      <div>
+        <Button
+          className="button forest-action-button danger"
+          id="deforest-button"
+          onClick={handleShow}
+        >
+          Deforest
+        </Button>
+
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header
+            closeButton
+            id="deforest-modal-header"
+            className="text-center"
+          >
+            <Modal.Title id="deforest-modal-title">Deforest</Modal.Title>
+          </Modal.Header>
+          <Modal.Body id="deforest-modal-body">
+            <Row>
+              <Col lg="12" md="12" sm="12" xs="12">
+                <Container id="deforest-warning-container">
+                  <h1> Are you sure you want to delete this Forest? </h1>
+                  <h6>
+                    Once your Forest is deleted, you will no longer have access to
+                    its contents, but it's name will remain in the hierarchy.
+                  </h6>
+                  <Link to="/feed" class="btn forest-action-button deforest-link-button" role="button">Deforest</Link>
+                </Container>
+              </Col>
+            </Row>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  };
+
   render() {
-    return <DeforestButton />;
+    return <this.deforestButton />;
   }
 }
+
+export default Deforest;
+

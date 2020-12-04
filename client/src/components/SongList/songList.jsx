@@ -12,6 +12,7 @@ import Tree from "../../assets/tree.svg";
 import Play from "../../assets/play.svg";
 import Queue from "../../assets/queue.svg";
 import Flower from "../../assets/flower.svg";
+import FlowerAlt from "../../assets/flower-alt.svg";
 import NowPlaying from "../NowPlaying/nowPlaying";
 
 import PropTypes from "prop-types";
@@ -23,6 +24,7 @@ class SongList extends Component {
       songs: [],
       myForests: [],
       selectedForest: "",
+      flower: false
     };
 
     this.addFavorite = this.addFavorite.bind(this);
@@ -50,6 +52,8 @@ class SongList extends Component {
   }
 
   addFavorite(song) {
+    document.getElementById("favoriteFlower").src = {FlowerAlt};
+    
     const url = "http://localhost:9000/user/favorites/songs/add";
     const options = {
       method: "POST",
@@ -174,6 +178,7 @@ class SongList extends Component {
                   <input
                     type="image"
                     className=""
+                    id="favoriteFlower"
                     src={Flower}
                     onClick={() => this.addFavorite(song)}
                   ></input>
