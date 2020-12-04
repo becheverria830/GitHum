@@ -30,6 +30,9 @@ class SongList extends Component {
     this.addFavorite = this.addFavorite.bind(this);
     this.getForests = this.getForests.bind(this);
     this.addToForest = this.addToForest.bind(this);
+    this.isFavorite = this.isFavorite.bind(this);
+    this.setSource = this.setSource.bind(this);
+    
   }
 
   updateState(state) {
@@ -52,9 +55,35 @@ class SongList extends Component {
   }
 
   addFavorite(song) {
-    document.getElementById("favoriteFlower").src = {FlowerAlt};
+    //document.getElementById("favoriteFlower").src = {FlowerAlt};
     
     const url = "http://localhost:9000/user/favorites/songs/add";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => err);
+  }
+
+  removeFavorite(song) {
+    //document.getElementById("favoriteFlower").src = {FlowerAlt};
+    
+    const url = "http://localhost:9000/user/favorites/songs/remove";
     const options = {
       method: "POST",
       mode: "cors",
@@ -97,6 +126,66 @@ class SongList extends Component {
       .then((res) => res.json())
       .then((res) => {})
       .catch((err) => err);
+  }
+
+  isFavorite(song) {
+    //Checks whether the song is favorited already
+    //if so change source image before it even loads? 
+    //No, if so then return boolean and separate source image into another function
+
+    //var favState = false;
+
+    fetch("http://localhost:9000/user/favorites/songs/" + this.props.user.id)
+      .then((res) => res.json())
+      .then((res) => {
+        //console.log(song);
+        //console.log(res);
+        for(var index = 0; index < res.songs.length; ++index) {
+          var loopSong = res.songs[index];
+          if(loopSong._id == song._id) {
+            this.state.flower = true;
+            //console.log(this.state.flower);
+            console.log("true in isFavorite");
+            //favState = true;
+            break;
+          }
+        }
+        //if(res.songs.includes(song)){
+        //  result = true;
+        //  console.log("Within the fetch result in terms of favoriting, seeing if current song is a fav");
+        //}
+      })
+      .catch((err) => err)
+      .done;
+
+      console.log(this.state.flower);
+      //return this.state.flower;
+      //return favState;
+  }
+
+  setSource(song) {
+    //Calls on is favorite, if that's true then return FlowerAlt
+    //if false return Flower
+    //else just Flower to default
+
+    this.isFavorite(song);
+
+    //var status = this.isFavorite(song);
+    //console.log("result is" + status);
+    //console.log(this.isFavorite(song));
+
+    console.log(this.state.flower);
+
+    if(this.state.flower == true) {
+      //document.getElementById("favoriteFlower").src = {FlowerAlt};
+      return FlowerAlt;
+    }
+    else{
+      //document.getElementById("favoriteFlower").src = {Flower};
+      return Flower;
+    }
+
+
   }
 
   queueSong(song) {
@@ -179,8 +268,9 @@ class SongList extends Component {
                     type="image"
                     className=""
                     id="favoriteFlower"
-                    src={Flower}
+                    src={this.setSource(song)}
                     onClick={() => this.addFavorite(song)}
+                    //onLoad={this.setSource(song)}
                   ></input>
                 </td>
               </tr>
