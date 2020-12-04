@@ -36,27 +36,7 @@ class Deforest extends Component {
 
     console.log(this.props.match.params.forestid);
 
-    const url = "http://localhost:9000/user/forests/deforest";
-    const options = {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        forest_id: this.props.match.params.forestid,
-        //userid: this.props.auth.user.id
-      }),
-    };
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((res) => {
-        this.props.history.push("/forests/:userid" + this.props.auth.user.id);
-      })
-      .catch((err) => err);
+    
   };
 
   deforestButton() {

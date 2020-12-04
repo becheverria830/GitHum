@@ -27,6 +27,7 @@ class ForestPage extends Component {
     super(props);
     this.songListElement = React.createRef();
     this.forestInfoElement = React.createRef();
+    this.forestSettingsElement = React.createRef();
 
     this.displaySongs = this.displaySongs.bind(this);
     this.displayInfo = this.displayInfo.bind(this);
@@ -77,6 +78,7 @@ class ForestPage extends Component {
         });
         this.songListElement.current.updateState(res.forests.songs);
         this.forestInfoElement.current.updateForestInfo(res.forests);
+        this.forestSettingsElement.current.updateForestSettings(res.forests);
 
         // set myForest
         if (this.props.auth.user.id === res.forests.creator) {
@@ -261,7 +263,7 @@ class ForestPage extends Component {
                   </Col>
                   <Col md="12">
                     <div className={this.state.myForest ? null : "hidden"}>
-                      <ForestSettings />
+                      <ForestSettings ref={this.forestSettingsElement}/>
                     </div>
                   </Col>
                   <Col md="12">
