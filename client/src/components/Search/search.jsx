@@ -58,7 +58,7 @@ class SearchPage extends Component {
     if(JSON.stringify(prevProps.match.params) == JSON.stringify(this.props.match.params)) {
       return false;
     }
-    this.getSearchResults();
+    window.location.reload();
   }
 
   displayPopular = e => {

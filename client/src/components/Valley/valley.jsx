@@ -135,6 +135,16 @@ class ValleyPage extends Component {
     this.getSavedForests(this.props.match.params.userid);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps == undefined) {
+      return false;
+    }
+    if(JSON.stringify(prevProps.match.params) == JSON.stringify(this.props.match.params)) {
+      return false;
+    }
+    window.location.reload();
+  }
+
   render() {
     return (
       <React.Fragment>
