@@ -226,7 +226,7 @@ class AddFriendButton extends Component {
           <Modal.Body id="add-friend-modal-body">
             <Row>
               <Col lg="12" md="12" sm="12" xs="12">
-                <Form inline>
+                <Form inline onSubmit={this.search}>
                   <FormControl
                     type="text"
                     value={this.state.search}
