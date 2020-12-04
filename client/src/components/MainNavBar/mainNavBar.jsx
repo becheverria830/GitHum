@@ -24,10 +24,15 @@ import SearchIcon from "../../assets/search.svg";
 class MainNavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      search: ''
+    if(this.props.match.params.query != undefined) {
+      this.state = {
+        search: this.props.match.params.query
+      }
+    } else {
+      this.state = {
+        search: ''
+      }
     }
-
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 

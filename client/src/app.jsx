@@ -34,6 +34,7 @@ export default function App() {
       <PrivateRoute exact path="/valley/:userid" component={ValleyPage} />
       <PrivateRoute exact path="/forests/:forestid" component={ForestPage} />
       <PrivateRoute exact path="/search/:query" component={SearchPage} />
+      <PrivateRoute exact path="/search/" component={SearchPage} />
     </Switch>
   );
 }

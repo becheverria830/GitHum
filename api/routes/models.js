@@ -112,6 +112,8 @@ let song = new Schema(
     album_art: String,
     spotify_uri: String,
     genre_id: String,
+    release_date: String,
+    popularity: Number,
   },
   { collection: "Song" }
 );

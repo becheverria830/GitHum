@@ -19,17 +19,32 @@ import SongList from "../SongList/songList";
 class SearchPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      'songs_popularity_sorted': [],
+      'songs_date_sorted': []
+    }
     this.songListElement = React.createRef();
   }
 
   getSearchResults() {
-    fetch("http://localhost:9000/search?query=" + this.props.match.params.query)
-      .then(res => res.json())
-      .then(res => {
-        console.log(res.songs);
-        this.songListElement.current.updateState(res.songs);
-      })
-      .catch(err => err);
+    if(this.props.match.params.query == undefined) {
+      this.songListElement.current.updateState([]);
+    } else {
+      fetch("http://localhost:9000/search?query=" + this.props.match.params.query)
+        .then(res => res.json())
+        .then(res => {
+          var songs_popularity_sorted = JSON.parse(JSON.stringify(res.songs));
+          var songs_date_sorted = JSON.parse(JSON.stringify(res.songs));
+          songs_popularity_sorted.sort(function(x, y) { return y.popularity - x.popularity; });
+          songs_date_sorted.sort(function(x, y) { return Date.parse(y.release_date) - Date.parse(x.release_date); });
+          this.setState({
+            'songs_popularity_sorted': songs_popularity_sorted,
+            'songs_date_sorted': songs_date_sorted
+          });
+          this.songListElement.current.updateState(songs_popularity_sorted);
+        })
+        .catch(err => err);
+    }
   }
 
   componentDidMount() {
@@ -38,10 +53,23 @@ class SearchPage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps == undefined) {
-        return false
+      return false;
+    }
+    if(JSON.stringify(prevProps.match.params) == JSON.stringify(this.props.match.params)) {
+      return false;
     }
     this.getSearchResults();
   }
+
+  displayPopular = e => {
+    e.preventDefault();
+    this.songListElement.current.updateState(this.state.songs_popularity_sorted);
+  };
+
+  displayReleaseDate = e => {
+    e.preventDefault();
+    this.songListElement.current.updateState(this.state.songs_date_sorted);
+  };
 
   render() {
     return (
@@ -67,9 +95,9 @@ class SearchPage extends Component {
             <Row>
               <Col id="filter-by-div">
                 <h3 id="filter-by-header">Filter By:</h3>
-                <Button id="search-action-1" className="filter-by-button"> By Keyword </Button>
+                <Button id="search-action-1" className="filter-by-button" onClick={this.displayPopular}> By Popularity </Button>
                 <br/>
-                <Button id="search-action-2" className="filter-by-button"> By Most Popular </Button>
+                <Button id="search-action-2" className="filter-by-button" onClick={this.displayReleaseDate}> By Release Date </Button>
               </Col>
             </Row>
             <Row>

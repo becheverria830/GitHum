@@ -20,7 +20,7 @@ spotifyApi.setAccessToken(keys.Spotify_OAuth_Token);
 
 router.get('/', function(req, res, next) {
   spotifyApi.searchTracks(req.query.query)
-  .then(function(tracks) {
+  .then(async function(tracks) {
     refined_songs = []
     for(song of tracks.body.tracks.items) {
       var song_data = {
@@ -28,16 +28,18 @@ router.get('/', function(req, res, next) {
         artist_name: song.artists[0].name,
         album_art: song.album.images[0].url,
         spotify_uri: song.uri,
-        genre_id: ""
+        genre_id: "",
+        release_date: song.album.release_date,
+        popularity: song.popularity
       }
-      refined_songs.push(song_data);
+      let query = { spotify_uri: song.uri };
+      let update = song_data;
+      let options = {upsert: true, new: true, setDefaultsOnInsert: true};
+      let result = await Song.findOneAndUpdate(query, update, options);
+      refined_songs.push(result);
     }
-    Song.insertMany(refined_songs, function(create_error, result) {
-      if (create_error) throw create_error;
-      console.log(result);
-      res.status(200).json({
-        "songs": result
-      });
+    res.status(200).json({
+      "songs": refined_songs
     });
   }, function(err) {
     console.error(err);
