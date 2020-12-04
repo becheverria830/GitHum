@@ -1,6 +1,6 @@
 /* Importing React & Router */
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 /* Importing All Bootstrap Components */
 import Row from "react-bootstrap/Row";
@@ -82,9 +82,11 @@ class MutualFriendBox extends Component {
                             </h3>
                           </td>
                           <td>
-                            <Button className="friend-visit-valley">
-                              Visit
-                            </Button>
+                            <Link to={"/valley/" + friend._id}>
+                              <Button className="friend-visit-valley">
+                                Visit
+                              </Button>
+                            </Link>
                           </td>
                           <td>
                             <FriendMessageButton
