@@ -27,6 +27,7 @@ class ForestPage extends Component {
     super(props);
     this.songListElement = React.createRef();
     this.forestInfoElement = React.createRef();
+    this.forestSettingsElement = React.createRef();
 
     this.displaySongs = this.displaySongs.bind(this);
     this.displayInfo = this.displayInfo.bind(this);
@@ -77,6 +78,7 @@ class ForestPage extends Component {
         });
         this.songListElement.current.updateState(res.forests.songs);
         this.forestInfoElement.current.updateForestInfo(res.forests);
+        this.forestSettingsElement.current.updateForestSettings(res.forests);
 
         // set myForest
         if (this.props.auth.user.id === res.forests.creator) {
@@ -181,6 +183,7 @@ class ForestPage extends Component {
     return (
       <React.Fragment>
         <MainNavBar />
+        <div className={this.state.forest.settings.privacy === 1 && this.state.myForest === false ? "hidden" : null}>
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
@@ -257,11 +260,13 @@ class ForestPage extends Component {
                     <ShareForest forest_id={this.state.forest._id} />
                   </Col>
                   <Col md="12">
-                    <BranchForest forest_id={this.state.forest._id} />
+                    <div>
+                      <BranchForest forest_id={this.state.forest._id} />
+                    </div>
                   </Col>
                   <Col md="12">
                     <div className={this.state.myForest ? null : "hidden"}>
-                      <ForestSettings />
+                      <ForestSettings ref={this.forestSettingsElement}/>
                     </div>
                   </Col>
                   <Col md="12">
@@ -286,6 +291,7 @@ class ForestPage extends Component {
             </Row>
           </Col>
         </Row>
+        </div>
       </React.Fragment>
     );
   }

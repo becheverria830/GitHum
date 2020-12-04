@@ -210,6 +210,33 @@ router.post("/branchForest", function (req, res, next) {
   //
 });
 
+router.post("/update_information", function (req, res, next) {
+  const fid = req.body.forest_id;
+  const pri = req.body.privacy;
+  const name = req.body.name;
+
+  if (fid == undefined || pri == undefined) {
+    res.status(400).json({
+      fid: -1
+    });
+  } 
+  else {
+    Forest.findOneAndUpdate(
+      { _id: fid },
+      {$set: {'settings.privacy': pri, 'name': name}},
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        else {
+          res.status(200).json({});
+        }
+      }
+    )
+  }
+});
+
 router.post("/deforest", function (req, res, next) {
   const fid = req.body.forest_id;
   console.log(fid);
@@ -224,7 +251,7 @@ router.post("/deforest", function (req, res, next) {
   else {
     Forest.findOneAndUpdate(
       { _id: fid },
-      {$set: {'creator': null}},
+      {$set: {'active': '0'}},
       function (err, result) {
         if (err) {
           console.log(err);
@@ -249,7 +276,7 @@ router.get("/forests/:userid", function (req, res, next) {
     });
   } else {
     //Finding if a user with the email exists already
-    Forest.find({ creator: userid }, function (find_error, forests) {
+    Forest.find({ creator: userid, active: 1}, function (find_error, forests) {
       if (find_error) throw find_error;
 
       refined_forests = [];
