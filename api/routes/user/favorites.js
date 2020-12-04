@@ -21,9 +21,11 @@ router.post("/songs/add", function (req, res, next) {
   if (songid == undefined || userid == undefined) {
     res.status(400).json({});
   } else {
-    User.findOneAndUpdate({_id : userid}, { $push: {'library.favorites': songid} }, function (err, result) {
+    User.findOneAndUpdate({_id : userid}, { $push: {'library.favorites': songid} }, {new: true}, function (err, result) {
       if (err) throw err;
-      res.status(200).json({});
+      res.status(200).json({
+        songs: result.library.favorites
+      });
     });
   }
   // Check if song has an object already
@@ -41,9 +43,11 @@ router.post("/songs/remove", function (req, res, next) {
   if (songid == undefined || userid == undefined) {
     res.status(400).json({});
   } else {
-    User.findOneAndUpdate({_id : userid}, { $pull: {'library.favorites': songid} }, function (err, result) {
+    User.findOneAndUpdate({_id : userid}, { $pull: {'library.favorites': songid} }, {new: true}, function (err, result) {
       if (err) throw err;
-      res.status(200).json({});
+      res.status(200).json({
+        songs: result.library.favorites
+      });
     });
   }
 });

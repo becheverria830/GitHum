@@ -70,7 +70,9 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {})
+      .then((res) => {
+        this.setState({ favorites: res.songs });
+      })
       .catch((err) => err);
   }
 
@@ -92,7 +94,9 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {})
+      .then((res) => {
+        this.setState({ favorites: res.songs });
+      })
       .catch((err) => err);
   }
 
