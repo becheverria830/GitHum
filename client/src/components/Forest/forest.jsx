@@ -183,6 +183,7 @@ class ForestPage extends Component {
     return (
       <React.Fragment>
         <MainNavBar />
+        <div className={this.state.forest.settings.privacy === 1 && this.state.myForest === false ? "hidden" : null}>
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
@@ -259,7 +260,9 @@ class ForestPage extends Component {
                     <ShareForest forest_id={this.state.forest._id} />
                   </Col>
                   <Col md="12">
-                    <BranchForest forest_id={this.state.forest._id} />
+                    <div>
+                      <BranchForest forest_id={this.state.forest._id} />
+                    </div>
                   </Col>
                   <Col md="12">
                     <div className={this.state.myForest ? null : "hidden"}>
@@ -288,6 +291,7 @@ class ForestPage extends Component {
             </Row>
           </Col>
         </Row>
+        </div>
       </React.Fragment>
     );
   }
