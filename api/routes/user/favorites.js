@@ -34,7 +34,18 @@ router.post("/songs/add", function (req, res, next) {
   // and as the object is being made, save the ID for it
 });
 
-router.post("/remove", function (req, res, next) {
+router.post("/songs/remove", function (req, res, next) {
+  const userid = req.body.userid;
+  const songid = req.body.songid;
+
+  if (songid == undefined || userid == undefined) {
+    res.status(400).json({});
+  } else {
+    User.findOneAndUpdate({_id : userid}, { $pull: {'library.favorites': songid} }, function (err, result) {
+      if (err) throw err;
+      res.status(200).json({});
+    });
+  }
 });
 
 /*
@@ -76,4 +87,25 @@ router.get("/songs/:userid", function (req, res, next) {
   }
 });
 
+/*
+router.get("/songs/:userid/checkSong/:songid", function (req, res, next) {
+  var userid = req.params.userid;
+  var songid = req.params.songid;
+
+  if (userid == undefined) {
+    res.status(400).json({
+      songs: [],
+    });
+  } else {
+    User.findOne({ _id: userid}, {$in: [songid]})
+      .populate('library.favorites')
+      .exec(function (err, result) {
+        if (err) throw err;
+        res.status(200).json({
+          songs: result.library.favorites
+        });
+      });
+  }
+});
+*/
 module.exports = router;

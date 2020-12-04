@@ -12,6 +12,7 @@ import Tree from "../../assets/tree.svg";
 import Play from "../../assets/play.svg";
 import Queue from "../../assets/queue.svg";
 import Flower from "../../assets/flower.svg";
+import FlowerAlt from "../../assets/flower-alt.svg";
 import NowPlaying from "../NowPlaying/nowPlaying";
 
 import PropTypes from "prop-types";
@@ -23,11 +24,13 @@ class SongList extends Component {
       songs: [],
       myForests: [],
       selectedForest: "",
+      favorites: [],
     };
 
     this.addFavorite = this.addFavorite.bind(this);
     this.getForests = this.getForests.bind(this);
     this.addToForest = this.addToForest.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
   }
 
   updateState(state) {
@@ -67,9 +70,29 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
+      .catch((err) => err);
+  }
+
+  removeFavorite(song) {
+    const url = "http://localhost:9000/user/favorites/songs/remove";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {})
       .catch((err) => err);
   }
 
@@ -92,6 +115,20 @@ class SongList extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {})
+      .catch((err) => err);
+  }
+
+  getFavorites(userid) {
+    fetch("http://localhost:9000/user/favorites/songs/" + this.props.user.id)
+      .then((res) => res.json())
+      .then((res) => {
+        var fave_list = [];
+        for (var index = 0; index < res.songs.length; ++index) {
+          var loopSong = res.songs[index];
+          fave_list.push(loopSong._id);
+        }
+        this.setState({ favorites: fave_list });
+      })
       .catch((err) => err);
   }
 
@@ -119,6 +156,7 @@ class SongList extends Component {
 
   componentDidMount() {
     this.getForests(this.props.user.id);
+    this.getFavorites(this.props.user.id);
   }
 
   render() {
@@ -137,6 +175,7 @@ class SongList extends Component {
                     type="image"
                     className=""
                     src={Play}
+                    alt="play"
                     onClick={() => this.songListPlayTrack(song)}
                   ></input>
                 </td>
@@ -147,6 +186,7 @@ class SongList extends Component {
                     type="image"
                     className=""
                     src={Queue}
+                    alt="queue"
                     onClick={() => this.queueSong(song)}
                   ></input>
                 </td>
@@ -170,12 +210,30 @@ class SongList extends Component {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
-                <td>
+                <td
+                  className={
+                    this.state.favorites.includes(song._id) ? "hidden" : null
+                  }
+                >
                   <input
                     type="image"
                     className=""
                     src={Flower}
+                    alt="unfavorited flower"
                     onClick={() => this.addFavorite(song)}
+                  ></input>
+                </td>
+                <td
+                  className={
+                    this.state.favorites.includes(song._id) ? null : "hidden"
+                  }
+                >
+                  <input
+                    type="image"
+                    className=""
+                    src={FlowerAlt}
+                    alt="favorited flower"
+                    onClick={() => this.removeFavorite(song)}
                   ></input>
                 </td>
               </tr>
