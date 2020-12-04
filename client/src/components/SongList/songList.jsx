@@ -24,15 +24,13 @@ class SongList extends Component {
       songs: [],
       myForests: [],
       selectedForest: "",
-      flower: false
+      favorites: [],
     };
 
     this.addFavorite = this.addFavorite.bind(this);
     this.getForests = this.getForests.bind(this);
     this.addToForest = this.addToForest.bind(this);
-    this.isFavorite = this.isFavorite.bind(this);
-    this.setSource = this.setSource.bind(this);
-    
+    this.getFavorites = this.getFavorites.bind(this);
   }
 
   updateState(state) {
@@ -55,8 +53,6 @@ class SongList extends Component {
   }
 
   addFavorite(song) {
-    //document.getElementById("favoriteFlower").src = {FlowerAlt};
-    
     const url = "http://localhost:9000/user/favorites/songs/add";
     const options = {
       method: "POST",
@@ -74,15 +70,11 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => err);
   }
 
   removeFavorite(song) {
-    //document.getElementById("favoriteFlower").src = {FlowerAlt};
-    
     const url = "http://localhost:9000/user/favorites/songs/remove";
     const options = {
       method: "POST",
@@ -100,9 +92,7 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => err);
   }
 
@@ -128,64 +118,18 @@ class SongList extends Component {
       .catch((err) => err);
   }
 
-  isFavorite(song) {
-    //Checks whether the song is favorited already
-    //if so change source image before it even loads? 
-    //No, if so then return boolean and separate source image into another function
-
-    //var favState = false;
-
+  getFavorites(userid) {
     fetch("http://localhost:9000/user/favorites/songs/" + this.props.user.id)
       .then((res) => res.json())
       .then((res) => {
-        //console.log(song);
-        //console.log(res);
-        for(var index = 0; index < res.songs.length; ++index) {
+        var fave_list = [];
+        for (var index = 0; index < res.songs.length; ++index) {
           var loopSong = res.songs[index];
-          if(loopSong._id == song._id) {
-            this.state.flower = true;
-            //console.log(this.state.flower);
-            console.log("true in isFavorite");
-            //favState = true;
-            break;
-          }
+          fave_list.push(loopSong._id);
         }
-        //if(res.songs.includes(song)){
-        //  result = true;
-        //  console.log("Within the fetch result in terms of favoriting, seeing if current song is a fav");
-        //}
+        this.setState({ favorites: fave_list });
       })
-      .catch((err) => err)
-      .done;
-
-      console.log(this.state.flower);
-      //return this.state.flower;
-      //return favState;
-  }
-
-  setSource(song) {
-    //Calls on is favorite, if that's true then return FlowerAlt
-    //if false return Flower
-    //else just Flower to default
-
-    this.isFavorite(song);
-
-    //var status = this.isFavorite(song);
-    //console.log("result is" + status);
-    //console.log(this.isFavorite(song));
-
-    console.log(this.state.flower);
-
-    if(this.state.flower == true) {
-      //document.getElementById("favoriteFlower").src = {FlowerAlt};
-      return FlowerAlt;
-    }
-    else{
-      //document.getElementById("favoriteFlower").src = {Flower};
-      return Flower;
-    }
-
-
+      .catch((err) => err);
   }
 
   queueSong(song) {
@@ -212,6 +156,7 @@ class SongList extends Component {
 
   componentDidMount() {
     this.getForests(this.props.user.id);
+    this.getFavorites(this.props.user.id);
   }
 
   render() {
@@ -230,6 +175,7 @@ class SongList extends Component {
                     type="image"
                     className=""
                     src={Play}
+                    alt="play"
                     onClick={() => this.songListPlayTrack(song)}
                   ></input>
                 </td>
@@ -240,6 +186,7 @@ class SongList extends Component {
                     type="image"
                     className=""
                     src={Queue}
+                    alt="queue"
                     onClick={() => this.queueSong(song)}
                   ></input>
                 </td>
@@ -263,14 +210,30 @@ class SongList extends Component {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
-                <td>
+                <td
+                  className={
+                    this.state.favorites.includes(song._id) ? "hidden" : null
+                  }
+                >
                   <input
                     type="image"
                     className=""
-                    id="favoriteFlower"
-                    src={this.setSource(song)}
+                    src={Flower}
+                    alt="unfavorited flower"
                     onClick={() => this.addFavorite(song)}
-                    //onLoad={this.setSource(song)}
+                  ></input>
+                </td>
+                <td
+                  className={
+                    this.state.favorites.includes(song._id) ? null : "hidden"
+                  }
+                >
+                  <input
+                    type="image"
+                    className=""
+                    src={FlowerAlt}
+                    alt="favorited flower"
+                    onClick={() => this.removeFavorite(song)}
                   ></input>
                 </td>
               </tr>

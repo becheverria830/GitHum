@@ -43,29 +43,28 @@ var play = ({
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 class NowPlaying extends Component {
-
   constructor(props) {
     super(props);
     /* Get your access token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/# */
     this.state = {
-      token: "BQBL52I6w3LY99_nU6Z6cLHBrluaspOIC1e4NWVc3iWlCStum_rONfwjbttZjAleb5ed9sgLAzMftOlXz95zua9a_1fbcbHAmOxrISVLGLmg_AVsH91u-GWuY5-Texba0eQPrSAKxwI8q1NvFEyNV2N-HO26Hgv7GZY",
+      token:
+        "BQC61-PMa4FdaHkrOyTvrczzEvxTvHCAcYTn26TgsN4NlgaLeshMEuyhq8Sz0b1hZeYMXT52d9FSrrUlkXJfkozM3ITfkVQT9YdcOE9GrXwOKa_7IjBRZV0j7l2Qi0mINlb1KSVRdgTmZdMfMQXA4BQvCGZ5odN7L_kV0vydo40Vf_tI6phhzA0",
       queue: {
         song_list: [],
         index: -1,
-        current_forest_id: null
+        current_forest_id: null,
       },
       deviceId: "",
       playing: false,
       position: 0,
-      duration: 1
+      duration: 1,
     };
 
     //TEMP STATIC FOREST TO ALLOW USER TO VISIT THEIR FOREST FROM NOW PLAYING
     this.current_forest_id = {
-      "_id": "5fae5aeb48d08f64ae32db6c",
-      "name": "My Current Forest!"
-
-    }
+      _id: "5fae5aeb48d08f64ae32db6c",
+      name: "My Current Forest!",
+    };
 
     this.onPrevClick = this.onPrevClick.bind(this);
     this.onPlayClick = this.onPlayClick.bind(this);
@@ -73,7 +72,7 @@ class NowPlaying extends Component {
     this.onShuffleClick = this.onShuffleClick.bind(this);
   }
 
-  playSong(spotifyId){
+  playSong(spotifyId) {
     play({
       playerInstance: this.player,
       spotify_uri: spotifyId,
@@ -92,14 +91,14 @@ class NowPlaying extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.auth.user.id
+        userid: this.props.auth.user.id,
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          queue:res.queue
+          queue: res.queue,
         });
         this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
       });
@@ -121,14 +120,14 @@ class NowPlaying extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.auth.user.id
+        userid: this.props.auth.user.id,
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          queue:res.queue
+          queue: res.queue,
         });
         this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
       });
@@ -146,14 +145,14 @@ class NowPlaying extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid: this.props.auth.user.id
+        userid: this.props.auth.user.id,
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          queue:res.queue
+          queue: res.queue,
         });
         this.playSong(res.queue.song_list[res.queue.index].spotify_uri);
       });
@@ -165,7 +164,7 @@ class NowPlaying extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          queue: res.queue
+          queue: res.queue,
         });
       });
   }
@@ -223,7 +222,7 @@ class NowPlaying extends Component {
 
       this.player.on("player_state_changed", (state) => {
         //If there are any changes to the player state
-        console.log(state);
+        // console.log(state);
         // if (
         //     this.state
         //     && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id)
@@ -274,26 +273,38 @@ class NowPlaying extends Component {
             </Col>
           </Row>
           <Row className="now-playing-container">
-            {
-              this.current_forest_id != null &&
+            {this.current_forest_id != null && (
               <Col md="12" className="playlist-name-div">
                 <Link to={"/forests/" + this.current_forest_id._id}>
                   <h3 className="playlist-name-header">
                     <span>
-                      <Image className="playlist-icon" src={ForestDefaultIcon} />
-                      { this.current_forest_id.name }
+                      <Image
+                        className="playlist-icon"
+                        src={ForestDefaultIcon}
+                      />
+                      {this.current_forest_id.name}
                     </span>
                   </h3>
                 </Link>
               </Col>
-            }
+            )}
             <Col md="12" className="song-container">
               <img
                 className="song-album-art-icon"
-                src={this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].album_art}
+                src={
+                  this.state.queue.index != -1 &&
+                  this.state.queue.song_list[this.state.queue.index].album_art
+                }
               ></img>
-              <h3 className="song-name-header">{this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].name}</h3>
-              <h3 className="artist-name-header">{this.state.queue.index != -1 && this.state.queue.song_list[this.state.queue.index].artist_name}</h3>
+              <h3 className="song-name-header">
+                {this.state.queue.index != -1 &&
+                  this.state.queue.song_list[this.state.queue.index].name}
+              </h3>
+              <h3 className="artist-name-header">
+                {this.state.queue.index != -1 &&
+                  this.state.queue.song_list[this.state.queue.index]
+                    .artist_name}
+              </h3>
             </Col>
             <Col md="12" className="actions-div">
               <input
@@ -334,11 +345,9 @@ class NowPlaying extends Component {
 }
 
 NowPlaying.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
-export default connect(
-  mapStateToProps
-)(withRouter(NowPlaying));
+export default connect(mapStateToProps)(withRouter(NowPlaying));
