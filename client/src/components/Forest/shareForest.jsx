@@ -114,7 +114,7 @@ class ShareForest extends Component {
                     </Col>
                   </Row>
                   <Row className="social-media-row">
-                    <Col
+                    {/* <Col
                       lg="4"
                       md="4"
                       sm="4"
@@ -130,12 +130,12 @@ class ShareForest extends Component {
                       >
                         <FacebookIcon size={65} />
                       </FacebookShareButton>
-                    </Col>
+                    </Col> */}
                     <Col
-                      lg="4"
-                      md="4"
-                      sm="4"
-                      xs="4"
+                      lg="6"
+                      md="6"
+                      sm="6"
+                      xs="6"
                       className="social-media-button"
                     >
                       <RedditShareButton
@@ -146,10 +146,10 @@ class ShareForest extends Component {
                       </RedditShareButton>
                     </Col>
                     <Col
-                      lg="4"
-                      md="4"
-                      sm="4"
-                      xs="4"
+                      lg="6"
+                      md="6"
+                      sm="6"
+                      xs="6"
                       className="social-media-button"
                     >
                       <TwitterShareButton
