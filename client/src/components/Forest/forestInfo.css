@@ -9,6 +9,11 @@
   border-radius: 10% 10% 10% 10%;
 }
 
+.hierarchy-holder {
+  /*padding-top: 2vmax;
+  padding-bottom: 2vmax;*/
+}
+
 .valley-forest-icon-holder {
   text-align: center;
   margin: 0 auto;
