@@ -40,39 +40,39 @@
   
   .queue-box-search-container {
     width: 28em !important;
-    height: 20em;
-    margin: 5% 0 0 0;
+    height: 21em;
+    margin: 5% 0 0 3%;
     background: #c4c4c4;
     border-radius: 50px;
   }
   
-  .queue-box-search-items {
-    height: 14em;
+  .queue-box-items {
+    height: 15em;
+    /* margin: 10% 0 0 0; */
     overflow-y: scroll;
-    margin: 0 0 0 0;
   }
   
-  table.queue-box-search-results {
+  table.queue-box-results {
     color: #000000;
     text-align: center;
-    width: 24em;
+    width: 25em;
   }
   
-  tr.queue-box-search-item:nth-child(even) {
+  tr.queue-box-item:nth-child(even) {
     background-color: #fedbff;
   }
   
-  td.queue-box-search-item:nth-child(even) {
+  td.queue-box-item:nth-child(even) {
     background-color: #fedbff;
     display: block;
     height: 2.5em;
   }
   
-  tr.queue-box-search-item:nth-child(odd) {
+  tr.queue-box-item:nth-child(odd) {
     background-color: #fbf3f3;
   }
   
-  td.queue-box-search-item:nth-child(odd) {
+  td.queue-box-item:nth-child(odd) {
     background-color: #fbf3f3;
     display: block;
     height: 2.5em;
@@ -88,19 +88,15 @@
   }
   
   /* Action */
-  #queue-box-request-button {
-    background-color: #c8e6c9;
+  #queue-box-clear-button {
+    background-color: #de8f8a;
     color: #000000;
     border-radius: 50px;
     border-color: #000000;
     width: 11em;
     margin: 2% 0 0 0;
   }
-  
-  .queue-box-search-icon-button {
-    padding: 0.375rem 0.75rem !important;
-  }
-  
+ 
   .center-button {
     text-align: center;
   }
@@ -124,4 +120,11 @@
     margin: 0 auto;
     vertical-align: center;
     display:inline-block;
+  }
+
+  /* */
+
+ #buffer-space{
+    visibility: hidden !important;
+    /* display: none; */
   }

@@ -36,11 +36,24 @@ class QueueBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      queue_list: [],
     };
+
+    this.getQueue = this.getQueue.bind(this);
   }
 
-  getQueue(){
-      
+  getQueue() {
+    fetch("http://localhost:9000/user/queue/" + this.props.auth.user.id)
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        // console.log(res.song_list);
+        // console.log(res.queue);
+        // console.log(res.queue.song_list)
+        // console.log(res.queue[0]);
+        this.setState({ queue_list: res.queue.song_list });
+      })
+      .catch((err) => err);
   }
 
   render() {
@@ -53,6 +66,7 @@ class QueueBox extends Component {
             src={QueueIcon}
             onClick={(e) => {
                 this.showModal();
+                this.getQueue();
               }}
          ></input>
 
@@ -68,22 +82,37 @@ class QueueBox extends Component {
             <Row>
               <Col>
                 <Container className="queue-box-search-container">
-                  <Row>
-                    <Col
-                      lg="12"
-                      md="12"
-                      sm="12"
-                      xs="12"
-                      className="center-button"
+                <Row>
+                  <Col>
+                    <p id="buffer-space">BUFFER</p>
+                  </Col>
+                </Row>
+                <Row className="queue-box-items">
+                  <Col>
+                  <Table className="queue-box-results">
+                      <tbody>
+                        {this.state.queue_list.map(
+                          (song) => (
+                            <tr className="queue-box-item">
+                              <td>
+                                {song.name}
+                              </td>
+                            </tr>
+                          )
+                        )}
+                      </tbody>
+                    </Table>
+                  </Col> 
+                </Row>
+                <Row>
+                  <Col lg="12" md="12" sm="12" xs="12" className="center-button">
+                    <Button
+                      id="queue-box-clear-button"
                     >
-                      <Button
-                        id="queue-box-request-button"
-                      >
-                        {" "}
-                        Send Request{" "}
-                      </Button>
-                    </Col>
-                  </Row>
+                      CLEAR
+                    </Button>
+                  </Col>
+                </Row>
                 </Container>
               </Col>
             </Row>
