@@ -20,7 +20,7 @@ class ForestList extends Component {
   }
 
   updateState(state) {
-    console.log(state);
+    // console.log(state);
     this.setState({
       forests: state
     });

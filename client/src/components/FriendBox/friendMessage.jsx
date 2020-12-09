@@ -78,7 +78,7 @@ class FriendMessageButton extends Component {
           .then(res => res.json())
           .then(res => {
             this.setState({messageList: res});
-            console.log(this.state.messageList);
+            // console.log(this.state.messageList);
           })
           .catch(err => err);
       }, 1000);
@@ -94,7 +94,7 @@ class FriendMessageButton extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState({messageList: res});
-        console.log(this.state.messageList);
+        // console.log(this.state.messageList);
       })
       .catch(err => err);
   }
