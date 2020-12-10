@@ -255,7 +255,7 @@ router.post("/update_information", function (req, res, next) {
 });
 
 router.post("/deforest", function (req, res, next) {
-  const fid = req.body.forest_id;
+  const fid = req.body.fid;
   console.log(fid);
   //const fname = req.body.name;
   //const user_id = req.body.user_id;

@@ -33,10 +33,28 @@ class Deforest extends Component {
 
   onConfirm(event) {
     event.preventDefault();
-
     console.log(this.props.match.params.forestid);
-
-    
+    const url = "http://localhost:9000/user/forests/deforest";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fid: this.props.match.params.forestid
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        // window.location.reload();
+        window.location.href = "http://localhost:3000/feed"
+      })
+      .catch((err) => err);
   };
 
   deforestButton() {
