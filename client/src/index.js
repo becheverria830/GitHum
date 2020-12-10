@@ -18,6 +18,7 @@ import setAuthToken from "./redux/utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./redux/actions/authActions";
 
 // Check for token to keep user logged in
+window.CurrentUserID = null;
 if (localStorage.jwtToken) {
   // Set auth token header auth
   const token = localStorage.jwtToken;
@@ -26,11 +27,13 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+  window.CurrentUserID = decoded['id'];
 // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
+    window.CurrentUserID = null;
     // Redirect to login
     window.location.href = "./login";
   }

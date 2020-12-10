@@ -57,6 +57,13 @@ class HierarchyButton extends Component {
     });
   }
 
+  handleClick = (nodeData, evt) => {
+    if(nodeData.nodeSvgShape.shapeProps.fill === 'green'){
+      //EVENTUALLY MAKE THIS JUST REDIRECT BASED OFF THE PREVIOUS URL
+      window.location.href = "http:// localhost:3000/forests/" + nodeData.forest_id;
+    }
+   }
+
   handleResize = (e) => {
     this.setState({
       translate: {
@@ -92,7 +99,7 @@ class HierarchyButton extends Component {
               </Col>
             </Row>
             <div ref={this.treeContainer} id="treeWrapper" style={{width: '100%', height: '500px'}}>
-              <Tree orientation="vertical" translate={this.state.translate} data={this.state.hierarchy} />
+              <Tree orientation="vertical" translate={this.state.translate} onClick={this.handleClick} collapsible={false} data={this.state.hierarchy} />
             </div>
           </Modal.Body>
         </Modal>

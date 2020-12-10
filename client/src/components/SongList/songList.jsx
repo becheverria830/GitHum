@@ -40,7 +40,27 @@ class SongList extends Component {
   }
 
   songListPlayTrack(song) {
-    this.np.playTrack(song.spotify_uri);
+    const url = "http://localhost:9000/user/queue/play_song";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        window.MyVars.player.updateQueue(res.queue);
+      })
+      .catch((err) => err);
   }
 
   getForests(userid) {
@@ -154,7 +174,9 @@ class SongList extends Component {
     };
     fetch(url, options)
       .then((res) => res.json())
-      .then((res) => {})
+      .then((res) => {
+        window.MyVars.player.updateQueue(res.queue);
+      })
       .catch((err) => err);
   }
 
