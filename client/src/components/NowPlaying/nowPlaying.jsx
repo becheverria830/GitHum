@@ -146,7 +146,7 @@ class NowPlaying extends Component {
               </Col>
             )}
             <Col md="12" className="song-container">
-              <img
+              {/* <img
                 className="song-album-art-icon"
                 src={
                   this.state.queue.index != -1 &&
@@ -161,7 +161,7 @@ class NowPlaying extends Component {
                 {this.state.queue.index != -1 &&
                   this.state.queue.song_list[this.state.queue.index]
                     .artist_name}
-              </h3>
+              </h3> */}
             </Col>
             <Col md="12" className="actions-div">
               <Row>

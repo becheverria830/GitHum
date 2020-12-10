@@ -1,3 +1,8 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* Errors: removeQueueItem and clearQueue cause rendering issues bc it keeps rendering something that was deleted */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
 /* Importing React & Router */
 import React, { Component, useState } from "react";
 import { withRouter } from "react-router-dom";
@@ -15,15 +20,14 @@ import FormControl from "react-bootstrap/FormControl";
 
 /* Importing All Resources & Custom CSS */
 import QueueIcon from "../../assets/queue.svg";
+import MinusIcon from "../../assets/minus.svg"
 import "./queueBox.css";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 class QueueBox extends Component {
-  state = {
-    show: false,
-  };
+
   showModal = (e) => {
     this.setState({
       show: !this.state.show,
@@ -37,23 +41,83 @@ class QueueBox extends Component {
     super(props);
     this.state = {
       queue_list: [],
+      show : false,
+      delete_list : [],
     };
 
     this.getQueue = this.getQueue.bind(this);
+    this.removeQueueItem = this.removeQueueItem.bind(this);
+    this.clearQueue = this.clearQueue.bind(this);
   }
+
 
   getQueue() {
     fetch("http://localhost:9000/user/queue/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
-        // console.log(res.song_list);
-        // console.log(res.queue);
-        // console.log(res.queue.song_list)
-        // console.log(res.queue[0]);
-        this.setState({ queue_list: res.queue.song_list });
+        this.setState({ queue_list: res.queue.song_list, temp_queue_list : res.queue.song_list });
       })
       .catch((err) => err);
+  }
+
+
+  removeQueueItem(queue_index){
+    // console.log(queue_index);
+    // console.log(this.props.auth.user.id);
+    const url = "http://localhost:9000/user/queue/remove_song";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid : this.props.auth.user.id,
+        queue_index : queue_index,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        // console.log(response);
+        if (response[0] == 200) {
+          this.setState({toggle_temp: !this.state.toggle_temp, queue_list : response });
+        } else {
+          alert(response[1].message);
+        }
+      });
+  }
+
+  clearQueue(){
+    // console.log(queue_index);
+    // console.log(this.props.auth.user.id);
+    const url = "http://localhost:9000/user/queue/clear";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid : this.props.auth.user.id
+      }),
+    };
+    fetch(url, options)
+      .then((res) => [res.status, res.json()])
+      .then((response) => {
+        // console.log(response);
+        if (response[0] == 200) {
+          this.setState({ queue_list : response.song_list });
+        } else {
+          alert(response[1].message);
+        }
+      });
   }
 
   render() {
@@ -92,10 +156,19 @@ class QueueBox extends Component {
                   <Table className="queue-box-results">
                       <tbody>
                         {this.state.queue_list.map(
-                          (song) => (
+                          (song, index) => (
                             <tr className="queue-box-item">
-                              <td>
+                              <td className = "queue-box-song">
                                 {song.name}
+                              </td>
+                              <td className = "queue-box-remove">
+                                <input
+                                  type="image"
+                                  src={MinusIcon}
+                                  onClick = {() => {
+                                    this.removeQueueItem(index);
+                                  }}
+                                ></input>
                               </td>
                             </tr>
                           )
@@ -108,6 +181,7 @@ class QueueBox extends Component {
                   <Col lg="12" md="12" sm="12" xs="12" className="center-button">
                     <Button
                       id="queue-box-clear-button"
+                      onClick={this.clearQueue}
                     >
                       CLEAR
                     </Button>
@@ -130,3 +204,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 export default connect(mapStateToProps)(withRouter(QueueBox));
+

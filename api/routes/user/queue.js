@@ -120,6 +120,56 @@ router.post('/add_song', function(req, res, next) {
     });
 });
 
+router.post('/remove_song', function(req, res, next) {
+  const userid = req.body.userid;
+  const index = req.body.queue_index;
+
+  Queue.findOne({ user_id: userid })
+    .exec(function (err, queue) {
+      if (err) throw err;
+      var song_list = queue.song_list;
+      song_list.splice(index, 1);
+      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list }, function(err, updated_queue) {
+        if (err) throw err;
+
+        Queue.findOne({ user_id: userid })
+          .populate('song_list')
+          .populate('current_forest_id')
+          .exec(function (err, queue_return) {
+            if (err) throw err;
+            console.log(queue_return);
+            res.status(200).json({
+              queue: queue_return
+            });
+          });
+      });
+    });
+});
+
+router.post('/clear', function(req, res, next) {
+  const userid = req.body.userid;
+
+  Queue.findOne({ user_id: userid })
+    .exec(function (err, queue) {
+      if (err) throw err;
+      var song_list = []; 
+      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list }, function(err, updated_queue) {
+        if (err) throw err;
+
+        Queue.findOne({ user_id: userid })
+          .populate('song_list')
+          .populate('current_forest_id')
+          .exec(function (err, queue_return) {
+            if (err) throw err;
+            console.log(queue_return);
+            res.status(200).json({
+              queue: queue_return
+            });
+          });
+      });
+    });
+});
+
 router.post('/play_forest', function(req, res, next) {
   const userid = req.body.userid;
   const forestid = req.body.forestid;

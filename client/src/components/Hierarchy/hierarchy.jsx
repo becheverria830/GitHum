@@ -60,7 +60,7 @@ class HierarchyButton extends Component {
   handleClick = (nodeData, evt) => {
     if(nodeData.nodeSvgShape.shapeProps.fill === 'green'){
       //EVENTUALLY MAKE THIS JUST REDIRECT BASED OFF THE PREVIOUS URL
-      window.location.href = "http:// localhost:3000/forests/" + nodeData.forest_id;
+      window.location.href = "http://localhost:3000/forests/" + nodeData.forest_id;
     }
    }
 
