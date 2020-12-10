@@ -32,6 +32,10 @@ class HierarchyButton extends Component {
       translate: {
         x: window.innerWidth * .9 / 2,
         y: 50
+      },
+      separation: {
+        siblings: 2,
+        nonSiblings: 2,
       }
     };
   }
@@ -99,7 +103,7 @@ class HierarchyButton extends Component {
               </Col>
             </Row>
             <div ref={this.treeContainer} id="treeWrapper" style={{width: '100%', height: '500px'}}>
-              <Tree orientation="vertical" translate={this.state.translate} onClick={this.handleClick} collapsible={false} data={this.state.hierarchy} />
+              <Tree orientation="vertical" separation = {this.state.separation} translate={this.state.translate} onClick={this.handleClick} collapsible={false} data={this.state.hierarchy} />
             </div>
           </Modal.Body>
         </Modal>
