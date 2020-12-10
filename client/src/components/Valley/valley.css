@@ -26,6 +26,7 @@
   padding: 5%;
   margin-left: 5%;
   margin-right: 5%;
+  height: 40vw;
 }
 
 #valley-content-container {
@@ -166,5 +167,5 @@
 }
 
 .invisible {
-  visibility: hidden;
+  visibility: hidden !important;
 }

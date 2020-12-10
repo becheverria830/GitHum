@@ -9,6 +9,11 @@
   border-radius: 10% 10% 10% 10%;
 }
 
+.hierarchy-holder {
+  /*padding-top: 2vmax;
+  padding-bottom: 2vmax;*/
+}
+
 .valley-forest-icon-holder {
   text-align: center;
   margin: 0 auto;
@@ -27,10 +32,6 @@
 .valley-forest-title {
   font-size: 1.5vw;
 }
-
-
-
-
 
 /* #forest-info-container {
   background-color: #c4c4c4;
@@ -92,7 +93,7 @@
   width: 10em;
   height: 3em;
   font-weight: bold;
-  font-size: 2.2vw;
+  font-size: 1.7vw;
   color: #949191;
   background-color: #fedbff;
   border-color: #000000;

@@ -16,8 +16,8 @@ import FastForwardIcon from "../../assets/fast_forward.svg";
 import FastRewindIcon from "../../assets/fast_rewind.svg";
 import PlayCircleIcon from "../../assets/play_circle.svg";
 import PauseCircleIcon from "../../assets/pause_circle.svg";
-import LoopIcon from "../../assets/loop.svg";
 import ShuffleIcon from "../../assets/shuffle.svg";
+import QueueBox from "./queueBox.jsx";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -164,35 +164,43 @@ class NowPlaying extends Component {
               </h3>
             </Col>
             <Col md="12" className="actions-div">
-              <input
-                type="image"
-                className="now-playing-icon"
-                src={ShuffleIcon}
-                onClick={() => this.onShuffleClick()}
-              ></input>
-              <input
-                type="image"
-                className="now-playing-icon"
-                src={FastRewindIcon}
-                onClick={() => this.onPrevClick()}
-              ></input>
-              <input
-                type="image"
-                className="now-playing-icon"
-                src={this.state.playing ? PauseCircleIcon : PlayCircleIcon}
-                onClick={() => this.onPlayClick()}
-              ></input>
-              <input
-                type="image"
-                className="now-playing-icon"
-                src={FastForwardIcon}
-                onClick={() => this.onNextClick()}
-              ></input>
-              <input
-                type="image"
-                className="now-playing-icon"
-                src={LoopIcon}
-              ></input>
+              <Row>
+                <Col>
+                  <input
+                  type="image"
+                  className="now-playing-icon"
+                  src={ShuffleIcon}
+                  onClick={() => this.onShuffleClick()}
+                ></input>
+                </Col>
+                <Col>
+                  <input
+                  type="image"
+                  className="now-playing-icon"
+                  src={FastRewindIcon}
+                  onClick={() => this.onPrevClick()}
+                ></input>
+                </Col>
+                <Col>
+                  <input
+                  type="image"
+                  className="now-playing-icon"
+                  src={this.state.playing ? PauseCircleIcon : PlayCircleIcon}
+                  onClick={() => this.onPlayClick()}
+                ></input>
+                </Col>
+                <Col>
+                  <input
+                  type="image"
+                  className="now-playing-icon"
+                  src={FastForwardIcon}
+                  onClick={() => this.onNextClick()}
+                ></input>
+                </Col>
+                <Col>
+                  <QueueBox className="now-playing-icon"></QueueBox>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </div>

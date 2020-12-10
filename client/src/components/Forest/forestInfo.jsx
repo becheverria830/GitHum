@@ -151,15 +151,11 @@ class ForestInfo extends Component {
               </Row>
             </div>
           </Col>
-          <Col
-            md="6"
-            sm="12"
-            className="info-holder-container"
-          >
-            <div className="info-holder">
+          <Col md="6" sm="12" className="info-holder-container">
+            <div className="hierarchy-holder">
               <Row>
                 <Col className="valley-forest-title-holder">
-                  <HierarchyButton ref={this.hierarchyref}/>
+                  <h3 className="valley-forest-title"><HierarchyButton ref={this.hierarchyref}/></h3>
                 </Col>
               </Row>
             </div>

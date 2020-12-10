@@ -109,6 +109,7 @@ class ValleyPage extends Component {
   }
 
   getValleyInformation(userid) {
+    console.log(this.props.auth.user.id);
     fetch("http://localhost:9000/user/credentials/" + userid)
       .then((res) => res.json())
       .then((res) => {
@@ -118,6 +119,7 @@ class ValleyPage extends Component {
 
         if (userid === this.props.auth.user.id) {
           this.setState({
+            userid: userid,
             myValley: true,
             showSongs: true,
             showForests: false,
@@ -230,7 +232,7 @@ class ValleyPage extends Component {
                     <ValleyForestDisplay ref={this.savedForestElement} />
                   </div>
                 </div>
-                <div className={this.state.showForests ? null : "invisible"}>
+                <div className={this.state.showForests && this.state.myValley ? null : "invisible"}>
                   <Row>
                     <Col md="12" className="start-forest-button">
                       <StartForest />
