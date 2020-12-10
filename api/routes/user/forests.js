@@ -15,9 +15,26 @@ const User = models["user"];
 */
 
 function filterRoot(parent) {
+  var color;
+  if(parent.active == 0) {
+    color = 'red';
+  } else if(parent.settings.privacy == 0) {
+    color = 'green';
+  } else {
+    color = 'grey';
+  }
   var refinedParent = {
     name: parent.name,
+    forest_id: parent.id,
+    active: parent.active == 1 && parent.settings.privacy == 0,
     children: [],
+    nodeSvgShape: {
+      shape: 'circle',
+      shapeProps: {
+        r: 10,
+        fill: color,
+      },
+    },
     attributes: {
       creator: parent.creator.first_name + " " + parent.creator.last_name,
     },
@@ -219,7 +236,7 @@ router.post("/update_information", function (req, res, next) {
     res.status(400).json({
       fid: -1
     });
-  } 
+  }
   else {
     Forest.findOneAndUpdate(
       { _id: fid },
@@ -247,7 +264,7 @@ router.post("/deforest", function (req, res, next) {
     res.status(400).json({
       fid: -1
     });
-  } 
+  }
   else {
     Forest.findOneAndUpdate(
       { _id: fid },
