@@ -40,6 +40,8 @@ class HierarchyButton extends Component {
       search: "",
     };
 
+    // this.getAllNodesInArrayOrder = this.getAllNodesInArrayOrder.bind(this);
+    this.parseHierarchy = this.parseHierarchy.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.searchForForests = this.searchForForests.bind(this);
   }
@@ -81,15 +83,97 @@ class HierarchyButton extends Component {
     });
   };
 
+  // getAllNodesInArrayOrder(forest_id, arr){
+  //   arr.push(forest_id);
+  //   if(node.children === null){
+  //     return arr
+  //   }
+  //   else{
+  //     for(var i = 0; i < node.children.length; i++){
+  //       this.getAllNodesInArrayOrder(node.children[i], arr);
+  //     }
+  //   }
+  // }
+
+  parseHierarchy(forest_id, keywords, all_arr, key_arr, num_nodes){
+    // Add iterated forest to list of all forests
+    all_arr.push(forest_id)
+
+    // ASYNC COMMENTED OUT
+
+    // Get Forest 
+    fetch("http://localhost:9000/user/forests/" + forest_id)
+      .then((res) => res.json())
+      .then((res) => {
+        var forest = res.forests;
+
+        // See if name matches keyword
+        var forestName = forest.name;
+        keywords = keywords.toLowerCase();
+        forestName = forestName.toLowerCase();
+        // console.log("NAME: " + forestName + " INDEX OF: " + forestName.indexOf(keywords));
+        if(forestName.indexOf(keywords) !== -1){
+          // Mark this id or index as searched
+          key_arr.push(forest_id);
+        }
+
+        // If there exists children, keep parsing
+        if(forest.children !== null && forest.children.length > 0){
+          for(var i = 0; i < forest.children.length; i++){
+            this.parseHierarchy(forest.children[i], keywords, all_arr, key_arr, num_nodes);
+          }
+        }
+      })
+      .catch((err) => err);
+  }
+
+
+
   searchForForests(){
+    //RESET
+    var svg = d3.selectAll("circle").style("stroke", "black");
+    svg = svg.style("opacity", "1");
+
     console.log(this.state.search);
-    // var svg = d3.selectAll("circle").style('backgroundColor', 'blue');
-    // var svg = d3.selectAll("circle").attr("style","stroke: yellow").attr("style","opacity: .2");
-    // var svg = d3.selectAll("circle").attr({style, stroke: yellow, opacity: .2});
-    var svg = d3.selectAll("circle").style("stroke", "yellow");
-    svg.style("opacity", ".2");
-    console.log(svg);
-    
+    console.log(this.state.hierarchy);
+
+    // Get this forest's root
+    var rootId = this.state.hierarchy.forest_id;
+  
+    // Get Number of Nodes
+    var all_nodes = d3.selectAll("circle");
+    var num_nodes = all_nodes[0].length;
+
+    // Parse Hierarchy
+    var all_arr = []
+    var key_arr = []
+    var keywords = this.state.search
+    this.parseHierarchy(rootId, keywords, all_arr, key_arr, num_nodes);
+
+    // WAIT
+    setTimeout(function() {
+      // If te whole tree was traversed
+      if(all_arr.length === num_nodes){
+        console.log("KEYWORD: ", keywords);
+        console.log("ALL ARR: ", all_arr);
+        console.log("KEY ARR: ", key_arr);
+        // Style the Searched Forests
+        var svg = [];
+        for (var i = 0; i < all_arr.length; i++){
+          console.log(key_arr.indexOf(all_arr[i]));
+          if(key_arr.indexOf(all_arr[i]) === -1){
+            svg = d3.selectAll("circle").filter(function(d,index){
+              return index == i;
+            }).style("opacity", ".2");
+          }
+          else {
+            svg = d3.selectAll("circle").filter(function(d,index){return index == i;}).style("stroke", "yellow");
+          }
+        }
+        
+      }
+     }, 2500);
+
   }
 
   handleSearchChange(event) {
