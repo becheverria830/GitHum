@@ -48,8 +48,12 @@ class ForestPage extends Component {
           privacy: 1,
         },
       },
+      uploadedFile: null,
     };
     this.saveForest = this.saveForest.bind(this);
+    this.playForest = this.playForest.bind(this);
+    this.changeForestIcon = this.changeForestIcon(this);
+    // this.getDataUrl = this.getDataUrl(this);
     // this.getSavedForests = this.getSavedForests.bind(this);
   }
 
@@ -113,6 +117,59 @@ class ForestPage extends Component {
       .then((res) => {
         console.log(res.forests);
         return res.forests;
+      })
+      .catch((err) => err);
+  }
+
+  changeForestIcon(event) {
+    console.log("Icon Image Uploaded! ! !");
+    console.log(document.getElementById("forestIconFile"));
+
+    
+  }
+
+  getDataUrl(img) {
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    // Set width and height
+    canvas.width = img.width;
+    canvas.height = img.height;
+    // Draw the image
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL('image/jpeg');
+ }
+
+  playForest(event) {
+    // Need: forestid, userid, and index
+    // Operating as if index means starting at the very first song
+    // This would indicate 0 
+
+    event.preventDefault();
+    const url = "http://localhost:9000/user/queue/play_forest";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        forestid: this.props.match.params.forestid,
+        userid: this.props.auth.user.id,
+        index: 0
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        if(res.queue == null) {
+          alert("Forest failed to play!");
+        } else {
+          this.props.history.push("/forests/" + this.props.match.params.forestid);
+        }
       })
       .catch((err) => err);
   }
@@ -216,6 +273,15 @@ class ForestPage extends Component {
                 <Row>
                   <Col xl="6" lg="6" md="6" sm="6" xs="6">
                     <Button className="forest-play-button"> PLAY </Button>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xl="6" lg="6" md="6" sm="6" xs="6">
+                    <form>
+                      <label for="file">Choose a Forest Icon</label>
+                      <input type="file" accept="image/png, image/jpeg" id="forestIconFile"/>
+                      <Button className="image-submit-button" onClick={this.changeForestIcon}> Submit </Button>
+                    </form>
                   </Col>
                 </Row>
               </Col>
