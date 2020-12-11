@@ -15,6 +15,9 @@ const User = models["user"];
 */
 
 function filterRoot(parent) {
+  console.log("here");
+  console.log("ok");
+  console.log("lol");
   var color;
   if(parent.active == 0) {
     color = 'red';
@@ -33,6 +36,8 @@ function filterRoot(parent) {
       shapeProps: {
         r: 10,
         fill: color,
+        stroke: 'black',
+        opacity: 1,
       },
     },
     attributes: {

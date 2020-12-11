@@ -1,21 +1,21 @@
 /* Importing React & Router */
-import React, { Component, useState } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import React, { Component } from "react";
+import * as d3 from "d3";
 
 /* Importing All Bootstrap Components */
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 /* Importing All Resources & Custom CSS */
 import "./hierarchy.css";
-import HierarchySample from "../../assets/hierarchy-pic.png";
+import SearchIcon from "../../assets/search.svg";
 
 import Tree from 'react-d3-tree';
 
@@ -36,8 +36,12 @@ class HierarchyButton extends Component {
       separation: {
         siblings: 2,
         nonSiblings: 2,
-      }
+      },
+      search: "",
     };
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.searchForForests = this.searchForForests.bind(this);
   }
 
   showModal = (e) => {
@@ -77,6 +81,21 @@ class HierarchyButton extends Component {
     });
   };
 
+  searchForForests(){
+    console.log(this.state.search);
+    // var svg = d3.selectAll("circle").style('backgroundColor', 'blue');
+    // var svg = d3.selectAll("circle").attr("style","stroke: yellow").attr("style","opacity: .2");
+    // var svg = d3.selectAll("circle").attr({style, stroke: yellow, opacity: .2});
+    var svg = d3.selectAll("circle").style("stroke", "yellow");
+    svg.style("opacity", ".2");
+    console.log(svg);
+    
+  }
+
+  handleSearchChange(event) {
+    this.setState({search: event.target.value});
+  }
+
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
   }
@@ -106,6 +125,23 @@ class HierarchyButton extends Component {
               <Tree orientation="vertical" separation = {this.state.separation} translate={this.state.translate} onClick={this.handleClick} collapsible={false} data={this.state.hierarchy} />
             </div>
           </Modal.Body>
+
+          <Modal.Footer>
+            <Navbar>
+              <Form inline onSubmit={this.searchForForests}>
+                <FormControl
+                  type="text"
+                  value={this.state.search}
+                  onChange={this.handleSearchChange}
+                  placeholder="Search for keywords (eg: study, lo-fi, dance...)"
+                  className="ml-sm-2 search-bar"
+                />
+                <Button onClick={this.searchForForests} variant="dark" className="search-icon-button">
+                  <Image className="search-button" src={SearchIcon} />
+                </Button>
+              </Form>
+            </Navbar>
+          </Modal.Footer>
         </Modal>
       </div>
     );
