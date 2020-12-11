@@ -70,6 +70,31 @@ class ForestPage extends Component {
     });
   }
 
+  /*Think about improvements*/
+  queueSong(song) {
+    const url = "http://localhost:9000/user/queue/add_song";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        window.MyVars.player.updateQueue(res.queue);
+      })
+      .catch((err) => err);
+  }
+
   getForestData() {
     fetch(
       "http://localhost:9000/user/forests/" + this.props.match.params.forestid
@@ -169,8 +194,9 @@ class ForestPage extends Component {
         if(res.queue == null) {
           alert("Forest failed to play!");
         } else {
+          /* NOTE TO SELF: Here's where queueSong should be applied */
+          /* Go through queue while there's still songs left */
           this.props.history.push("/forests/" + this.props.match.params.forestid);
-          
         }
       })
       .catch((err) => err);
