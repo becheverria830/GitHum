@@ -3,9 +3,9 @@
   padding-bottom: 10%;
   padding-left: 20%;
   padding-right: 20%;
-  background-image: linear-gradient(0deg, #118b1b, #07db3c);
+  background-image: linear-gradient(0deg, #2ead39, #66ee88);
   border-radius: 10% 10% 10% 10%;
-  color: #fedbff;
+  color: #000000;
   border: none;
   font-weight: bold;
   font-size: 1.5em;
@@ -14,7 +14,7 @@
 
 #hierarchy-button:hover {
   border: none;
-  background-image: linear-gradient(0deg,  #0c6813, #05b330);
+  background-image: linear-gradient(0deg,  #248b2c, #2ed658);
 }
 
 @media (min-width: 576px) {

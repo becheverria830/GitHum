@@ -103,7 +103,7 @@ export default function App() {
     };
 
     window.playerCheckInterval = setInterval(() => {
-      const token = "BQBhKUlfVru2_EAC6PuODZEk7UjTvCoTPmhB2VdFGLr4nmSewL1dnet8ClS3GJIAHUVA5jaTSYpsXl2-BtShbV0Stz-yK5u3r6r5PhWEgNCyqvH92EccyEFqdQNQDKlXhIkYbeGXAbGGr65Rztj_hRMKn94bY08rpVc";
+      const token = "BQDOdD4WAts8WGt3v5RfSFZbmMJZt9TgszMYb5uP3t_c6VWAI9_TffS4GKbjJqbwYR5NwJvBEs6E1oYEZ7VYlTssrgmCdN6Cdyvgz4b3zV-7_c9ohZspnKbNCeeEPZu0i1Z2CE-d1LExE8AXjOT9aKopc1QUZCjI33TG54BIisQ1R6ebjIt_RCs";
 
       // If the Spotify SDK has loaded
       if (window.Spotify !== undefined) {

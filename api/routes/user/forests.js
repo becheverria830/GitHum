@@ -259,6 +259,32 @@ router.post("/update_information", function (req, res, next) {
   }
 });
 
+router.post("/update_icon", function (req, res, next) {
+  const fid = req.body.forest_id;
+  const icon = req.body.base_icon;
+
+  if (fid == undefined) {
+    res.status(400).json({
+      fid: -1
+    });
+  }
+  else {
+    Forest.findOneAndUpdate(
+      { _id: fid },
+      {$set: {'icon': icon}},
+      function (err, result) {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        else {
+          res.status(200).json({});
+        }
+      }
+    )
+  }
+});
+
 router.post("/deforest", function (req, res, next) {
   const fid = req.body.fid;
   console.log(fid);

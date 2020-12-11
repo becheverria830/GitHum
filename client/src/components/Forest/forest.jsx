@@ -48,7 +48,6 @@ class ForestPage extends Component {
           privacy: 1,
         },
       },
-      uploadedFile: null,
     };
     this.saveForest = this.saveForest.bind(this);
     this.playForest = this.playForest.bind(this);
@@ -69,6 +68,31 @@ class ForestPage extends Component {
       showSongList: false,
       showForestInfo: true,
     });
+  }
+
+  /*Think about improvements*/
+  queueSong(song) {
+    const url = "http://localhost:9000/user/queue/add_song";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: this.props.user.id,
+        songid: song._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {
+        window.MyVars.player.updateQueue(res.queue);
+      })
+      .catch((err) => err);
   }
 
   getForestData() {
@@ -94,6 +118,8 @@ class ForestPage extends Component {
         }
       })
       .catch((err) => err);
+      console.log("within get forest data?");
+      console.log(this.state.forest.icon);
   }
 
   getHierarchyData() {
@@ -168,6 +194,8 @@ class ForestPage extends Component {
         if(res.queue == null) {
           alert("Forest failed to play!");
         } else {
+          /* NOTE TO SELF: Here's where queueSong should be applied */
+          /* Go through queue while there's still songs left */
           this.props.history.push("/forests/" + this.props.match.params.forestid);
         }
       })
@@ -272,18 +300,22 @@ class ForestPage extends Component {
                 </Row>
                 <Row>
                   <Col xl="6" lg="6" md="6" sm="6" xs="6">
-                    <Button className="forest-play-button"> PLAY </Button>
+                    <Button className="forest-play-button" onClick={this.playForest}> PLAY </Button>
                   </Col>
                 </Row>
+                {/*
                 <Row>
                   <Col xl="6" lg="6" md="6" sm="6" xs="6">
+                    
                     <form>
                       <label for="file">Choose a Forest Icon</label>
                       <input type="file" accept="image/png, image/jpeg" id="forestIconFile"/>
                       <Button className="image-submit-button" onClick={this.changeForestIcon}> Submit </Button>
                     </form>
+                    
                   </Col>
                 </Row>
+                */}
               </Col>
             </Row>
             <Row>
