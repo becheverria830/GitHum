@@ -85,6 +85,11 @@ tr.forest-settings-item {
   width: 15em;
 }
 
+#forest-settings-privacy-align{
+  text-align: center;
+  width: 14em;
+}
+
 .forest-privacy-selector-div {
   vertical-align: center;
   margin: 0 auto;
@@ -93,5 +98,5 @@ tr.forest-settings-item {
 .visibility-dropdown{
   text-align: center;
   align-items: center;
-  padding: 0 0 0 37%;
+  padding: 0 0 0 0%;
 }

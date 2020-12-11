@@ -228,7 +228,7 @@ class ForestSettings extends Component {
                       <tr className="forest-settings-item">
                         <td>Visibility: </td>
                         <td>
-                          <select onChange={this.updatePrivacy} value={this.state.pri} className="visibility-dropdown">
+                          <select onChange={this.updatePrivacy} value={this.state.pri} id="forest-settings-privacy-align" className="visibility-dropdown">
                             <option className="visibility-dropdown" value="0">Public</option>
                             <option className="visibility-dropdown" value="1">Private</option>
                           </select>
