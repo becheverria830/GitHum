@@ -48,7 +48,6 @@ class ForestPage extends Component {
           privacy: 1,
         },
       },
-      uploadedFile: null,
     };
     this.saveForest = this.saveForest.bind(this);
     this.playForest = this.playForest.bind(this);
@@ -94,6 +93,8 @@ class ForestPage extends Component {
         }
       })
       .catch((err) => err);
+      console.log("within get forest data?");
+      console.log(this.state.forest.icon);
   }
 
   getHierarchyData() {
@@ -169,6 +170,7 @@ class ForestPage extends Component {
           alert("Forest failed to play!");
         } else {
           this.props.history.push("/forests/" + this.props.match.params.forestid);
+          
         }
       })
       .catch((err) => err);
@@ -272,18 +274,22 @@ class ForestPage extends Component {
                 </Row>
                 <Row>
                   <Col xl="6" lg="6" md="6" sm="6" xs="6">
-                    <Button className="forest-play-button"> PLAY </Button>
+                    <Button className="forest-play-button" onClick={this.playForest}> PLAY </Button>
                   </Col>
                 </Row>
+                {/*
                 <Row>
                   <Col xl="6" lg="6" md="6" sm="6" xs="6">
+                    
                     <form>
                       <label for="file">Choose a Forest Icon</label>
                       <input type="file" accept="image/png, image/jpeg" id="forestIconFile"/>
                       <Button className="image-submit-button" onClick={this.changeForestIcon}> Submit </Button>
                     </form>
+                    
                   </Col>
                 </Row>
+                */}
               </Col>
             </Row>
             <Row>

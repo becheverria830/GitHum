@@ -44,11 +44,14 @@ class ForestSettings extends Component {
         },
         children: []
       },
+      uploadedFile: null,
+      base_icon: null
     };
 
     this.ForestSettingsExample = this.ForestSettingsExample.bind(this);
     this.updateForestSettings = this.updateForestSettings.bind(this);
     this.makeChange = this.makeChange.bind(this);
+    this.changeForestIcon = this.changeForestIcon.bind(this);
   }
 
   updatePrivacy = (event) => {
@@ -57,6 +60,10 @@ class ForestSettings extends Component {
 
   updateName = (event) => {
     this.setState({ name: event.target.value });
+  };
+
+  updateFile = (event) => {
+    this.setState({ uploadedFile: event.target.files[0] });
   };
 
   updateForestSettings(state) {
@@ -75,6 +82,65 @@ class ForestSettings extends Component {
     });
   }
   
+  changeForestIcon(event) {
+    var res;
+    var base64;
+    var forest_id_out = this.state.forest._id;
+
+    const reader = new FileReader();
+    if(this.state.uploadedFile instanceof File) {
+      reader.readAsDataURL(this.state.uploadedFile);
+    }
+
+    reader.onload = function () {
+      res = reader.result;//base64encoded string
+      console.log(res);
+      //base64 = res.toString('base64');
+      //var base_icon = Buffer.from(base64, 'base64');
+      const url = "http://localhost:9000/user/forests/update_icon";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          forest_id: forest_id_out,
+          base_icon: res
+        }),
+      };
+      fetch(url, options)
+        .then((res) => res.json())
+        .catch((err) => err);
+    };
+  }
+
+  getDataUrl(img) {
+    const reader = new FileReader();
+    if(img instanceof Blob) {
+      const result = reader.readAsDataURL(img);
+      return result;
+    }
+    else {
+      return null;
+    }
+
+    /*
+    // Create canvas
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    // Set width and height
+    canvas.width = img.width;
+    canvas.height = img.height;
+    // Draw the image
+    ctx.drawImage(img, 0, 0);
+    return canvas.toDataURL('image/jpeg');
+    */
+ }
+
   makeChange(event) {
     console.log("in makeChange");
     const url = "http://localhost:9000/user/forests/update_information";
@@ -168,6 +234,19 @@ class ForestSettings extends Component {
                           </select>
                         </td>
                       </tr>
+                      <tr className="forest-settings-item">
+                        <td>Forest Icon: </td>
+                        <td>
+                          <FormControl
+                            type="file"
+                            accept="image/png"
+                            className="ml-sm-2"
+                            id="forest-settings-forest-icon"
+                            //value={this.state.uploadedFile}
+                            onChange={this.updateFile}
+                          />
+                        </td>
+                      </tr>
                     </tbody>
                   </Table>
                 </Row>
@@ -176,6 +255,7 @@ class ForestSettings extends Component {
                     <Button
                       id="forest-settings-save-button"
                       onClick={(e) => {
+                        this.changeForestIcon();
                         this.makeChange();
                         this.showModal();
                       }}
