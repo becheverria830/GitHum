@@ -40,7 +40,7 @@ class HierarchyButton extends Component {
       search: "",
     };
 
-    // this.getAllNodesInArrayOrder = this.getAllNodesInArrayOrder.bind(this);
+    this.DFS = this.DFS.bind(this);
     this.parseHierarchy = this.parseHierarchy.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.searchForForests = this.searchForForests.bind(this);
@@ -83,17 +83,21 @@ class HierarchyButton extends Component {
     });
   };
 
-  // getAllNodesInArrayOrder(forest_id, arr){
-  //   arr.push(forest_id);
-  //   if(node.children === null){
-  //     return arr
-  //   }
-  //   else{
-  //     for(var i = 0; i < node.children.length; i++){
-  //       this.getAllNodesInArrayOrder(node.children[i], arr);
-  //     }
-  //   }
-  // }
+  DFS(forest, all_arr, visited){
+    all_arr.push(forest.forest_id);
+    visited.push(forest)
+    //Get Forest
+
+    // var forest = res.forests;
+    if(forest.children !== null){
+      for (var i = 0; i < forest.children.length; i++){
+        var check_visited = visited.indexOf(forest.children[i]) //returns -1 or a num
+        if(check_visited === -1){
+          this.DFS(forest.children[i], all_arr, visited);
+        }
+      }
+    }
+  }
 
   parseHierarchy(forest_id, keywords, all_arr, key_arr, num_nodes){
     // Add iterated forest to list of all forests
@@ -128,8 +132,9 @@ class HierarchyButton extends Component {
   }
 
 
-
   searchForForests(){
+
+    ////////////////////////
     //RESET
     var svg = d3.selectAll("circle").style("stroke", "black");
     svg = svg.style("opacity", "1");
@@ -140,6 +145,14 @@ class HierarchyButton extends Component {
     // Get this forest's root
     var rootId = this.state.hierarchy.forest_id;
   
+    // GET ALL ARR
+    var all_arr_real = [];
+    var visited = [];
+    this.DFS(this.state.hierarchy, all_arr_real, visited);
+    setTimeout(function(){
+      console.log(all_arr_real);
+    }, 1000);
+
     // Get Number of Nodes
     var all_nodes = d3.selectAll("circle");
     var num_nodes = all_nodes[0].length;
@@ -159,9 +172,9 @@ class HierarchyButton extends Component {
         console.log("KEY ARR: ", key_arr);
         // Style the Searched Forests
         var svg = [];
-        for (var i = 0; i < all_arr.length; i++){
-          console.log(key_arr.indexOf(all_arr[i]));
-          if(key_arr.indexOf(all_arr[i]) === -1){
+        for (var i = 0; i < all_arr_real.length; i++){
+          console.log(key_arr.indexOf(all_arr_real[i]));
+          if(key_arr.indexOf(all_arr_real[i]) === -1){
             svg = d3.selectAll("circle").filter(function(d,index){
               return index == i;
             }).style("opacity", ".2");
