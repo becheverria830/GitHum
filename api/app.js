@@ -13,6 +13,7 @@ var favoritesRouter   = require("./routes/user/favorites");
 var queueRouter       = require("./routes/user/queue");
 var credentialsRouter = require("./routes/user/credentials");
 var messagesRouter = require("./routes/user/messages");
+var songRouter = require("./routes/songs");
 
 const db   = require("./routes/database");
 
@@ -37,6 +38,7 @@ app.use("/user/friends", friendsRouter);
 app.use("/user/forests", forestsRouter);
 app.use("/user/favorites", favoritesRouter);
 app.use("/user/queue", queueRouter);
+app.use("/songs", songRouter);
 app.use("/user/credentials", credentialsRouter);
 app.use("/user/messages", messagesRouter);
 

@@ -27,13 +27,20 @@ class ForestList extends Component {
   }
 
   renderSong(song) {
-    return (
-      <Col md="4" sm="12" className="song-container">
-        <img className="song-album-art-icon" src={song.album_art}></img>
-        <h3 className="song-name-header">{song.song_name}</h3>
-        <h3 className="artist-name-header">{song.artist_name}</h3>
-      </Col>
-    )
+    // console.log(song_id);
+    // Get song info
+    fetch("http://localhost:9000/songs/" + song)
+      .then((res) => res.json())
+      .then((res) => {
+        return (
+          <Col md="4" sm="12" className="song-container">
+            <img className="song-album-art-icon" src={res.album_art}></img>
+            <h3 className="song-name-header">{res.name}</h3>
+            <h3 className="artist-name-header">{res.artist_name}</h3>
+          </Col>
+        )
+      })
+      .catch((err) => err);
   }
 
   render() {
@@ -41,7 +48,7 @@ class ForestList extends Component {
       <div>
         {
           this.state.forests.map(forest => (
-            <div className="forest-container">
+            <div className={forest.settings.privacy === 1 ? "hidden" : "forest-container"}>
               <Row>
                 <Col>
                   <h3 className="forest-container-header">{forest.creator[0].first_name} {forest.creator[0].last_name} is listening to <i><b>{forest.name}</b></i></h3>
