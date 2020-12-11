@@ -172,7 +172,7 @@ class HierarchyButton extends Component {
         }
         
       }
-     }, 2500);
+     }, 500);
 
   }
 
