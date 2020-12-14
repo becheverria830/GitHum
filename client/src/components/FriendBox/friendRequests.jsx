@@ -114,13 +114,14 @@ class FriendRequests extends Component {
       fetch(url, options)
         .then((res) => [res.status, res.json()])
         .then((response) => {
-          console.log(response);
-          if (response[0] == 200) {
-          } else {
-            alert(response[1].message);
-          }
+          this.getFriends();
+          alert("Friend Request Accepted!");
+          // console.log(response);
+          // if (response[0] == 200) {
+          // } else {
+          //   alert(response[1].message);
+          // }
         });
-      alert("Friend Request Accepted!");
     }
   }
 
@@ -148,13 +149,14 @@ class FriendRequests extends Component {
       fetch(url, options)
         .then((res) => [res.status, res.json()])
         .then((response) => {
-          console.log(response);
-          if (response[0] == 200) {
-          } else {
-            alert(response[1].message);
-          }
+          this.getFriends();
+          alert("Friend Request Declined!");
+          // console.log(response);
+          // if (response[0] == 200) {
+          // } else {
+          //   alert(response[1].message);
+          // }
         });
-      alert("Friend Request Declined!");
     }
   }
 

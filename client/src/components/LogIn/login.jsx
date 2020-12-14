@@ -54,6 +54,11 @@ class Login extends Component {
   logIn(event) {
     event.preventDefault();
 
+    if(this.state.email === "" || this.state.password === "") {
+      alert("Please fill out the entire form!");
+      return;
+    }
+
     const userData = {
       email: this.state.email,
       password: this.state.password

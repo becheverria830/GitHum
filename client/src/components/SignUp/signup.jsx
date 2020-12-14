@@ -68,6 +68,12 @@ class SignUp extends Component {
   signUp(event) {
     event.preventDefault();
 
+    if(this.state.fname === "" || this.state.lname === "" || this.state.email === "" || this.state.username === "" || this.state.password === "") {
+      alert("Please fill out the entire form!");
+      return;
+    }
+
+
     const newUser = {
       fname: this.state.fname,
       lname: this.state.lname,
