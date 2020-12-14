@@ -81,8 +81,6 @@ class ForestSettings extends Component {
       name: state.name,
       forest: state,
     });
-    console.log(state);
-    console.log(state);
   }
 
   showModal = (e) => {
@@ -98,14 +96,13 @@ class ForestSettings extends Component {
 
     const reader = new FileReader();
     if(this.state.uploadedFile instanceof File) {
-      if(this.state.uploadedFile.size > 3000000) {
-        let message = 'File Size must be below 3MB.';
+      if(this.state.uploadedFile.size > 1000000) {
+        let message = 'File Size must be below 1MB.';
         alert(message);
         //let errors = this.state.errors.icon;
         //this.setState({errors : message});
         return;
       }
-      console.log(this.state.uploadedFile.size);
       reader.readAsDataURL(this.state.uploadedFile);
     }
 
@@ -206,8 +203,6 @@ class ForestSettings extends Component {
         <Button className="button forest-action-button"
         onClick={(e) => {
             this.showModal();
-            console.log("aaaaaaa");
-            console.log(this.state);
           }}>
           Forest Settings
         </Button>
