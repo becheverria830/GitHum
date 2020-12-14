@@ -49,8 +49,10 @@ class ForestPage extends Component {
         },
       },
       toggle: 0,
+      saved: false,
     };
     this.saveForest = this.saveForest.bind(this);
+    this.unsaveForest = this.unsaveForest.bind(this);
     this.playForest = this.playForest.bind(this);
     this.changeForestIcon = this.changeForestIcon(this);
     // this.getDataUrl = this.getDataUrl(this);
@@ -113,11 +115,23 @@ class ForestPage extends Component {
 
         // set myForest
         if (this.props.auth.user.id === res.forests.creator) {
-          console.log("hola");
           this.setState({ myForest: true });
         } else {
-          console.log("ohayo");
-          this.setState({ myForest: false });
+          // Check if its been saved before
+
+          fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
+            .then((res) => res.json())
+            .then((res) => {
+              console.log(res.forests);
+              var saved_bool = false;
+              for (var i = 0; i < res.forests.length; i++) {
+                if (res.forests[i]._id === this.state.forest._id) {
+                  saved_bool = true;
+                }
+              }
+              this.setState({ myForest: false, saved: saved_bool});
+            });
+
         }
       })
       .catch((err) => err);
@@ -261,6 +275,64 @@ class ForestPage extends Component {
     }
   }
 
+  unsaveForest(){
+
+    // Check if forest / user id is non-null
+    if (this.state.forest._id === null || this.props.auth.user.id === null) {
+      console.log("Null forest or user");
+    }
+   
+    // Check if it has been unsaved already
+    else {
+
+      fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.forests);
+          var checkSaved = false;
+          for (var i = 0; i < res.forests.length; i++) {
+            if (res.forests[i]._id === this.state.forest._id) {
+              checkSaved = true;    
+            }
+          }
+          if (checkSaved){
+            // Unsave Forest
+            const url = "http://localhost:9000/user/forests/unsave";
+            const options = {
+              method: "POST",
+              mode: "cors",
+              cache: "no-cache",
+              credentials: "same-origin",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                forest_id: this.state.forest._id,
+                user_id: this.props.auth.user.id,
+              }),
+            };
+            fetch(url, options)
+              .then((res) => [res.status, res.json()])
+              .then((response) => {
+                console.log(response);
+                if (response[0] == 200) {
+                  this.setState = {saved: false}
+                } else {
+                  alert(response[1].message);
+                }
+              });
+            alert("Removed from Saved Forests");
+          }
+          else{
+            alert("You have unsaved this forest already");
+            return;
+          }
+        })
+        .catch((err) => err);
+    }
+  }
+
   componentDidMount() {
     console.log("inside componentDidMount of ForestPage in forest.jsx");
     this.getForestData();
@@ -296,19 +368,6 @@ class ForestPage extends Component {
                     <Button className="forest-play-button" onClick={this.playForest}> PLAY </Button>
                   </Col>
                 </Row>
-                {/*
-                <Row>
-                  <Col xl="6" lg="6" md="6" sm="6" xs="6">
-                    
-                    <form>
-                      <label for="file">Choose a Forest Icon</label>
-                      <input type="file" accept="image/png, image/jpeg" id="forestIconFile"/>
-                      <Button className="image-submit-button" onClick={this.changeForestIcon}> Submit </Button>
-                    </form>
-                    
-                  </Col>
-                </Row>
-                */}
               </Col>
             </Row>
             <Row>
@@ -362,16 +421,16 @@ class ForestPage extends Component {
                     </div>
                   </Col>
                   <Col md="12">
-                    {this.state.myForest ? (
-                      <Deforest />
-                    ) : (
-                      <Button
-                        className="button forest-action-button"
-                        onClick={this.saveForest}
-                      >
-                        Save Forest
-                      </Button>
-                    )}
+                    {this.state.myForest ? ( <Deforest /> ) : null}
+                    {this.state.saved ? 
+                    <Button className="button forest-action-button" onClick={this.unsaveForest}>
+                      Unsave Forest 
+                    </Button> 
+                    : 
+                    <Button className="button forest-action-button" onClick={this.saveForest}>
+                      Save Forest
+                    </Button>
+                    }
                   </Col>
                 </Row>
               </Col>

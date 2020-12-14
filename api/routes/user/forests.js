@@ -147,6 +147,57 @@ router.post("/save", function (req, res, next) {
   }
 });
 
+router.post("/unsave", function (req, res, next) {
+  const fid = req.body.forest_id;
+  // const fcreator = req.body.forest_creator_id; //FIX LATER
+  const uid = req.body.user_id;
+  console.log(fid);
+  console.log(uid);
+
+  if (fid == undefined || uid == undefined) {
+    res.status(400).json({
+      forest: null,
+    });
+  } else {
+    User.findOne({ _id: uid })
+    .exec(function (err, user) {
+    if (err) throw err;
+    console.log(user);
+
+    // Remove forest from saved forest list
+    var saved_forests = user.library.saved_forests;
+    var index = saved_forests.indexOf(fid);
+    saved_forests.splice(index, 1);
+
+    // Updated saved forests
+    User.findOneAndUpdate(
+      { _id: uid },
+      { $set: {'library.saved_forests': saved_forests}},
+      function (err, result) {
+        if (err) {
+          throw err;
+        } else {
+          // Times Saved + 1
+          Forest.findOneAndUpdate(
+            { _id: fid },
+            { $inc: { times_saved: -1 } },
+            { new: true },
+            function (err, res_updated_times_saved) {
+              if (err) {
+                throw err;
+              } else {
+                res.status(200).json({});
+              }
+            }
+          );
+        }
+      }
+    );
+
+    });
+  }
+});
+
 router.post("/addToForest", function (req, res, next) {
   // WORKS!
   const song_id = req.body.song_id;
