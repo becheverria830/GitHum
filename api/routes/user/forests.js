@@ -541,21 +541,24 @@ router.get("/friends/:userid", function (req, res, next) {
           function (err, forests) {
             // Remove Forests with No Songs
               var final_forest_list = forests;
+              var splice_indices = [];
               final_forest_list.forEach(function(forest, index) {
                 if(forest.songs === null || forest.songs.length === 0 ){
-                  final_forest_list.splice(index, 1);
+                  splice_indices.push(index);
                 }
               });
+              for (var i = splice_indices.length -1; i >= 0; i--)
+              final_forest_list.splice(splice_indices[i],1);
 
-            // If # of Forests > 50, get 50 random forests **UNTESTED**
-              if(final_forest_list.length > 50){
+            // If # of Forests > n, get n random forests 
+              var n = 50;
+              if(final_forest_list.length > n){
                 var sampled_forests = [];
-                var n = 50;
                 var non_selected_indices = Array(final_forest_list.length).fill().map((_, idx) => idx);
                 var selected_indices = [];
                 for(var i = 0; i < n; i++){
-                  var index = items[Math.floor(Math.random() * items.length)];
-                  non_selected_indices.splice(indexOf(index), 1);
+                  var index = non_selected_indices[Math.floor(Math.random() * non_selected_indices.length)];
+                  non_selected_indices.splice(non_selected_indices.indexOf(index), 1);
                   selected_indices.push(index);
                 }
 
