@@ -55,12 +55,8 @@ class BranchForest extends Component {
 
   handleCreateBranch(event) {
     event.preventDefault();
-    console.log(this.state.errors);
 
     if (this.state.errors.length > 0) {
-      console.log("AM I HERE???");
-      // When Alert is there it doesn't stop, and just makes it anyway. 
-      // FIXED: Had been accidentally saving an empty string. Sorry for rookie mistake there. 
       alert(this.state.errors);
       return;
     }

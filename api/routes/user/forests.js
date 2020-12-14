@@ -53,6 +53,7 @@ function filterRoot(parent) {
 router.post("/create", (req, res, err) => {
   const name = req.body.name;
   const userid = req.body.userid;
+  const icon = req.body.icon;
   console.log(name);
   console.log(userid);
 
@@ -63,7 +64,7 @@ router.post("/create", (req, res, err) => {
   } else {
     var forest_data = {
       name: name,
-      icon: "/static/media/forest.ff62ca20.svg",
+      icon: icon,
       active: true,
       children: [],
       depth: 1,
