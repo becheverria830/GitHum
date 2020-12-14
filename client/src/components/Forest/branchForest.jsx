@@ -24,6 +24,7 @@ class BranchForest extends Component {
       branch_name_input: "",
       show: false,
       forestid: -1,
+      errors: 'New Branch Name must be between 1 and 30 characters long!'
     };
     this.handleCreateBranch = this.handleCreateBranch.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -34,16 +35,31 @@ class BranchForest extends Component {
       show: !this.state.show,
     });
   };
+
   onClose = (e) => {
     this.props.onClose && this.props.onClose(e);
   };
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
+    const { name, value } = event.target;
+
+    let errors = this.state.errors;
+
+    errors = event.target.value.length < 1 || event.target.value.length > 30 ? 'New Branch Name must be between 1 and 30 characters long!' : '';
+
     this.setState({ branch_name_input: event.target.value });
-  }
+    this.setState({errors : errors}, ()=> {
+      console.log(errors);
+    });
+  };
 
   handleCreateBranch(event) {
     event.preventDefault();
+
+    if (this.state.errors.length > 0) {
+      alert(this.state.errors);
+      return;
+    }
 
     // AJAX
     const url = "http://localhost:9000/user/forests/branchForest";
@@ -113,6 +129,7 @@ class BranchForest extends Component {
                     placeholder="Give the Branched Forest a name!"
                     className="ml-sm-2"
                     id="branch-forest-name-bar"
+                    name="branch-forest-name-bar"
                     onChange={this.handleNameChange}
                   />
                   <input

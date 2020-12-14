@@ -24,6 +24,7 @@ import MainNavBar from "../MainNavBar/mainNavBar";
 import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 import AddIcon from "../../assets/add.svg";
+import x from "./blankForestIcon";
 
 class StartForest extends Component {
   constructor(props) {
@@ -31,6 +32,8 @@ class StartForest extends Component {
     this.state = {
       name: "",
       show: false,
+      icon: x,
+      errors: 'New Forest Name must be between 1 and 30 characters long!'
     };
 
     this.newForest = this.newForest.bind(this);
@@ -47,6 +50,12 @@ class StartForest extends Component {
 
   newForest(event) {
     event.preventDefault();
+
+    if (this.state.errors.length > 0) {
+      alert(this.state.errors);
+      return;
+    }
+
     const url = "http://localhost:9000/user/forests/create";
     const options = {
       method: "POST",
@@ -59,6 +68,7 @@ class StartForest extends Component {
       },
       body: JSON.stringify({
         name: this.state.name,
+        icon: this.state.icon,
         userid: this.props.auth.user.id
       }),
     };
@@ -76,7 +86,12 @@ class StartForest extends Component {
   }
 
   createNewForest(event) {
+    let errors = this.state.errors;
+
+    errors = event.target.value.length < 1 || event.target.value.length > 30 ? 'New Forest Name must be between 1 and 30 characters long!' : '';
+    
     this.setState({ name: event.target.value });
+    this.setState({ errors : errors });
   }
 
   render() {

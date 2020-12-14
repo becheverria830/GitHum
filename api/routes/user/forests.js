@@ -50,6 +50,7 @@ function filterRoot(parent) {
 router.post("/create", (req, res, err) => {
   const name = req.body.name;
   const userid = req.body.userid;
+  const icon = req.body.icon;
   console.log(name);
   console.log(userid);
 
@@ -60,7 +61,7 @@ router.post("/create", (req, res, err) => {
   } else {
     var forest_data = {
       name: name,
-      icon: "/static/media/forest.ff62ca20.svg",
+      icon: icon,
       active: true,
       children: [],
       depth: 1,
@@ -140,6 +141,57 @@ router.post("/save", function (req, res, next) {
         }
       }
     );
+  }
+});
+
+router.post("/unsave", function (req, res, next) {
+  const fid = req.body.forest_id;
+  // const fcreator = req.body.forest_creator_id; //FIX LATER
+  const uid = req.body.user_id;
+  console.log(fid);
+  console.log(uid);
+
+  if (fid == undefined || uid == undefined) {
+    res.status(400).json({
+      forest: null,
+    });
+  } else {
+    User.findOne({ _id: uid })
+    .exec(function (err, user) {
+    if (err) throw err;
+    console.log(user);
+
+    // Remove forest from saved forest list
+    var saved_forests = user.library.saved_forests;
+    var index = saved_forests.indexOf(fid);
+    saved_forests.splice(index, 1);
+
+    // Updated saved forests
+    User.findOneAndUpdate(
+      { _id: uid },
+      { $set: {'library.saved_forests': saved_forests}},
+      function (err, result) {
+        if (err) {
+          throw err;
+        } else {
+          // Times Saved + 1
+          Forest.findOneAndUpdate(
+            { _id: fid },
+            { $inc: { times_saved: -1 } },
+            { new: true },
+            function (err, res_updated_times_saved) {
+              if (err) {
+                throw err;
+              } else {
+                res.status(200).json({});
+              }
+            }
+          );
+        }
+      }
+    );
+
+    });
   }
 });
 
@@ -484,7 +536,45 @@ router.get("/friends/:userid", function (req, res, next) {
             },
           ],
           function (err, forests) {
-            res.status(200).json({ forests: forests });
+            // Remove Forests with No Songs
+              var final_forest_list = forests;
+              var splice_indices = [];
+              final_forest_list.forEach(function(forest, index) {
+                if(forest.songs === null || forest.songs.length === 0 ){
+                  splice_indices.push(index);
+                }
+              });
+              for (var i = splice_indices.length -1; i >= 0; i--)
+              final_forest_list.splice(splice_indices[i],1);
+
+            // If # of Forests > n, get n random forests 
+              var n = 50;
+              if(final_forest_list.length > n){
+                var sampled_forests = [];
+                var non_selected_indices = Array(final_forest_list.length).fill().map((_, idx) => idx);
+                var selected_indices = [];
+                for(var i = 0; i < n; i++){
+                  var index = non_selected_indices[Math.floor(Math.random() * non_selected_indices.length)];
+                  non_selected_indices.splice(non_selected_indices.indexOf(index), 1);
+                  selected_indices.push(index);
+                }
+
+                for(var i = 0; i < selected_indices.length; i++){
+                  sampled_forests.push(final_forest_list[selected_indices[i]]);
+                }
+                final_forest_list = sampled_forests;
+              }  
+
+            // Shuffle the forests
+              for (var i = final_forest_list.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = final_forest_list[i];
+                final_forest_list[i] = final_forest_list[j];
+                final_forest_list[j] = temp;
+               }
+
+            // Return forests
+            res.status(200).json({ forests: final_forest_list });
           }
         );
       }

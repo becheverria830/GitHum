@@ -48,11 +48,8 @@ class ForestPage extends Component {
           privacy: 1,
         },
       },
-      toggle: 0,
-      saved: false,
     };
     this.saveForest = this.saveForest.bind(this);
-    this.unsaveForest = this.unsaveForest.bind(this);
     this.playForest = this.playForest.bind(this);
     this.changeForestIcon = this.changeForestIcon(this);
     // this.getDataUrl = this.getDataUrl(this);
@@ -63,7 +60,6 @@ class ForestPage extends Component {
     this.setState({
       showSongList: true,
       showForestInfo: false,
-      toggle: 0
     });
   }
 
@@ -71,7 +67,6 @@ class ForestPage extends Component {
     this.setState({
       showSongList: false,
       showForestInfo: true,
-      toggle: 1
     });
   }
 
@@ -111,32 +106,10 @@ class ForestPage extends Component {
         });
         this.songListElement.current.updateState(res.forests.songs);
         this.forestInfoElement.current.updateForestInfo(res.forests);
-        this.forestSettingsElement.current.updateForestSettings(res.forests);
 
-        // set myForest
-        if (this.props.auth.user.id === res.forests.creator) {
-          this.setState({ myForest: true });
-        } else {
-          // Check if its been saved before
-
-          fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
-            .then((res) => res.json())
-            .then((res) => {
-              console.log(res.forests);
-              var saved_bool = false;
-              for (var i = 0; i < res.forests.length; i++) {
-                if (res.forests[i]._id === this.state.forest._id) {
-                  saved_bool = true;
-                }
-              }
-              this.setState({ myForest: false, saved: saved_bool});
-            });
-
-        }
+        this.setState({ myForest: false });
       })
       .catch((err) => err);
-      console.log("within get forest data?");
-      console.log(this.state.forest.icon);
   }
 
   getHierarchyData() {
@@ -168,7 +141,7 @@ class ForestPage extends Component {
     console.log("Icon Image Uploaded! ! !");
     console.log(document.getElementById("forestIconFile"));
 
-
+    
   }
 
   getDataUrl(img) {
@@ -186,7 +159,7 @@ class ForestPage extends Component {
   playForest(event) {
     // Need: forestid, userid, and index
     // Operating as if index means starting at the very first song
-    // This would indicate 0
+    // This would indicate 0 
 
     event.preventDefault();
     const url = "http://localhost:9000/user/queue/play_forest";
@@ -202,13 +175,19 @@ class ForestPage extends Component {
       body: JSON.stringify({
         forestid: this.props.match.params.forestid,
         userid: this.props.auth.user.id,
+        index: 0
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.SpotifyPlayerVar.player.setQueue(res.queue);
-        window.SpotifyPlayerVar.player.playCurrentSong();
+        if(res.queue == null) {
+          alert("Forest failed to play!");
+        } else {
+          /* NOTE TO SELF: Here's where queueSong should be applied */
+          /* Go through queue while there's still songs left */
+          this.props.history.push("/forests/" + this.props.match.params.forestid);
+        }
       })
       .catch((err) => err);
   }
@@ -269,77 +248,10 @@ class ForestPage extends Component {
     }
   }
 
-  unsaveForest(){
-
-    // Check if forest / user id is non-null
-    if (this.state.forest._id === null || this.props.auth.user.id === null) {
-      console.log("Null forest or user");
-    }
-
-    // Check if it has been unsaved already
-    else {
-
-      fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.forests);
-          var checkSaved = false;
-          for (var i = 0; i < res.forests.length; i++) {
-            if (res.forests[i]._id === this.state.forest._id) {
-              checkSaved = true;
-            }
-          }
-          if (checkSaved){
-            // Unsave Forest
-            const url = "http://localhost:9000/user/forests/unsave";
-            const options = {
-              method: "POST",
-              mode: "cors",
-              cache: "no-cache",
-              credentials: "same-origin",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                forest_id: this.state.forest._id,
-                user_id: this.props.auth.user.id,
-              }),
-            };
-            fetch(url, options)
-              .then((res) => [res.status, res.json()])
-              .then((response) => {
-                console.log(response);
-                if (response[0] == 200) {
-                  this.setState = {saved: false}
-                } else {
-                  alert(response[1].message);
-                }
-              });
-            alert("Removed from Saved Forests");
-          }
-          else{
-            alert("You have unsaved this forest already");
-            return;
-          }
-        })
-        .catch((err) => err);
-    }
-  }
-
   componentDidMount() {
+    console.log("inside componentDidMount of ForestPage in forest.jsx");
     this.getForestData();
     this.getHierarchyData();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps == undefined) {
-      return false;
-    }
-    if(JSON.stringify(prevProps.match.params) == JSON.stringify(this.props.match.params)) {
-      return false;
-    }
-    window.location.reload();
   }
 
   render() {
@@ -350,25 +262,30 @@ class ForestPage extends Component {
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
-              <Col xl="2" lg="2" md="2" sm="2" xs="2"
+              <Col
+                xl="2"
+                lg="2"
+                md="2"
+                sm="2"
+                xs="2"
                 className="forest-title-div"
               >
                 <Image
                   className="forest-icon"
-                  src={this.state.forest.icon}
+                  src=""
                 ></Image>
               </Col>
-              <Col xl="6" lg="6" md="6" sm="6" xs="6"
+              <Col
+                xl="6"
+                lg="6"
+                md="6"
+                sm="6"
+                xs="6"
                 className="forest-title-play-col"
               >
                 <Row>
                   <Col>
-                    <h2>{this.state.forest.name} </h2>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xl="6" lg="6" md="6" sm="6" xs="6">
-                    <Button className="forest-play-button" onClick={this.playForest}> PLAY </Button>
+                    <h2>This Forest Is Inaccessible</h2>
                   </Col>
                 </Row>
               </Col>
@@ -377,14 +294,13 @@ class ForestPage extends Component {
               <Col className="forest-info-song-actions">
                 <Button
                   onClick={this.displaySongs}
-                  // className="button forest-info-song-buttons"
-                  className={this.state.toggle === 0 ? "button forest-info-song-buttons-toggled" :"button forest-info-song-buttons"}
+                  className="button forest-info-song-buttons"
                 >
                   Songs
                 </Button>
                 <Button
                   onClick={this.displayInfo}
-                  className={this.state.toggle === 1 ? "button forest-info-song-buttons-toggled" :"button forest-info-song-buttons"}
+                  className="button forest-info-song-buttons"
                 >
                   Info
                 </Button>
@@ -394,13 +310,8 @@ class ForestPage extends Component {
               <Col id="song-list-div">
                 <div id="song-container">
                   <div className={this.state.showSongList ? null : "hidden"}>
-                    <SongList
-                      ref={this.songListElement}
-                      user={this.props.auth.user}
-                    />
                   </div>
                   <div className={this.state.showForestInfo ? null : "hidden"}>
-                    <ForestInfo ref={this.forestInfoElement} />
                   </div>
                 </div>
               </Col>
@@ -410,33 +321,6 @@ class ForestPage extends Component {
             <Row>
               <Col className="forest-options-div">
                 <Row>
-                  <Col md="12">
-                    <ShareForest forest_id={this.state.forest._id} />
-                  </Col>
-                  <Col md="12">
-                    <div>
-                      <BranchForest forest_id={this.state.forest._id} />
-                    </div>
-                  </Col>
-                  <Col md="12">
-                    <div className={this.state.myForest ? null : "hidden"}>
-                      <ForestSettings ref={this.forestSettingsElement}/>
-                    </div>
-                  </Col>
-                  <Col md="12">
-                    {this.state.myForest ? ( <Deforest /> ) : null}
-                    {(this.state.saved === false) && (this.state.myForest === false) ?
-                    ( <Button className="button forest-action-button" onClick={this.saveForest}>
-                        Save Forest
-                      </Button> )
-                    : null}
-
-                    {this.state.saved && (this.state.myForest === false) ? (
-                      <Button className="button forest-action-button" onClick={this.unsaveForest}>
-                        Unsave Forest
-                      </Button> )
-                    : null}
-                  </Col>
                 </Row>
               </Col>
             </Row>

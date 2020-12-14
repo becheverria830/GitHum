@@ -115,26 +115,6 @@ class ForestInfo extends Component {
               </Row>
             </div>
           </Col>
-          {/*
-          <Col md="6" sm="12" className="info-holder-container">
-            <div className="info-holder">
-              
-              <Row>
-                <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title">
-                    This is an Original Forest
-                  </h3>
-                </Col>
-              </Row>
-              
-              <Row>
-                <Col className="valley-forest-title-holder">
-                  <h3 className="valley-forest-title"></h3>
-                </Col>
-              </Row>
-            </div>
-          </Col>
-          */}
           <Col md="6" sm="12" className="info-holder-container">
             <div className="info-holder">
               <Row>

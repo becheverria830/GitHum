@@ -51,6 +51,7 @@ class ValleyPage extends Component {
         username: "",
         firstname: "",
       },
+      toggle: 0,
     };
   }
 
@@ -59,6 +60,7 @@ class ValleyPage extends Component {
       showSongs: true,
       showForests: false,
       showSavedForests: false,
+      toggle: 0,
     });
   }
 
@@ -67,6 +69,7 @@ class ValleyPage extends Component {
       showSongs: false,
       showForests: true,
       showSavedForests: false,
+      toggle: 1,
     });
   }
 
@@ -75,6 +78,7 @@ class ValleyPage extends Component {
       showSongs: false,
       showForests: false,
       showSavedForests: true,
+      toggle: 2,
     });
   }
 
@@ -106,6 +110,8 @@ class ValleyPage extends Component {
         this.forestElement.current.updateState(res.forests);
       })
       .catch((err) => err);
+
+    
   }
 
   getValleyInformation(userid) {
@@ -175,10 +181,10 @@ class ValleyPage extends Component {
             </Row>
             <Row className="valley-toggle-button-container-div">
               {this.state.myValley && (
-                <Col md="4" className="valley-toggle-button-container">
+                <Col md="4" className= "valley-toggle-button-container">
                   <Button
                     onClick={this.displaySongs}
-                    className="valley-toggle-button"
+                    className={this.state.toggle === 0 ? "valley-toggle-button-toggled" :"valley-toggle-button"}
                   >
                     {" "}
                     Favorites{" "}
@@ -191,10 +197,10 @@ class ValleyPage extends Component {
               <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displayForests}
-                  className="valley-toggle-button"
+                  className={this.state.toggle === 1 ? "valley-toggle-button-toggled" :"valley-toggle-button"}
                 >
                   {" "}
-                  My Forests{" "}
+                  Created Forests{" "}
                   <span>
                     <Image className="icon" src={Forest}></Image>
                   </span>
@@ -203,7 +209,7 @@ class ValleyPage extends Component {
               <Col md="4" className="valley-toggle-button-container">
                 <Button
                   onClick={this.displaySavedForests}
-                  className="valley-toggle-button"
+                  className={this.state.toggle === 2 ? "valley-toggle-button-toggled" :"valley-toggle-button"}
                 >
                   {" "}
                   Saved Forests{" "}

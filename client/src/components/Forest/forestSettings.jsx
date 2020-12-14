@@ -44,8 +44,10 @@ class ForestSettings extends Component {
         },
         children: []
       },
+      hasNameChanged: false,
       uploadedFile: null,
-      base_icon: null
+      base_icon: null,
+      errors: 'Forest Name must be between 1 and 30 characters long!'
     };
 
     this.ForestSettingsExample = this.ForestSettingsExample.bind(this);
@@ -59,7 +61,14 @@ class ForestSettings extends Component {
   };
 
   updateName = (event) => {
+    this.setState({hasNameChanged : true});
+
+    let errors = this.state.errors;
+
+    errors = event.target.value.length < 1 || event.target.value.length > 30 ? 'Forest Name must be between 1 and 30 characters long!' : '';
+
     this.setState({ name: event.target.value });
+    this.setState({ errors : errors });
   };
 
   updateFile = (event) => {
@@ -72,8 +81,6 @@ class ForestSettings extends Component {
       name: state.name,
       forest: state,
     });
-    console.log(state);
-    console.log(state);
   }
 
   showModal = (e) => {
@@ -89,14 +96,19 @@ class ForestSettings extends Component {
 
     const reader = new FileReader();
     if(this.state.uploadedFile instanceof File) {
+      if(this.state.uploadedFile.size > 1000000) {
+        let message = 'File Size must be below 1MB.';
+        alert(message);
+        //let errors = this.state.errors.icon;
+        //this.setState({errors : message});
+        return;
+      }
       reader.readAsDataURL(this.state.uploadedFile);
     }
 
     reader.onload = function () {
       res = reader.result;//base64encoded string
-      console.log(res);
-      //base64 = res.toString('base64');
-      //var base_icon = Buffer.from(base64, 'base64');
+      
       const url = "http://localhost:9000/user/forests/update_icon";
       const options = {
         method: "POST",
@@ -142,7 +154,13 @@ class ForestSettings extends Component {
  }
 
   makeChange(event) {
-    console.log("in makeChange");
+    event.preventDefault();
+
+    if (this.state.errors.length > 0 && this.state.hasNameChanged) {
+      alert(this.state.errors);
+      return;
+    }
+
     const url = "http://localhost:9000/user/forests/update_information";
     const options = {
       method: "POST",
@@ -185,8 +203,6 @@ class ForestSettings extends Component {
         <Button className="button forest-action-button"
         onClick={(e) => {
             this.showModal();
-            console.log("aaaaaaa");
-            console.log(this.state);
           }}>
           Forest Settings
         </Button>
@@ -216,7 +232,7 @@ class ForestSettings extends Component {
                           <Form inline>
                             <FormControl
                               type="text"
-                              placeholder="My First Forest"
+                              placeholder={this.state.forest.name}
                               className="ml-sm-2"
                               id="forest-settings-name-bar"
                               value={this.state.name}
@@ -256,7 +272,7 @@ class ForestSettings extends Component {
                       id="forest-settings-save-button"
                       onClick={(e) => {
                         this.changeForestIcon();
-                        this.makeChange();
+                        this.makeChange(e);
                         this.showModal();
                       }}
                     >
