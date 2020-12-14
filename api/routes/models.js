@@ -48,6 +48,8 @@ let queue = new Schema(
     current_forest_id: { type: mongoose.ObjectId, ref: "forests" },
     song_list: [{ type: mongoose.ObjectId, ref: "song" }],
     index: Number,
+    position: Number,
+    playing: Number,
   },
   { collection: "Queue" }
 );

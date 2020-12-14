@@ -55,11 +55,18 @@ router.post('/skip', function(req, res, next) {
           queue.index = 0;
         }
       }
-      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index }, function(err, updated_queue) {
+      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'position': 0 }, function(err, updated_queue) {
         if (err) throw err;
-        res.status(200).json({
-          queue: queue
-        });
+
+        Queue.findOne({ user_id: userid })
+          .populate('song_list')
+          .populate('current_forest_id')
+          .exec(function (err, queue) {
+            if (err) throw err;
+            res.status(200).json({
+              queue: queue
+            });
+          });
       });
     });
 });
@@ -81,11 +88,18 @@ router.post('/rewind', function(req, res, next) {
           queue.index = queue.song_list.length - 1;
         }
       }
-      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index }, function(err, updated_queue) {
+      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'position': 0 }, function(err, updated_queue) {
         if (err) throw err;
-        res.status(200).json({
-          queue: queue
-        });
+
+        Queue.findOne({ user_id: userid })
+          .populate('song_list')
+          .populate('current_forest_id')
+          .exec(function (err, queue) {
+            if (err) throw err;
+            res.status(200).json({
+              queue: queue
+            });
+          });
       });
     });
 });
@@ -102,7 +116,8 @@ router.post('/add_song', function(req, res, next) {
         queue.index = 0;
         queue.song_list.push(songid);
       } else {
-        queue.song_list.splice(queue.index + 1, 0, songid);
+        queue.song_list.push(songid);
+        // queue.song_list.splice(queue.index + 1, 0, songid);
       }
       Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list }, function(err, updated_queue) {
         if (err) throw err;
@@ -127,9 +142,29 @@ router.post('/remove_song', function(req, res, next) {
   Queue.findOne({ user_id: userid })
     .exec(function (err, queue) {
       if (err) throw err;
+
       var song_list = queue.song_list;
       song_list.splice(index, 1);
-      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list }, function(err, updated_queue) {
+
+      var index = -1;
+      var playing = 0;
+      var position = 0;
+
+      if(song_list.length != 0) {
+        playing = queue.playing;
+        index = queue.index;
+        if(index < queue.index) {
+          index = index - 1;
+        } else {
+          position = queue.position;
+        }
+        if (index >= song_list.length || index < 0) {
+          queue.index = 0;
+        }
+      }
+
+
+      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list, 'index': index, 'position': position, 'playing': playing }, function(err, updated_queue) {
         if (err) throw err;
 
         Queue.findOne({ user_id: userid })
@@ -137,7 +172,6 @@ router.post('/remove_song', function(req, res, next) {
           .populate('current_forest_id')
           .exec(function (err, queue_return) {
             if (err) throw err;
-            console.log(queue_return);
             res.status(200).json({
               queue: queue_return
             });
@@ -152,8 +186,7 @@ router.post('/clear', function(req, res, next) {
   Queue.findOne({ user_id: userid })
     .exec(function (err, queue) {
       if (err) throw err;
-      var song_list = []; 
-      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list }, function(err, updated_queue) {
+      Queue.updateOne({ 'user_id': userid }, { 'song_list': [], 'index': -1, 'position': 0, 'playing': 0 }, function(err, updated_queue) {
         if (err) throw err;
 
         Queue.findOne({ user_id: userid })
@@ -173,7 +206,6 @@ router.post('/clear', function(req, res, next) {
 router.post('/play_forest', function(req, res, next) {
   const userid = req.body.userid;
   const forestid = req.body.forestid;
-  const index = req.body.index;
 
   Queue.findOne({ user_id: userid })
     .exec(function (err, queue) {
@@ -184,14 +216,13 @@ router.post('/play_forest', function(req, res, next) {
           if (err) throw err;
 
           queue.song_list = forest.songs;
-          queue.index = index;
           if (queue.song_list.length == 0) {
             queue.index = -1;
-          } else if (queue.index >= queue.song_list.length || queue.index < 0) {
+          } else {
             queue.index = 0;
           }
 
-          Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list, 'current_forest_id': forestid }, function(err, updated_queue) {
+          Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list, 'current_forest_id': forestid, 'position': 0 }, function(err, updated_queue) {
             if (err) throw err;
 
             Queue.findOne({ user_id: userid })
@@ -221,9 +252,8 @@ router.post('/play_song', function(req, res, next) {
           if (err) throw err;
 
           queue.song_list = [songid];
-          queue.index = 0;
 
-          Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list, 'current_forest_id': null }, function(err, updated_queue) {
+          Queue.updateOne({ 'user_id': userid }, { 'index': 0, 'song_list': queue.song_list, 'current_forest_id': null, 'position': 0 }, function(err, updated_queue) {
             if (err) throw err;
 
             Queue.findOne({ user_id: userid })
@@ -252,7 +282,7 @@ router.post('/shuffle', function(req, res, next) {
         queue.index = 0;
       }
 
-      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list }, function(err, updated_queue) {
+      Queue.updateOne({ 'user_id': userid }, { 'index': queue.index, 'song_list': queue.song_list, 'position': 0 }, function(err, updated_queue) {
         if (err) throw err;
 
         Queue.findOne({ user_id: userid })
@@ -266,6 +296,24 @@ router.post('/shuffle', function(req, res, next) {
           });
       });
     });
+});
+
+router.post('/update_position', function(req, res, next) {
+  const userid = req.body.userid;
+  const position = req.body.position;
+  Queue.updateOne({ 'user_id': userid }, { 'position': position }, function(err, updated_queue) {
+    if (err) throw err;
+    res.status(200).send("");
+  });
+});
+
+router.post('/set_is_playing', function(req, res, next) {
+  const userid = req.body.userid;
+  const playing = req.body.playing;
+  Queue.updateOne({ 'user_id': userid }, { 'playing': playing }, function(err, updated_queue) {
+    if (err) throw err;
+    res.status(200).send("");
+  });
 });
 
 module.exports = router;

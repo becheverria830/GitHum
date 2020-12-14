@@ -58,7 +58,8 @@ class SongList extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.MyVars.player.updateQueue(res.queue);
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       })
       .catch((err) => err);
   }
@@ -175,7 +176,7 @@ class SongList extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.MyVars.player.updateQueue(res.queue);
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
       })
       .catch((err) => err);
   }
