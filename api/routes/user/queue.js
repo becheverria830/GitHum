@@ -144,7 +144,7 @@ router.post('/remove_song', function(req, res, next) {
       if (err) throw err;
 
       var song_list = queue.song_list;
-      song_list.splice(index, 1);
+      song_list.pop(index);
 
       var index = -1;
       var playing = 0;
