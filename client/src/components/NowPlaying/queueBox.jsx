@@ -42,7 +42,6 @@ class QueueBox extends Component {
     this.state = {
       queue_list: [],
       show : false,
-      delete_list : [],
     };
 
     this.getQueue = this.getQueue.bind(this);
@@ -62,8 +61,6 @@ class QueueBox extends Component {
 
 
   removeQueueItem(queue_index){
-    // console.log(queue_index);
-    // console.log(this.props.auth.user.id);
     const url = "http://localhost:9000/user/queue/remove_song";
     const options = {
       method: "POST",
@@ -82,9 +79,12 @@ class QueueBox extends Component {
     fetch(url, options)
       .then((res) => [res.status, res.json()])
       .then((response) => {
-        // console.log(response);
+        // FILTER DOESN'T BREAK .MAP!
+        var q_index = [queue_index];
         if (response[0] == 200) {
-          this.setState({toggle_temp: !this.state.toggle_temp, queue_list : response });
+          this.setState({queue_list: this.state.queue_list.filter(function(song, index) { 
+            return q_index.indexOf(index) == -1;
+           })});
         } else {
           alert(response[1].message);
         }
@@ -92,8 +92,6 @@ class QueueBox extends Component {
   }
 
   clearQueue(){
-    // console.log(queue_index);
-    // console.log(this.props.auth.user.id);
     const url = "http://localhost:9000/user/queue/clear";
     const options = {
       method: "POST",
@@ -111,9 +109,9 @@ class QueueBox extends Component {
     fetch(url, options)
       .then((res) => [res.status, res.json()])
       .then((response) => {
-        // console.log(response);
+        // FILTER ALL ELEMENTS AND DELETE
         if (response[0] == 200) {
-          this.setState({ queue_list : response.song_list });
+          this.setState({ queue_list : this.state.queue_list.filter((item) => {item !== null })});
         } else {
           alert(response[1].message);
         }
