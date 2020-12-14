@@ -132,7 +132,8 @@ class HierarchyButton extends Component {
   }
 
 
-  searchForForests(){
+  searchForForests(event){
+    event.preventDefault();
 
     ////////////////////////
     //RESET
