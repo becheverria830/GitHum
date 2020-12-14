@@ -23,25 +23,37 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 class NowPlaying extends Component {
+
   constructor(props) {
     super(props);
-    /* Get your access token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/# */
-    this.state = {
-      playing: false,
-    };
 
-    //TEMP STATIC FOREST TO ALLOW USER TO VISIT THEIR FOREST FROM NOW PLAYING
-    this.current_forest_id = {
-      _id: "5fae5aeb48d08f64ae32db6c",
-      name: "My Current Forest!",
-    };
+    this.state = {
+      isPlaying: false,
+      forest: {
+        _id: "5fae5aeb48d08f64ae32db6c",
+        name: "My Current Forest!",
+      },
+      song: null,
+    }
 
     this.onPrevClick = this.onPrevClick.bind(this);
-    this.onPlayClick = this.onPlayClick.bind(this);
+    this.onToggleClick = this.onToggleClick.bind(this);
     this.onNextClick = this.onNextClick.bind(this);
     this.onShuffleClick = this.onShuffleClick.bind(this);
+  }
 
-    window.MyVars.player.setNowPlaying(this);
+  setSongState(state) {
+    console.log("state for song:");
+    console.log(state);
+    this.setState({
+      song: state.song
+    });
+  }
+
+  setPlayingState(state) {
+    this.setState({
+      isPlaying: state.isPlaying
+    });
   }
 
   onPrevClick() {
@@ -62,14 +74,14 @@ class NowPlaying extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.MyVar.player.updateQueue(res.queue);
-        window.MyVar.player.playCurrentSong();
+        console.log(res.queue);
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       });
   }
 
-  onPlayClick() {
-    window.MyVar.player.togglePlay();
-    this.setState({'playing': window.MyVar.player.isPlaying()});
+  onToggleClick() {
+    window.SpotifyPlayerVar.player.togglePlay();
   }
 
   onNextClick() {
@@ -90,8 +102,8 @@ class NowPlaying extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.MyVar.player.updateQueue(res.queue);
-        window.MyVar.player.playCurrentSong();
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       });
   }
 
@@ -113,10 +125,15 @@ class NowPlaying extends Component {
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        window.MyVar.player.updateQueue(res.queue);
-        window.MyVar.player.playCurrentSong();
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       });
   }
+
+  componentDidMount() {
+    window.SpotifyPlayerVar.player.setNowPlaying(this);
+  }
+
 
   render() {
     return (
@@ -146,22 +163,24 @@ class NowPlaying extends Component {
               </Col>
             )}
             <Col md="12" className="song-container">
-              {/* <img
-                className="song-album-art-icon"
-                src={
-                  this.state.queue.index != -1 &&
-                  this.state.queue.song_list[this.state.queue.index].album_art
-                }
-              ></img>
+              <img className="song-album-art-icon"
+                   src={
+                     this.state.song != null &&
+                     this.state.song.album_art
+                   }>
+              </img>
               <h3 className="song-name-header">
-                {this.state.queue.index != -1 &&
-                  this.state.queue.song_list[this.state.queue.index].name}
+                {
+                  this.state.song != null &&
+                  this.state.song.name
+                }
               </h3>
               <h3 className="artist-name-header">
-                {this.state.queue.index != -1 &&
-                  this.state.queue.song_list[this.state.queue.index]
-                    .artist_name}
-              </h3> */}
+                {
+                  this.state.song != null &&
+                  this.state.song.artist_name
+                }
+              </h3>
             </Col>
             <Col md="12" className="actions-div">
               <Row>
@@ -185,8 +204,8 @@ class NowPlaying extends Component {
                   <input
                   type="image"
                   className="now-playing-icon"
-                  src={this.state.playing ? PauseCircleIcon : PlayCircleIcon}
-                  onClick={() => this.onPlayClick()}
+                  src={this.state.isPlaying ? PauseCircleIcon : PlayCircleIcon}
+                  onClick={() => this.onToggleClick()}
                 ></input>
                 </Col>
                 <Col>

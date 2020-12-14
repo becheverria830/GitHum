@@ -168,7 +168,7 @@ class ForestPage extends Component {
     console.log("Icon Image Uploaded! ! !");
     console.log(document.getElementById("forestIconFile"));
 
-    
+
   }
 
   getDataUrl(img) {
@@ -186,7 +186,7 @@ class ForestPage extends Component {
   playForest(event) {
     // Need: forestid, userid, and index
     // Operating as if index means starting at the very first song
-    // This would indicate 0 
+    // This would indicate 0
 
     event.preventDefault();
     const url = "http://localhost:9000/user/queue/play_forest";
@@ -202,19 +202,13 @@ class ForestPage extends Component {
       body: JSON.stringify({
         forestid: this.props.match.params.forestid,
         userid: this.props.auth.user.id,
-        index: 0
       }),
     };
     fetch(url, options)
       .then((res) => res.json())
       .then((res) => {
-        if(res.queue == null) {
-          alert("Forest failed to play!");
-        } else {
-          /* NOTE TO SELF: Here's where queueSong should be applied */
-          /* Go through queue while there's still songs left */
-          this.props.history.push("/forests/" + this.props.match.params.forestid);
-        }
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       })
       .catch((err) => err);
   }
@@ -281,7 +275,7 @@ class ForestPage extends Component {
     if (this.state.forest._id === null || this.props.auth.user.id === null) {
       console.log("Null forest or user");
     }
-   
+
     // Check if it has been unsaved already
     else {
 
@@ -292,7 +286,7 @@ class ForestPage extends Component {
           var checkSaved = false;
           for (var i = 0; i < res.forests.length; i++) {
             if (res.forests[i]._id === this.state.forest._id) {
-              checkSaved = true;    
+              checkSaved = true;
             }
           }
           if (checkSaved){
@@ -334,9 +328,18 @@ class ForestPage extends Component {
   }
 
   componentDidMount() {
-    console.log("inside componentDidMount of ForestPage in forest.jsx");
     this.getForestData();
     this.getHierarchyData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps == undefined) {
+      return false;
+    }
+    if(JSON.stringify(prevProps.match.params) == JSON.stringify(this.props.match.params)) {
+      return false;
+    }
+    window.location.reload();
   }
 
   render() {
@@ -422,16 +425,16 @@ class ForestPage extends Component {
                   </Col>
                   <Col md="12">
                     {this.state.myForest ? ( <Deforest /> ) : null}
-                    {(this.state.saved === false) && (this.state.myForest === false) ? 
+                    {(this.state.saved === false) && (this.state.myForest === false) ?
                     ( <Button className="button forest-action-button" onClick={this.saveForest}>
                         Save Forest
-                      </Button> ) 
+                      </Button> )
                     : null}
 
-                    {this.state.saved && (this.state.myForest === false) ? ( 
+                    {this.state.saved && (this.state.myForest === false) ? (
                       <Button className="button forest-action-button" onClick={this.unsaveForest}>
-                        Unsave Forest 
-                      </Button> ) 
+                        Unsave Forest
+                      </Button> )
                     : null}
                   </Col>
                 </Row>

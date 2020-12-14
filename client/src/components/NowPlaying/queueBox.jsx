@@ -72,21 +72,17 @@ class QueueBox extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userid : this.props.auth.user.id,
+        userid: this.props.auth.user.id,
         queue_index : queue_index,
       }),
     };
     fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        // FILTER DOESN'T BREAK .MAP!
-        var q_index = [queue_index];
-        if (response[0] == 200) {
-          this.setState({queue_list: this.state.queue_list.filter(function(song, index) { 
-            return q_index.indexOf(index) == -1;
-           })});
-        } else {
-          alert(response[1].message);
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({queue_list: res.queue.song_list});
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        if(res.queue.song_list.length == 0 || window.SpotifyPlayerVar.player.getIsPlaying()) {
+          window.SpotifyPlayerVar.player.playCurrentSong();
         }
       });
   }
@@ -107,14 +103,11 @@ class QueueBox extends Component {
       }),
     };
     fetch(url, options)
-      .then((res) => [res.status, res.json()])
-      .then((response) => {
-        // FILTER ALL ELEMENTS AND DELETE
-        if (response[0] == 200) {
-          this.setState({ queue_list : this.state.queue_list.filter((item) => {item !== null })});
-        } else {
-          alert(response[1].message);
-        }
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({queue_list: res.queue.song_list});
+        window.SpotifyPlayerVar.player.setQueue(res.queue);
+        window.SpotifyPlayerVar.player.playCurrentSong();
       });
   }
 
@@ -173,7 +166,7 @@ class QueueBox extends Component {
                         )}
                       </tbody>
                     </Table>
-                  </Col> 
+                  </Col>
                 </Row>
                 <Row>
                   <Col lg="12" md="12" sm="12" xs="12" className="center-button">
@@ -202,4 +195,3 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 export default connect(mapStateToProps)(withRouter(QueueBox));
-

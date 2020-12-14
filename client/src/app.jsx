@@ -17,11 +17,15 @@ var play = ({
   playerInstance: {
     _options: { getOAuthToken, id },
   },
+  position,
 }) => {
   getOAuthToken((access_token) => {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
       method: "PUT",
-      body: JSON.stringify({ uris: [spotify_uri] }),
+      body: JSON.stringify({
+        uris: [spotify_uri],
+        position_ms: position,
+      }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${access_token}`,
@@ -38,7 +42,12 @@ class SpotifyPlayer {
     this.queue = {
       song_list: [],
       index: -1,
-      current_forest_id: null,
+      position: -1,
+      playing: 0,
+      current_forest: {
+        forest_id: -1,
+        forest_name: "",
+      },
     };
   }
 
@@ -47,7 +56,16 @@ class SpotifyPlayer {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        this.updateQueue(res.queue);
+        this.setQueue(res.queue);
+        if(res.queue.playing != null && res.queue.playing == 1) {
+          this.togglePlay();
+        } else {
+          if(this.queue.index != -1 && this.queue.song_list.length != 0) {
+            if(this.nowPlaying != null) {
+              this.nowPlaying.setSongState({"song":this.queue.song_list[this.queue.index % this.queue.song_list.length]});
+            }
+          }
+        }
       });
   }
 
@@ -55,40 +73,143 @@ class SpotifyPlayer {
     this.player = player;
   }
 
-  playSong(song) {
-    play({
-      playerInstance: this.player,
-      spotify_uri: song.spotify_uri,
-    });
-    if(this.nowPlaying != null) {
-      this.nowPlaying.setState({"song":song});
-    }
-  }
-
-  updateQueue(queue) {
-    this.queue = queue;
-    if(this.queue.song_list.length == 1) {
-      this.playCurrentSong();
-    }
-  }
-
-  playCurrentSong() {
-    if(this.queue.index != -1 && this.queue.song_list.length != 0) {
-      this.playSong(this.queue.song_list[this.queue.index]);
-    }
-  }
-
-  togglePlay() {
-    this.player.togglePlay();
-    this.isPlaying = !this.isPlaying;
-  }
-
   getIsPlaying() {
     return this.isPlaying;
   }
 
+  setIsPlaying(isPlaying) {
+    this.isPlaying = isPlaying;
+    if(window.CurrentUserID != null) {
+      const url = "http://localhost:9000/user/queue/set_is_playing";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: window.CurrentUserID,
+          playing: isPlaying ? 1 : 0,
+        }),
+      };
+      fetch(url, options);
+    }
+
+    if(this.nowPlaying != null) {
+      this.nowPlaying.setPlayingState({"isPlaying":this.isPlaying});
+    }
+  }
+
   setNowPlaying(nowPlaying) {
+    console.log("nowPlaying");
+    console.log(nowPlaying);
+    console.log(this.queue.song_list[this.queue.index % this.queue.song_list.length]);
     this.nowPlaying = nowPlaying;
+    if(this.queue.index != -1 && this.queue.song_list.length != 0) {
+      this.nowPlaying.setSongState({"song":this.queue.song_list[this.queue.index % this.queue.song_list.length]});
+    }
+  }
+
+  setQueue(queue) {
+    this.queue = queue;
+  }
+
+  getCurrentState() {
+    return this.player.getCurrentState()
+  }
+
+  playSong(song, position) {
+    play({
+      playerInstance: this.player,
+      spotify_uri: song.spotify_uri,
+      position,
+    });
+    if(this.nowPlaying != null) {
+      this.nowPlaying.setSongState({"song":song});
+    }
+    this.player.resume();
+    this.setIsPlaying(true);
+  }
+
+  playCurrentSong() {
+    if(this.queue.index != -1 && this.queue.song_list.length != 0) {
+      this.playSong(this.queue.song_list[this.queue.index % this.queue.song_list.length], this.queue.position);
+    } else {
+      if(this.nowPlaying != null) {
+        this.nowPlaying.setSongState({"song":null});
+      }
+      this.player.pause();
+      this.setIsPlaying(false);
+    }
+  }
+
+  getCurrentSong() {
+    if(this.queue.index != -1 && this.queue.song_list.length != 0) {
+      return this.queue.song_list[this.queue.index % this.queue.song_list.length];
+    }
+    return null;
+  }
+
+  songFinished() {
+    if(window.CurrentUserID != null) {
+      const url = "http://localhost:9000/user/queue/skip";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: window.CurrentUserID,
+        }),
+      };
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((res) => {
+          this.setQueue(res.queue);
+          this.playCurrentSong();
+        });
+    }
+  }
+
+  updatePosition(position) {
+    if(window.CurrentUserID != null) {
+      this.queue.position = position;
+      const url = "http://localhost:9000/user/queue/update_position";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: window.CurrentUserID,
+          position: position,
+        }),
+      };
+      fetch(url, options);
+    }
+  }
+
+  togglePlay() {
+    if(this.isPlaying) {
+      this.player.pause();
+      this.setIsPlaying(false);
+    } else {
+      if(this.queue.index != -1 && this.queue.song_list.length != 0) {
+        this.playCurrentSong();
+        this.setIsPlaying(true);
+      }
+    }
   }
 
 }
@@ -96,100 +217,97 @@ class SpotifyPlayer {
 export default function App() {
 
   const [mounted, setMounted] = useState(false)
+  var songFinishedTime = 0;
+  var first_time = true;
 
   if(!mounted){
-    window.MyVars = {
+    //Once the page loads, create a spotify player and store it globally.
+    window.SpotifyPlayerVar = {
       player: new SpotifyPlayer()
     };
 
-    window.playerCheckInterval = setInterval(() => {
-      const token = "BQCXGPRYfyinxl2iXMEJuaFZLAfViJrvKR0E-spVz9CJyYOkANhZuRyJckJmhHa2wodAo7k6HHVc0pDBNt_6Au2pRBeBuFkuZUabyVD1A8BU6Pq0Yo4QD3DzDcFp3t5Z6lELxd_bGN0vIaI-JYVH4OtK7CV5T6hxm_kjXGM_nfRxQygQ4vV6mvQ";
+    //When the spotify API is loaded, go ahead and make the player.
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      //Get the token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
+      const token = "BQAlvSB8ojoN-gQzREsb3OAwtZ-pjMwnjUu-kyrmicTvXYQ8GJJUtzu_Ro6w-qG4gpKR_J3WBAy3KV1VdoohUomEvI5MSEgM0GpBYtI0DWpZgPUSUQcDHOzb7t2x1qwKBID885-PSATO4o0Q39NwEQmf7VdtD7CllqzvWUsjCZzrZgr--VqDiqfl";
+      const player = new window.Spotify.Player({
+        name: "GitHum",
+        getOAuthToken: (cb) => { cb(token); },
+      });
 
-      // If the Spotify SDK has loaded
-      if (window.Spotify !== undefined) {
-        // Cancel the periodic checking and make a new player
-        clearInterval(window.playerCheckInterval);
+      //Exception handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-        const player = new window.Spotify.Player({
-          name: "GitHum",
-          getOAuthToken: (cb) => {
-            cb(token);
-          },
-        });
-
-        //Adding event handlers
-        player.on("initialization_error", (e) => {
-          //If there was a problem setting up the player
-          console.error(e);
-        });
-
-        player.on("authentication_error", (e) => {
-          //If there was a problem authenticating the user(Token was invalid / expired)
-          console.error(e);
-        });
-
-        player.on("account_error", (e) => {
-          //??
-          console.error(e);
-        });
-
-        player.on("playback_error", (e) => {
-          //If playing a track failed for some reason
-          console.error(e);
-        });
-
-        player.on("player_state_changed", (state) => {
-          //If there are any changes to the player state
-          // console.log(state);
-          // if (
-          //     this.state
-          //     && state.track_window.previous_tracks.find(x => x.id === state.track_window.current_track.id)
-          //     && !this.state.paused
-          //     && state.paused
-          //     ) {
-          //     this.onNextClick();
-          //   }
-          // this.state = state;
-        });
-
-        player.on("ready", async (data) => {
-          //Making the player
-          // let { device_id } = data;
-          // await this.setState({ deviceId: device_id });
-          //
-          // const { deviceId, token } = this.state;
-          //
-          //   fetch("https://api.spotify.com/v1/me/player", {
-          //     method: "PUT",
-          //     headers: {
-          //       authorization: `Bearer ${token}`,
-          //       "Content-Type": "application/json",
-          //     },
-          //     body: JSON.stringify({
-          //       device_ids: [deviceId],
-          //       play: false,
-          //     }),
-          //   });
-          // }
-
-          console.log("ready");
-          console.log("ready");
-          console.log("ready");
-            console.log("ready");
-        });
-
-
-        player.connect();
-        if(window.CurrentUserID != null) {
-          window.MyVars.player.getCurrentQueue(window.CurrentUserID);
+      // Playback status updates
+      player.addListener('player_state_changed', state => {
+        if(first_time) {
+          first_time = false;
+          if(window.CurrentUserID != null) {
+            window.SpotifyPlayerVar.player.getCurrentQueue(window.CurrentUserID);
+          }
         }
-        window.MyVars.player.setPlayer(player);
-      }
-    }, 1000);
+        if(state != null){
+          if(state.paused == true && state.position == 0 && state.restrictions.disallow_resuming_reasons && state.restrictions.disallow_resuming_reasons[0] === "not_paused") {
+            if(state.timestamp - songFinishedTime > 5000) {
+              var current_song = window.SpotifyPlayerVar.player.getCurrentSong();
+              if(current_song != null && current_song.spotify_uri == state.track_window.current_track.uri){
+                songFinishedTime = state.timestamp;
+                window.SpotifyPlayerVar.player.songFinished();
+              }
+            }
+          } else if(state.paused == true) {
+            var current_song = window.SpotifyPlayerVar.player.getCurrentSong();
+            if(current_song != null && current_song.spotify_uri == state.track_window.current_track.uri){
+              window.SpotifyPlayerVar.player.updatePosition(state.position);
+            }
+          }
+        }
+      });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        fetch("https://api.spotify.com/v1/me/player", {
+          method: "PUT",
+          headers: {
+            authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            device_ids: [device_id],
+            play: false,
+          }),
+        });
+
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+
+      window.SpotifyPlayerVar.player.setPlayer(player);
+    };
   }
 
   useEffect(() =>{
     setMounted(true)
+    window.addEventListener("beforeunload", async (ev) =>
+    {
+      // ev.preventDefault();
+      let state = await window.SpotifyPlayerVar.player.getCurrentState();
+      if (state == null) {
+        // Playback isn't on this device yet
+      } else {
+        window.SpotifyPlayerVar.player.updatePosition(state.position);
+      }
+      return ev.returnValue = 'Are you sure you want to close?';
+    });
   },[])
 
   return (
