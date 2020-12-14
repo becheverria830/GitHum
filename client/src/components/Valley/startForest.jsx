@@ -25,6 +25,7 @@ import NowPlaying from "../NowPlaying/nowPlaying";
 import SearchIcon from "../../assets/search.svg";
 import AddIcon from "../../assets/add.svg";
 import x from "./blankForestIcon";
+import Tree from "../../assets/tree.svg"
 
 class StartForest extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class StartForest extends Component {
     this.state = {
       name: "",
       show: false,
-      icon: x,
+      icon: Tree,
       errors: 'New Forest Name must be between 1 and 30 characters long!'
     };
 
