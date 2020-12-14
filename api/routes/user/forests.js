@@ -539,7 +539,42 @@ router.get("/friends/:userid", function (req, res, next) {
             },
           ],
           function (err, forests) {
-            res.status(200).json({ forests: forests });
+            // Remove Forests with No Songs
+              var final_forest_list = forests;
+              final_forest_list.forEach(function(forest, index) {
+                if(forest.songs === null || forest.songs.length === 0 ){
+                  final_forest_list.splice(index, 1);
+                }
+              });
+
+            // If # of Forests > 50, get 50 random forests **UNTESTED**
+              if(final_forest_list.length > 50){
+                var sampled_forests = [];
+                var n = 50;
+                var non_selected_indices = Array(final_forest_list.length).fill().map((_, idx) => idx);
+                var selected_indices = [];
+                for(var i = 0; i < n; i++){
+                  var index = items[Math.floor(Math.random() * items.length)];
+                  non_selected_indices.splice(indexOf(index), 1);
+                  selected_indices.push(index);
+                }
+
+                for(var i = 0; i < selected_indices.length; i++){
+                  sampled_forests.push(final_forest_list[selected_indices[i]]);
+                }
+                final_forest_list = sampled_forests;
+              }  
+
+            // Shuffle the forests
+              for (var i = final_forest_list.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = final_forest_list[i];
+                final_forest_list[i] = final_forest_list[j];
+                final_forest_list[j] = temp;
+               }
+
+            // Return forests
+            res.status(200).json({ forests: final_forest_list });
           }
         );
       }
