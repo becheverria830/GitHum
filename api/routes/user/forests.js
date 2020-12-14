@@ -220,6 +220,35 @@ router.post("/addToForest", function (req, res, next) {
   });
 });
 
+router.post("/removeFromForest", function (req, res, next) {
+  const song_id = req.body.song_id;
+  const forest_id = req.body.forest_id;
+
+  Forest.findOne({ _id: forest_id }, function (err, res_find_forest) {
+    if (err) {
+      console.log("didnt find forest");
+      console.log(err);
+    } else {
+      console.log(res_find_forest.songs);
+      const index = res_find_forest.songs.indexOf(song_id);
+      console.log(index);
+      res_find_forest.songs.splice(index,1);
+      Forest.update(
+        { _id: forest_id },
+        { songs: res_find_forest.songs },
+        function (err, res_update_forest) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.status(200).json({});
+          }
+        }
+      );
+    }
+  });
+});
+
+
 router.post("/branchForest", function (req, res, next) {
   const branch_forest_name = req.body.branch_forest_name;
   const parent_forest_id = req.body.parent_forest_id;

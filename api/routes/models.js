@@ -112,6 +112,8 @@ let song = new Schema(
     name: String,
     artist_name: String,
     album_art: String,
+    album_uri: String,
+    album_name: String,
     spotify_uri: String,
     genre_id: String,
     release_date: String,
@@ -122,6 +124,18 @@ let song = new Schema(
 
 song = mongoose.model("song", song);
 
+let album = new Schema(
+  {
+    name: String,
+    artist_name: String,
+    album_uri: String,
+    songs: [{ type: mongoose.ObjectId, ref: 'song' }]
+  },
+  { collection: "Album" }
+);
+
+album = mongoose.model("album", album);
+
 const models = {
   'user': user,
   'resetpassword': resetpassword,
@@ -129,7 +143,8 @@ const models = {
   'forests': forests,
   'hierarchy': hierarchy,
   'message': message,
-  'song': song
+  'song': song,
+  'album': album
 };
 
 module.exports = models;
