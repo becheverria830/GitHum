@@ -422,15 +422,17 @@ class ForestPage extends Component {
                   </Col>
                   <Col md="12">
                     {this.state.myForest ? ( <Deforest /> ) : null}
-                    {this.state.saved ? 
-                    <Button className="button forest-action-button" onClick={this.unsaveForest}>
-                      Unsave Forest 
-                    </Button> 
-                    : 
-                    <Button className="button forest-action-button" onClick={this.saveForest}>
-                      Save Forest
-                    </Button>
-                    }
+                    {(this.state.saved === false) && (this.state.myForest === false) ? 
+                    ( <Button className="button forest-action-button" onClick={this.saveForest}>
+                        Save Forest
+                      </Button> ) 
+                    : null}
+
+                    {this.state.saved && (this.state.myForest === false) ? ( 
+                      <Button className="button forest-action-button" onClick={this.unsaveForest}>
+                        Unsave Forest 
+                      </Button> ) 
+                    : null}
                   </Col>
                 </Row>
               </Col>
