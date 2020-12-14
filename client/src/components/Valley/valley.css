@@ -145,6 +145,20 @@
   white-space: nowrap;
 }
 
+
+.valley-toggle-button-toggled {
+  border-radius: .5vw;
+  width: 95%;
+  color: #ffffff;
+  background-color: #82c484 !important;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.3vw;
+  white-space: nowrap;
+  box-shadow: none!important;
+}
+
 #forest-action-4 {
   background-color: #f16868;
 }
