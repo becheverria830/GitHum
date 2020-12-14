@@ -94,7 +94,7 @@ class ForestSettings extends Component {
 
     reader.onload = function () {
       res = reader.result;//base64encoded string
-      console.log(res);
+      //console.log(res);
       //base64 = res.toString('base64');
       //var base_icon = Buffer.from(base64, 'base64');
       const url = "http://localhost:9000/user/forests/update_icon";
