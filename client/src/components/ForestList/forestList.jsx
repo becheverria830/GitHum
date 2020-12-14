@@ -91,7 +91,8 @@ class ForestList extends Component {
     return (
       <div>
         {
-          this.state.forest_feed_info.map(f_info => (
+          this.state.forest_feed_info/*.filter(forest => 
+            forest.f_privacy == 0 || (forest.f_privacy == 1 && forest.f_creator == this.props.userid))*/.map(f_info => (
             
             <div className={f_info[3] === 1 || f_info[4].length === 0 ? "hidden" : "forest-container"}>
               <Row>

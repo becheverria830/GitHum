@@ -1,0 +1,122 @@
+.forest-title-div {
+  margin: 5%;
+  margin-bottom: 1%;
+}
+
+.forest-title-text {
+  font-size: 3vmax;
+}
+
+.forest-title-play-col {
+  margin: 8% 0 4% 0;
+  text-align: left;
+}
+
+.forest-play-button {
+  background-color: #c8e6c9;
+  color: #000000;
+  font-weight: bold;
+  border: none;
+  width: 8vw;
+  height: 3.5vw;
+  margin: 0 1% 5% 1%;
+  font-size: 2vw;
+  padding: 0 4% 0 4%;
+}
+
+.forest-play-button:hover {
+  background-color: #86db89 !important;
+}
+
+.forest-info-song-actions {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 1%;
+}
+
+.forest-info-song-buttons {
+  margin-left: 1%;
+  margin-right: 1%;
+  font-size: 3vw;
+  padding-left: 4%;
+  padding-right: 4%;
+  background-color: #c8e6c9 !important;
+}
+
+.forest-info-song-buttons:hover {
+  background-color: #86db89 !important;
+}
+
+.forest-info-song-buttons:active {
+  background-color: #86db89 !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.forest-options-div {
+  margin: 5%;
+  padding: 5%;
+  border-radius: 10% 10% 10% 10%;
+  background-color: #c4c4c4;
+  text-align: center;
+}
+
+.forest-action-button {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  width: 15vw;
+  height: 3vw;
+  max-width: 20em;
+  max-height: 5em;
+}
+
+#deforest-button {
+  background-color: #f76d6d;
+}
+
+.button {
+  background-color: #fedbff;
+  color: #423e3e;
+  font-size: 1.2vw;
+  border: none;
+  text-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background-color: #e7c3e8;
+}
+
+#song-list-div {
+  background-color: #c4c4c4;
+  border-radius: 10% 10% 10% 10%;
+  height: 40vw;
+  /* width: 35vw; */
+  padding: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+#song-container {
+  height: 33vw;
+  overflow-y: scroll;
+}
+
+#now-playing-div {
+  background-color: #c4c4c4;
+  border-radius: 10% 10% 10% 10%;
+  height: 40vw;
+  padding: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.forest-icon {
+  margin: 1.5%;
+  padding: 1.5%;
+  width: 10vw;
+  height: 10vw;
+}

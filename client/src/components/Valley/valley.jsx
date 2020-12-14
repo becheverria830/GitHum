@@ -106,6 +106,8 @@ class ValleyPage extends Component {
         this.forestElement.current.updateState(res.forests);
       })
       .catch((err) => err);
+
+    
   }
 
   getValleyInformation(userid) {
@@ -194,7 +196,7 @@ class ValleyPage extends Component {
                   className="valley-toggle-button"
                 >
                   {" "}
-                  My Forests{" "}
+                  Created Forests{" "}
                   <span>
                     <Image className="icon" src={Forest}></Image>
                   </span>
