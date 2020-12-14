@@ -43,6 +43,16 @@
   background-color: #c8e6c9 !important;
 }
 
+.forest-info-song-buttons-toggled {
+  margin-left: 1%;
+  margin-right: 1%;
+  font-size: 3vw;
+  padding-left: 4%;
+  padding-right: 4%;
+  background-color: #82c484 !important;
+  color: #ffffff !important;
+}
+
 .forest-info-song-buttons:hover {
   background-color: #86db89 !important;
 }

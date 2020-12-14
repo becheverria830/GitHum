@@ -48,6 +48,7 @@ class ForestPage extends Component {
           privacy: 1,
         },
       },
+      toggle: 0,
     };
     this.saveForest = this.saveForest.bind(this);
     this.playForest = this.playForest.bind(this);
@@ -60,6 +61,7 @@ class ForestPage extends Component {
     this.setState({
       showSongList: true,
       showForestInfo: false,
+      toggle: 0
     });
   }
 
@@ -67,6 +69,7 @@ class ForestPage extends Component {
     this.setState({
       showSongList: false,
       showForestInfo: true,
+      toggle: 1
     });
   }
 
@@ -272,12 +275,7 @@ class ForestPage extends Component {
         <Row>
           <Col xl="8" lg="8" md="8" sm="12" xs="12">
             <Row>
-              <Col
-                xl="2"
-                lg="2"
-                md="2"
-                sm="2"
-                xs="2"
+              <Col xl="2" lg="2" md="2" sm="2" xs="2"
                 className="forest-title-div"
               >
                 <Image
@@ -285,12 +283,7 @@ class ForestPage extends Component {
                   src={this.state.forest.icon}
                 ></Image>
               </Col>
-              <Col
-                xl="6"
-                lg="6"
-                md="6"
-                sm="6"
-                xs="6"
+              <Col xl="6" lg="6" md="6" sm="6" xs="6"
                 className="forest-title-play-col"
               >
                 <Row>
@@ -322,13 +315,14 @@ class ForestPage extends Component {
               <Col className="forest-info-song-actions">
                 <Button
                   onClick={this.displaySongs}
-                  className="button forest-info-song-buttons"
+                  // className="button forest-info-song-buttons"
+                  className={this.state.toggle === 0 ? "button forest-info-song-buttons-toggled" :"button forest-info-song-buttons"}
                 >
                   Songs
                 </Button>
                 <Button
                   onClick={this.displayInfo}
-                  className="button forest-info-song-buttons"
+                  className={this.state.toggle === 1 ? "button forest-info-song-buttons-toggled" :"button forest-info-song-buttons"}
                 >
                   Info
                 </Button>
