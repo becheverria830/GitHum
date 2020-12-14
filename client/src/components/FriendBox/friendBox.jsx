@@ -75,15 +75,9 @@ class FriendBox extends Component {
       }),
     };
     fetch(url, options)
-      .then((res) => [res.status, res.json()])
       .then((response) => {
-        // console.log(response);
-        if (response[0] == 200) {
-        } else {
-          alert(response[1].message);
-        }
+        window.location.reload();
       });
-    alert("Friend Removed!");
   }
 
   componentDidMount() {
