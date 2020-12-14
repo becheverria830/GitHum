@@ -27,6 +27,8 @@ router.get('/', function(req, res, next) {
         name: song.name,
         artist_name: song.artists[0].name,
         album_art: song.album.images[0].url,
+        album_uri: song.album.uri,
+        album_name: song.album.name,
         spotify_uri: song.uri,
         genre_id: "",
         release_date: song.album.release_date,

@@ -9,6 +9,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 /* Importing All Resources & Custom CSS */
 import "./songList.css";
 import Tree from "../../assets/tree.svg";
+import DeleteIcon from "../../assets/delete_small.svg";
 import Play from "../../assets/play.svg";
 import Queue from "../../assets/queue.svg";
 import Flower from "../../assets/flower.svg";
@@ -30,6 +31,7 @@ class SongList extends Component {
     this.addFavorite = this.addFavorite.bind(this);
     this.getForests = this.getForests.bind(this);
     this.addToForest = this.addToForest.bind(this);
+    this.removeFromForest = this.removeFromForest.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
   }
 
@@ -142,6 +144,28 @@ class SongList extends Component {
       .catch((err) => err);
   }
 
+  removeFromForest(song, forest) {
+    const url = "http://localhost:9000/user/forests/removeFromForest";
+    const options = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        song_id: song._id,
+        forest_id: forest._id,
+      }),
+    };
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((res) => {})
+      .catch((err) => err);
+  }
+
   getFavorites(userid) {
     fetch("http://localhost:9000/user/favorites/songs/" + this.props.user.id)
       .then((res) => res.json())
@@ -206,6 +230,7 @@ class SongList extends Component {
                   ></input>
                 </td>
                 <td>{song.name}</td>
+                <td>{song.album_name}</td>
                 <td>{song.artist_name}</td>
                 <td>
                   <input
@@ -227,6 +252,26 @@ class SongList extends Component {
                           <Dropdown.Item
                             onClick={() => {
                               this.addToForest(song, forest);
+                            }}
+                          >
+                            {forest.name}
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+                <td>
+                  <Dropdown>
+                    <Dropdown.Toggle type="image" src={DeleteIcon}>
+                      <Image src={DeleteIcon}></Image>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {this.state.myForests.filter(forest => forest.songs.includes(song._id)).map((forest) => {
+                        return (
+                          <Dropdown.Item
+                            onClick={() => {
+                              this.removeFromForest(song, forest);
                             }}
                           >
                             {forest.name}
