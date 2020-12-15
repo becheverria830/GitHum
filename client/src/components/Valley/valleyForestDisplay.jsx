@@ -22,13 +22,15 @@ class ValleyForestDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      forests: []
+      forests: [],
+      user: [],
     };
   }
 
-  updateState(state) {
+  updateState(forests, user) {
     this.setState({
-      forests: state
+      forests: forests,
+      user: user
     });
   }
 
@@ -42,7 +44,7 @@ class ValleyForestDisplay extends Component {
         <Row>
           {
             this.state.forests.filter(forest => 
-              forest.settings.privacy == 0 || (forest.settings.privacy == 1 && forest.creator == this.props.userid))
+              forest.settings.privacy === 0 || (forest.creator === this.state.user.id))
             .map(forest => (
               <Col md="6" sm="12" className="valley-forest-holder-container">
                 <Link to={"/forests/"+forest._id}>

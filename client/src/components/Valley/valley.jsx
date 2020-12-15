@@ -87,7 +87,7 @@ class ValleyPage extends Component {
     fetch("http://localhost:9000/user/forests/saved/" + userid)
       .then((res) => res.json())
       .then((res) => {
-        this.savedForestElement.current.updateState(res.forests);
+        this.savedForestElement.current.updateState(res.forests, this.props.auth.user);
       })
       .catch((err) => err);
   }
@@ -107,7 +107,7 @@ class ValleyPage extends Component {
     fetch("http://localhost:9000/user/forests/forests/" + userid)
       .then((res) => res.json())
       .then((res) => {
-        this.forestElement.current.updateState(res.forests);
+        this.forestElement.current.updateState(res.forests, this.props.auth.user);
       })
       .catch((err) => err);
 
