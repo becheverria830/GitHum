@@ -81,7 +81,7 @@ class QueueBox extends Component {
       .then((res) => {
         this.setState({queue_list: res.queue.song_list});
         window.SpotifyPlayerVar.player.setQueue(res.queue);
-        if(res.queue.song_list.length == 0 || window.SpotifyPlayerVar.player.getIsPlaying()) {
+        if(res.queue.song_list.length === 0 || queue_index === 0) {
           window.SpotifyPlayerVar.player.playCurrentSong();
         }
       });
