@@ -43,7 +43,7 @@ class ForestList extends Component {
         var arr = f.songs;
         var unique_arr = arr.filter(function(value, index, self) {
           return self.indexOf(value) === index;
-        }); 
+        });
         console.log(unique_arr);
         if(unique_arr.length === 1){var f_songs = unique_arr.splice(0,1);}
         else if(unique_arr.length === 2){var f_songs = unique_arr.splice(0,2);}
@@ -52,8 +52,8 @@ class ForestList extends Component {
         }
       }
 
-      // Fetch Song Objects   
-      const url = "http://localhost:9000/songs/manySongs";
+      // Fetch Song Objects
+      const url = "http://104.141.160.216:9000/songs/manySongs";
       const options = {
         method: "POST",
         mode: "cors",
@@ -99,21 +99,21 @@ class ForestList extends Component {
                 </Col>
               </Row>
               <Row>
-                { f_info[4].length >= 1 && 
+                { f_info[4].length >= 1 &&
                   <Col md="4" sm="12" className="song-container">
                   <img className="song-album-art-icon" src={f_info[4][0].album_art}></img>
                   <h3 className="song-name-header">{f_info[4][0].name}</h3>
                   <h3 className="artist-name-header">{f_info[4][0].artist_name}</h3>
                 </Col>
                 }
-                { f_info[4].length >= 2 && 
+                { f_info[4].length >= 2 &&
                   <Col md="4" sm="12" className="song-container">
                   <img className="song-album-art-icon" src={f_info[4][1].album_art}></img>
                   <h3 className="song-name-header">{f_info[4][1].name}</h3>
                   <h3 className="artist-name-header">{f_info[4][1].artist_name}</h3>
                   </Col>
                 }
-                { f_info[4].length >= 3 && 
+                { f_info[4].length >= 3 &&
                   <Col md="4" sm="12" className="song-container">
                   <img className="song-album-art-icon" src={f_info[4][2].album_art}></img>
                   <h3 className="song-name-header">{f_info[4][2].name}</h3>

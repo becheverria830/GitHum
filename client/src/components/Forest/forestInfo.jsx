@@ -47,7 +47,7 @@ class ForestInfo extends Component {
   }
 
   getUserData(id) {
-    fetch("http://localhost:9000/user/credentials/" + id)
+    fetch("http://104.141.160.216:9000/user/credentials/" + id)
       .then((res) => res.json())
       .then((res) => {
         console.log("user");

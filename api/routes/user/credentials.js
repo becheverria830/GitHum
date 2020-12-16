@@ -187,7 +187,7 @@ router.post("/resetpassword", (req, res, err) => {
 
               //Sending an email to the user.
               let url = "/" + result[0].id + "/" + token;
-              url = "localhost/passwordreset" + url;
+              url = "104.141.160.216:3000/passwordreset" + url;
               let msg = {
                 to: 'Jeremy.Herrmann@notouchorders.com', // Change to your recipient
                 from: 'jeremycherrmann@gmail.com', // Change to your verified sender

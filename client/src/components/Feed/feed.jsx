@@ -27,7 +27,7 @@ class FeedPage extends Component {
   }
 
   getFriendsForests() {
-    fetch("http://localhost:9000/user/forests/friends/" + this.props.auth.user.id)
+    fetch("http://104.141.160.216:9000/user/forests/friends/" + this.props.auth.user.id)
       .then(res => res.json())
       .then(res => {
         this.forestListElement.current.updateState(res.forests);
@@ -36,7 +36,7 @@ class FeedPage extends Component {
   }
 
   getFriendInformation() {
-    fetch("http://localhost:9000/user/friends")
+    fetch("http://104.141.160.216:9000/user/friends")
       .then(res => res.json())
       .then(res => {
         this.friendListElement.current.updateState(res);

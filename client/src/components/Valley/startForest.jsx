@@ -56,7 +56,7 @@ class StartForest extends Component {
       return;
     }
 
-    const url = "http://localhost:9000/user/forests/create";
+    const url = "http://104.141.160.216:9000/user/forests/create";
     const options = {
       method: "POST",
       mode: "cors",

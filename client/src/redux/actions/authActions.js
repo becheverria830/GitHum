@@ -9,7 +9,7 @@ import {
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("http://localhost:9000/user/credentials/signup", userData)
+    .post("http://104.141.160.216:9000/user/credentials/signup", userData)
     .then(res => history.push("/login")) // re-direct to login on successful register
     .catch(err => {
       alert(err.response.data.message);
@@ -22,7 +22,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - get user token
 export const loginUser = userData => dispatch => {
   axios
-    .post("http://localhost:9000/user/credentials/login", userData)
+    .post("http://104.141.160.216:9000/user/credentials/login", userData)
     .then(res => {
       // Save to localStorage
       // Set token to localStorage

@@ -82,7 +82,7 @@ class SignUp extends Component {
       password: this.state.password
     };
     this.props.registerUser(newUser, this.props.history);
-    // const url = 'http://localhost:9000/user/credentials/signup';
+    // const url = 'http://104.141.160.216:9000/user/credentials/signup';
     // const options = {
     //   method: 'POST',
     //   headers: {
@@ -102,7 +102,7 @@ class SignUp extends Component {
     //   .then(res => {
     //     console.log(res);
     //     if(res.status == 200) {
-    //       // window.location.href = "http://localhost:3000/login"
+    //       // window.location.href = "http://104.141.160.216:3000/login"
     //     } else {
     //       alert(res.message);
     //     }

@@ -38,7 +38,7 @@ class FriendMessageButton extends Component {
 
   sendMessage(event) {
     event.preventDefault();
-    const url = "http://localhost:9000/user/messages/create";
+    const url = "http://104.141.160.216:9000/user/messages/create";
     const options = {
       method: "POST",
       mode: "cors",
@@ -74,7 +74,7 @@ class FriendMessageButton extends Component {
       clearInterval(this.interval);
     } else {
       this.interval = setInterval(() => {
-        fetch("http://localhost:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
+        fetch("http://104.141.160.216:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
           .then(res => res.json())
           .then(res => {
             this.setState({messageList: res});
@@ -90,7 +90,7 @@ class FriendMessageButton extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
+    fetch("http://104.141.160.216:9000/user/messages/"+this.props.current_user.id+"/"+this.props.other_user._id)
       .then(res => res.json())
       .then(res => {
         this.setState({messageList: res});
