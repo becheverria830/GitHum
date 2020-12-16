@@ -11,7 +11,8 @@ const Twilio_Key =
   "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";
 const Spotify_Client_ID = "f052d98613e44dd1bcff5da4fa1b2c0a";
 const Spotify_Client_Secret = "3f079d1cede8444a88627e4dfa2ab161";
-const Spotify_OAuth_Token = "BQCd6X55Fdjv90YiPUZTb6FbpcJFSGeOTmm7wcMD-dzkKwDmF5LYXoj0jd_F15L7r0DLQb2gBsBU-4M9xIYhvKFeEPXNg376vJsYj3JD9GGrbpg-mjv8WyYfcNn9g-_Ad7VEZqET5sgg1H8";
+const Spotify_OAuth_Token = "BQCJSVd6r7p7NFmRzdXbFzbj6R1rOxIG367So6zFsAm5m3QuyNni-RgeHP_JEG2xg0EKVvNxaJu7gQPrKeSKqhOGTBooIzN0CKHT1ciX5uxmuuArrfcmMij4jUw7XFOazYAgNmuTzSCuyWe5sqhdoey4rdgpulsTmQlMFigmdvbp";
+const Spotify_Refresh = "AQC_By2gr1OZg4DOIukBgZ3_2h71d2AOrYXo7QnLkw9AzmtRuuenvjmj2Qq2ubqiFQygQQVW6vKteqbndDoxBUvBO_pkSXmsQBuYSVyCRSQM0Sl4mIWdWQM7xlZ_Y8Q53tA";
 
 module.exports = {
   MongoDB_URI: MongoDB_URI,

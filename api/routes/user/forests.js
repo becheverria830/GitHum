@@ -238,13 +238,14 @@ router.post("/removeFromForest", function (req, res, next) {
 
   Forest.findOne({ _id: forest_id }, function (err, res_find_forest) {
     if (err) {
-      console.log("didnt find forest");
       console.log(err);
     } else {
       console.log(res_find_forest.songs);
       const index = res_find_forest.songs.indexOf(song_id);
       console.log(index);
-      res_find_forest.songs.splice(index,1);
+      if(index >= 0){
+        res_find_forest.songs.splice(index,1);
+      }
       Forest.update(
         { _id: forest_id },
         { songs: res_find_forest.songs },
