@@ -1,7 +1,7 @@
 version: "2"
 services:
     client:
-        image: jherrmann01/mixtape-app-client
+        image: jherrmann01/mixtape-app-client:v1
         restart: always
         ports:
             - "3000:3000"
@@ -14,7 +14,7 @@ services:
         networks:
             - webappnetwork
     api:
-        image: jherrmann01/mixtape-app-api
+        image: jherrmann01/mixtape-app-api:v1
         restart: always
         ports:
             - "9000:9000"
