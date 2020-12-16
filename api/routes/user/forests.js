@@ -75,9 +75,21 @@ router.post("/create", (req, res, err) => {
     Forest.insertMany([forest_data], function (create_error, result) {
       if (create_error) throw create_error;
       console.log(result);
-      res.status(200).json({
-        forest: result[0],
-      });
+
+      // Update User
+      User.findOneAndUpdate(
+        { _id: userid },
+        { $push: { "library.my_forests": result[0]._id } },
+        function (err, res_update_user) {
+          if (err) {
+            throw err;
+          } else {
+            res.status(200).json({
+              forest: result[0],
+            });
+          }
+        }
+      );  
     });
   }
 });
@@ -297,9 +309,21 @@ router.post("/branchForest", function (req, res, next) {
             function (err, res_update_children) {
               if (create_error) throw create_error;
               console.log(res_insert_forest);
-              res.status(200).json({
-                forest: res_insert_forest[0],
-              });
+
+                // Update User
+                User.findOneAndUpdate(
+                  { _id: user_id },
+                  { $push: { "library.my_forests": res_insert_forest[0]._id } },
+                  function (err, res_update_user) {
+                    if (err) {
+                      throw err;
+                    } else {
+                      res.status(200).json({
+                        forest: res_insert_forest[0],
+                      });
+                    }
+                  }
+                );  
             }
           );
         }
