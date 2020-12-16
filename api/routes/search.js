@@ -36,6 +36,7 @@ function intervalFunc() {
 */
 
 router.get('/', function(req, res, next) {
+  
   spotifyApi.searchTracks(req.query.query)
   .then(async function(tracks) {
     refined_songs = []

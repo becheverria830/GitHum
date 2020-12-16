@@ -25,6 +25,7 @@ function randomString(len, charSet) {
 }
 
 sgMail.setApiKey(keys.Twilio_Key)
+console.log(keys.encoded)
 
 router.post("/signup", (req, res, err) => {
   //Getting the information from the request

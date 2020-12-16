@@ -227,13 +227,66 @@ export default function App() {
     };
 
     //When the spotify API is loaded, go ahead and make the player.
-    window.onSpotifyWebPlaybackSDKReady = () => {
+     window.onSpotifyWebPlaybackSDKReady  = async () => {
       //Get the token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
-      const token = "BQB6whHbZI-SWSxYJ2WD6ffxr4g-A9_chEB_5NMNVfWUmED1F_LSsdEP4BQRaW-xyCqTES-rjxLuEMqeCg2PgiNCLTJPsZIae0TBH-y5ANZA_kz86g5NBXdblCMel8Mvm9VZm3z-RIQUwgCZAx8sSISfMpctRw";
+      var token = "";
+      console.log("before");
+      await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Basic ZjA1MmQ5ODYxM2U0NGRkMWJjZmY1ZGE0ZmExYjJjMGE6M2YwNzlkMWNlZGU4NDQ0YTg4NjI3ZTRkZmEyYWIxNjE='
+        },
+      body:  'grant_type=refresh_token&refresh_token=AQC_By2gr1OZg4DOIukBgZ3_2h71d2AOrYXo7QnLkw9AzmtRuuenvjmj2Qq2ubqiFQygQQVW6vKteqbndDoxBUvBO_pkSXmsQBuYSVyCRSQM0Sl4mIWdWQM7xlZ_Y8Q53tA'
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("DO I GET TO THE RES PLZ");
+        token = res.access_token;
+        console.log(token);
+      });
+
+      /*
+      //let token = "";
+      const url = "https://accounts.spotify.com/api/token";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        enctype: "Application/x-www-form-urlencoded",
+        headers: {
+          Authorization: "Basic ZjA1MmQ5ODYxM2U0NGRkMWJjZmY1ZGE0ZmExYjJjMGE6M2YwNzlkMWNlZGU4NDQ0YTg4NjI3ZTRkZmEyYWIxNjE="
+        },
+        body: {
+          grant_type: "refresh_token",
+          refresh_token: "AQC_By2gr1OZg4DOIukBgZ3_2h71d2AOrYXo7QnLkw9AzmtRuuenvjmj2Qq2ubqiFQygQQVW6vKteqbndDoxBUvBO_pkSXmsQBuYSVyCRSQM0Sl4mIWdWQM7xlZ_Y8Q53tA"
+        },
+      };
+      
+      console.log(token);
+
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("DO I GET TO THE RES PLZ");
+          console.log(res);
+          token = res.access_token;
+        });
+
+
+        console.log(token);
+        */
+      
+      
       const player = new window.Spotify.Player({
         name: "GitHum",
         getOAuthToken: (cb) => { cb(token); },
       });
+
+
+      console.log("later");
+      console.log(token);
 
       //Exception handling
       player.addListener('initialization_error', ({ message }) => { console.error(message); });
@@ -266,6 +319,9 @@ export default function App() {
           }
         }
       });
+
+      console.log("more later");
+      console.log(token);
 
       // Ready
       player.addListener('ready', ({ device_id }) => {

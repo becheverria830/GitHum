@@ -13,6 +13,8 @@ const Spotify_Client_ID = "f052d98613e44dd1bcff5da4fa1b2c0a";
 const Spotify_Client_Secret = "3f079d1cede8444a88627e4dfa2ab161";
 const Spotify_OAuth_Token = "BQCJSVd6r7p7NFmRzdXbFzbj6R1rOxIG367So6zFsAm5m3QuyNni-RgeHP_JEG2xg0EKVvNxaJu7gQPrKeSKqhOGTBooIzN0CKHT1ciX5uxmuuArrfcmMij4jUw7XFOazYAgNmuTzSCuyWe5sqhdoey4rdgpulsTmQlMFigmdvbp";
 const Spotify_Refresh = "AQC_By2gr1OZg4DOIukBgZ3_2h71d2AOrYXo7QnLkw9AzmtRuuenvjmj2Qq2ubqiFQygQQVW6vKteqbndDoxBUvBO_pkSXmsQBuYSVyCRSQM0Sl4mIWdWQM7xlZ_Y8Q53tA";
+const encoded = Buffer.from(Spotify_Client_ID + ':' + Spotify_Client_Secret).toString('base64');
+console.log(encoded);
 
 module.exports = {
   MongoDB_URI: MongoDB_URI,
@@ -22,4 +24,5 @@ module.exports = {
   Spotify_Client_ID: Spotify_Client_ID,
   Spotify_Client_Secret: Spotify_Client_Secret,
   Spotify_OAuth_Token: Spotify_OAuth_Token,
+  encoded: encoded
 };
