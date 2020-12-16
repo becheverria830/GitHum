@@ -67,7 +67,7 @@ class FriendRequests extends Component {
   }
 
   getFriends() {
-    fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
+    fetch("http://104.141.160.216:9000/user/friends/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -96,7 +96,7 @@ class FriendRequests extends Component {
       console.log("No user selected");
       return;
     } else {
-      const url = "http://localhost:9000/user/friends/request/accept";
+      const url = "http://104.141.160.216:9000/user/friends/request/accept";
       const options = {
         method: "POST",
         mode: "cors",
@@ -131,7 +131,7 @@ class FriendRequests extends Component {
       console.log("No user selected");
       return;
     } else {
-      const url = "http://localhost:9000/user/friends/request/decline";
+      const url = "http://104.141.160.216:9000/user/friends/request/decline";
       const options = {
         method: "POST",
         mode: "cors",

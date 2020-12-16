@@ -70,7 +70,7 @@ class HierarchyButton extends Component {
   handleClick = (nodeData, evt) => {
     if(nodeData.nodeSvgShape.shapeProps.fill === 'green'){
       //EVENTUALLY MAKE THIS JUST REDIRECT BASED OFF THE PREVIOUS URL
-      window.location.href = "http://localhost:3000/forests/" + nodeData.forest_id;
+      window.location.href = "http://104.141.160.216:3000/forests/" + nodeData.forest_id;
     }
    }
 
@@ -105,8 +105,8 @@ class HierarchyButton extends Component {
 
     // ASYNC COMMENTED OUT
 
-    // Get Forest 
-    fetch("http://localhost:9000/user/forests/" + forest_id)
+    // Get Forest
+    fetch("http://104.141.160.216:9000/user/forests/" + forest_id)
       .then((res) => res.json())
       .then((res) => {
         var forest = res.forests;
@@ -145,7 +145,7 @@ class HierarchyButton extends Component {
 
     // Get this forest's root
     var rootId = this.state.hierarchy.forest_id;
-  
+
     // GET ALL ARR
     var all_arr_real = [];
     var visited = [];
@@ -184,7 +184,7 @@ class HierarchyButton extends Component {
             svg = d3.selectAll("circle").filter(function(d,index){return index == i;}).style("stroke", "yellow");
           }
         }
-        
+
       }
      }, 500);
 

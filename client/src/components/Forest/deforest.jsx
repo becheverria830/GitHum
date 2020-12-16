@@ -34,7 +34,7 @@ class Deforest extends Component {
   onConfirm(event) {
     event.preventDefault();
     console.log(this.props.match.params.forestid);
-    const url = "http://localhost:9000/user/forests/deforest";
+    const url = "http://104.141.160.216:9000/user/forests/deforest";
     const options = {
       method: "POST",
       mode: "cors",
@@ -52,7 +52,7 @@ class Deforest extends Component {
       .then((res) => res.json())
       .then((res) => {
         // window.location.reload();
-        window.location.href = "http://localhost:3000/feed"
+        window.location.href = "http://104.141.160.216:3000/feed"
       })
       .catch((err) => err);
   };
