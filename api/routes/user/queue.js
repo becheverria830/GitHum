@@ -137,34 +137,38 @@ router.post('/add_song', function(req, res, next) {
 
 router.post('/remove_song', function(req, res, next) {
   const userid = req.body.userid;
-  const index = req.body.queue_index;
+  var index_num = req.body.queue_index;
 
+  console.log(index_num)
   Queue.findOne({ user_id: userid })
     .exec(function (err, queue) {
       if (err) throw err;
 
       var song_list = queue.song_list;
-      song_list.pop(index);
+      console.log(queue.song_list);
+      console.log(index_num);
+      song_list.splice(index_num, 1);
+      console.log(queue.song_list);
 
-      var index = -1;
+      index_num = 0;
       var playing = 0;
       var position = 0;
 
-      if(song_list.length != 0) {
+      if(song_list.length !== 0) {
         playing = queue.playing;
-        index = queue.index;
-        if(index < queue.index) {
-          index = index - 1;
+        index_num = queue.index;
+        if(index_num > 0) {
+          index_num = index_num - 1;
         } else {
           position = queue.position;
         }
-        if (index >= song_list.length || index < 0) {
+        if (index_num >= song_list.length || index_num < 0) {
           queue.index = 0;
         }
       }
 
 
-      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list, 'index': index, 'position': position, 'playing': playing }, function(err, updated_queue) {
+      Queue.updateOne({ 'user_id': userid }, { 'song_list': song_list, 'index': index_num, 'position': position, 'playing': playing }, function(err, updated_queue) {
         if (err) throw err;
 
         Queue.findOne({ user_id: userid })
