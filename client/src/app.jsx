@@ -229,7 +229,7 @@ export default function App() {
     //When the spotify API is loaded, go ahead and make the player.
     window.onSpotifyWebPlaybackSDKReady = () => {
       //Get the token here: https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
-      const token = "BQCFv9x6-Kq4fxcIpBIdM6kimVt_QUqES-VVAHZfiTD3IXVfeeo0d5kXp0R4NiAe2fB7IlHMFuzSyAR4xqCNGjsBGskpmzssu61LRxOdO_xX3ZGRBPlPCLCcndKn3VoCGC8opGHTbkjoyyv6VhOlhsIRDPB-AsmdxUw1v7w6qUlO_02Mn8ZRcIS6";
+      const token = "BQB6whHbZI-SWSxYJ2WD6ffxr4g-A9_chEB_5NMNVfWUmED1F_LSsdEP4BQRaW-xyCqTES-rjxLuEMqeCg2PgiNCLTJPsZIae0TBH-y5ANZA_kz86g5NBXdblCMel8Mvm9VZm3z-RIQUwgCZAx8sSISfMpctRw";
       const player = new window.Spotify.Player({
         name: "GitHum",
         getOAuthToken: (cb) => { cb(token); },
