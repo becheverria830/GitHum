@@ -30,7 +30,7 @@ class SearchPage extends Component {
     if(this.props.match.params.query == undefined) {
       this.songListElement.current.updateState([]);
     } else {
-      fetch("http://104.141.160.216:9000/search?query=" + this.props.match.params.query)
+      fetch("http://localhost:9000/search?query=" + this.props.match.params.query)
         .then(res => res.json())
         .then(res => {
           var songs_popularity_sorted = JSON.parse(JSON.stringify(res.songs));

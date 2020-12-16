@@ -57,7 +57,7 @@ class AddFriendButton extends Component {
 
   // getFriends() {
   //   console.log("GetFriends called");
-  //   fetch("http://104.141.160.216:9000/user/friends/" + this.props.auth.user.id)
+  //   fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
   //     .then((res) => res.json())
   //     .then((res) => {
   //       console.log("Res: " + res);
@@ -80,7 +80,7 @@ class AddFriendButton extends Component {
     if (this.state.search == "") {
       return;
     } else {
-      fetch("http://104.141.160.216:9000/user/friends/search/" + this.state.search)
+      fetch("http://localhost:9000/user/friends/search/" + this.state.search)
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
@@ -108,7 +108,7 @@ class AddFriendButton extends Component {
 
   sendFriendRequest(event) {
     // getFriend()
-    fetch("http://104.141.160.216:9000/user/friends/" + this.props.auth.user.id)
+    fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -171,7 +171,7 @@ class AddFriendButton extends Component {
             return;
           }
           // Send Friend Request
-          const url = "http://104.141.160.216:9000/user/friends/add";
+          const url = "http://localhost:9000/user/friends/add";
           const options = {
             method: "POST",
             mode: "cors",

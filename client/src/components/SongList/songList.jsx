@@ -42,7 +42,7 @@ class SongList extends Component {
   }
 
   songListPlayTrack(song) {
-    const url = "http://104.141.160.216:9000/user/queue/play_song";
+    const url = "http://localhost:9000/user/queue/play_song";
     const options = {
       method: "POST",
       mode: "cors",
@@ -67,7 +67,7 @@ class SongList extends Component {
   }
 
   getForests(userid) {
-    fetch("http://104.141.160.216:9000/user/forests/forests/" + userid)
+    fetch("http://localhost:9000/user/forests/forests/" + userid)
       .then((res) => res.json())
       .then((res) => {
         this.setState({ myForests: res.forests });
@@ -76,7 +76,7 @@ class SongList extends Component {
   }
 
   addFavorite(song) {
-    const url = "http://104.141.160.216:9000/user/favorites/songs/add";
+    const url = "http://localhost:9000/user/favorites/songs/add";
     const options = {
       method: "POST",
       mode: "cors",
@@ -100,7 +100,7 @@ class SongList extends Component {
   }
 
   removeFavorite(song) {
-    const url = "http://104.141.160.216:9000/user/favorites/songs/remove";
+    const url = "http://localhost:9000/user/favorites/songs/remove";
     const options = {
       method: "POST",
       mode: "cors",
@@ -124,7 +124,7 @@ class SongList extends Component {
   }
 
   addToForest(song, forest) {
-    const url = "http://104.141.160.216:9000/user/forests/addToForest";
+    const url = "http://localhost:9000/user/forests/addToForest";
     const options = {
       method: "POST",
       mode: "cors",
@@ -146,7 +146,7 @@ class SongList extends Component {
   }
 
   removeFromForest(song, forest) {
-    const url = "http://104.141.160.216:9000/user/forests/removeFromForest";
+    const url = "http://localhost:9000/user/forests/removeFromForest";
     const options = {
       method: "POST",
       mode: "cors",
@@ -165,11 +165,11 @@ class SongList extends Component {
       .then((res) => res.json())
       .then((res) => {})
       .catch((err) => err);
-    
+
   }
 
   getFavorites(userid) {
-    fetch("http://104.141.160.216:9000/user/favorites/songs/" + this.props.user.id)
+    fetch("http://localhost:9000/user/favorites/songs/" + this.props.user.id)
       .then((res) => res.json())
       .then((res) => {
         var fave_list = [];
@@ -183,7 +183,7 @@ class SongList extends Component {
   }
 
   queueSong(song) {
-    const url = "http://104.141.160.216:9000/user/queue/add_song";
+    const url = "http://localhost:9000/user/queue/add_song";
     const options = {
       method: "POST",
       mode: "cors",

@@ -30,7 +30,7 @@ class MutualFriendBox extends Component {
 
   getMutualFriends() {
     // Get Mutual Friends
-    const url = "http://104.141.160.216:9000/user/friends/mutualFriends";
+    const url = "http://localhost:9000/user/friends/mutualFriends";
     const options = {
       method: "POST",
       mode: "cors",

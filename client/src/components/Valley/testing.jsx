@@ -29,7 +29,7 @@ class StartForest extends Component {
       name: this.state.name
     };
   
-    const url = 'http://104.141.160.216:9000/forests/create';
+    const url = 'http://localhost:9000/forests/create';
     const options = {
       method: 'POST',
       mode: 'cors',
@@ -48,7 +48,7 @@ class StartForest extends Component {
       .then(response => {
         console.log(response);
       if(response[0] == 200) {
-        window.location.href = "http://104.141.160.216:3000/feed"
+        window.location.href = "http://localhost:3000/feed"
       } else {
         alert(response[1].message);
       }

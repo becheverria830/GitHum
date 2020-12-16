@@ -53,7 +53,7 @@ class ShareForest extends Component {
   };
 
   setUrl() {
-    var url = "http://104.141.160.216:3000/forests/" + this.props.forest_id;
+    var url = "http://localhost:3000/forests/" + this.props.forest_id;
     console.log(this.props.forest_id);
     this.setState({ url: url });
   }

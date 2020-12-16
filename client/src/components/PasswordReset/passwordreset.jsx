@@ -31,7 +31,7 @@ class PasswordReset extends Component {
     const resetPasswordData = {
       email: this.state.email,
     };
-    const url = 'http://104.141.160.216:9000/user/credentials/resetpassword';
+    const url = 'http://localhost:9000/user/credentials/resetpassword';
     const options = {
       method: 'POST',
       mode: 'cors',

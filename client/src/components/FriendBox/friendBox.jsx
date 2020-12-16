@@ -41,7 +41,7 @@ class FriendBox extends Component {
   }
 
   getFriends() {
-    fetch("http://104.141.160.216:9000/user/friends/" + this.props.auth.user.id)
+    fetch("http://localhost:9000/user/friends/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -59,7 +59,7 @@ class FriendBox extends Component {
   }
 
   handleSelectedFriend(event, request) {
-    const url = "http://104.141.160.216:9000/user/friends/remove";
+    const url = "http://localhost:9000/user/friends/remove";
     const options = {
       method: "POST",
       mode: "cors",

@@ -62,7 +62,7 @@ class BranchForest extends Component {
     }
 
     // AJAX
-    const url = "http://104.141.160.216:9000/user/forests/branchForest";
+    const url = "http://localhost:9000/user/forests/branchForest";
 
     const options = {
       method: "POST",

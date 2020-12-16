@@ -52,7 +52,7 @@ class SpotifyPlayer {
   }
 
   getCurrentQueue(user_id) {
-    const url = "http://104.141.160.216:9000/user/queue/" + user_id;
+    const url = "http://localhost:9000/user/queue/" + user_id;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -80,7 +80,7 @@ class SpotifyPlayer {
   setIsPlaying(isPlaying) {
     this.isPlaying = isPlaying;
     if(window.CurrentUserID != null) {
-      const url = "http://104.141.160.216:9000/user/queue/set_is_playing";
+      const url = "http://localhost:9000/user/queue/set_is_playing";
       const options = {
         method: "POST",
         mode: "cors",
@@ -155,7 +155,7 @@ class SpotifyPlayer {
 
   songFinished() {
     if(window.CurrentUserID != null) {
-      const url = "http://104.141.160.216:9000/user/queue/skip";
+      const url = "http://localhost:9000/user/queue/skip";
       const options = {
         method: "POST",
         mode: "cors",
@@ -181,7 +181,7 @@ class SpotifyPlayer {
   updatePosition(position) {
     if(window.CurrentUserID != null) {
       this.queue.position = position;
-      const url = "http://104.141.160.216:9000/user/queue/update_position";
+      const url = "http://localhost:9000/user/queue/update_position";
       const options = {
         method: "POST",
         mode: "cors",

@@ -38,7 +38,7 @@ class PasswordReset extends Component {
   resetPassword(event) {
     event.preventDefault();
 
-    const url = 'http://104.141.160.216:9000/user/credentials/passwordreset';
+    const url = 'http://localhost:9000/user/credentials/passwordreset';
     const options = {
       method: 'POST',
       mode: 'cors',
