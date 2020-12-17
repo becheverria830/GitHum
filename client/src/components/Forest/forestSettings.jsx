@@ -109,7 +109,7 @@ class ForestSettings extends Component {
     reader.onload = function () {
       res = reader.result;//base64encoded string
       
-      const url = "http://localhost:9000/user/forests/update_icon";
+      const url = "http://104.131.160.216:9000/user/forests/update_icon";
       const options = {
         method: "POST",
         mode: "cors",
@@ -161,7 +161,7 @@ class ForestSettings extends Component {
       return;
     }
 
-    const url = "http://localhost:9000/user/forests/update_information";
+    const url = "http://104.131.160.216:9000/user/forests/update_information";
     const options = {
       method: "POST",
       mode: "cors",

@@ -51,7 +51,7 @@ class QueueBox extends Component {
 
 
   getQueue() {
-    fetch("http://localhost:9000/user/queue/" + this.props.auth.user.id)
+    fetch("http://104.131.160.216:9000/user/queue/" + this.props.auth.user.id)
       .then((res) => res.json())
       .then((res) => {
         this.setState({ queue_list: res.queue.song_list, temp_queue_list : res.queue.song_list });
@@ -61,7 +61,7 @@ class QueueBox extends Component {
 
 
   removeQueueItem(queue_index){
-    const url = "http://localhost:9000/user/queue/remove_song";
+    const url = "http://104.131.160.216:9000/user/queue/remove_song";
     const options = {
       method: "POST",
       mode: "cors",
@@ -88,7 +88,7 @@ class QueueBox extends Component {
   }
 
   clearQueue(){
-    const url = "http://localhost:9000/user/queue/clear";
+    const url = "http://104.131.160.216:9000/user/queue/clear";
     const options = {
       method: "POST",
       mode: "cors",

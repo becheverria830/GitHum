@@ -57,7 +57,7 @@ class NowPlaying extends Component {
   }
 
   onPrevClick() {
-    const url = "http://localhost:9000/user/queue/rewind";
+    const url = "http://104.131.160.216:9000/user/queue/rewind";
     const options = {
       method: "POST",
       mode: "cors",
@@ -85,7 +85,7 @@ class NowPlaying extends Component {
   }
 
   onNextClick() {
-    const url = "http://localhost:9000/user/queue/skip";
+    const url = "http://104.131.160.216:9000/user/queue/skip";
     const options = {
       method: "POST",
       mode: "cors",
@@ -108,7 +108,7 @@ class NowPlaying extends Component {
   }
 
   onShuffleClick() {
-    const url = "http://localhost:9000/user/queue/shuffle";
+    const url = "http://104.131.160.216:9000/user/queue/shuffle";
     const options = {
       method: "POST",
       mode: "cors",

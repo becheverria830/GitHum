@@ -52,7 +52,7 @@ class SpotifyPlayer {
   }
 
   getCurrentQueue(user_id) {
-    const url = "http://localhost:9000/user/queue/" + user_id;
+    const url = "http://104.131.160.216:9000/user/queue/" + user_id;
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
@@ -80,7 +80,7 @@ class SpotifyPlayer {
   setIsPlaying(isPlaying) {
     this.isPlaying = isPlaying;
     if(window.CurrentUserID != null) {
-      const url = "http://localhost:9000/user/queue/set_is_playing";
+      const url = "http://104.131.160.216:9000/user/queue/set_is_playing";
       const options = {
         method: "POST",
         mode: "cors",
@@ -155,7 +155,7 @@ class SpotifyPlayer {
 
   songFinished() {
     if(window.CurrentUserID != null) {
-      const url = "http://localhost:9000/user/queue/skip";
+      const url = "http://104.131.160.216:9000/user/queue/skip";
       const options = {
         method: "POST",
         mode: "cors",
@@ -181,7 +181,7 @@ class SpotifyPlayer {
   updatePosition(position) {
     if(window.CurrentUserID != null) {
       this.queue.position = position;
-      const url = "http://localhost:9000/user/queue/update_position";
+      const url = "http://104.131.160.216:9000/user/queue/update_position";
       const options = {
         method: "POST",
         mode: "cors",
@@ -263,7 +263,7 @@ export default function App() {
           refresh_token: "AQC_By2gr1OZg4DOIukBgZ3_2h71d2AOrYXo7QnLkw9AzmtRuuenvjmj2Qq2ubqiFQygQQVW6vKteqbndDoxBUvBO_pkSXmsQBuYSVyCRSQM0Sl4mIWdWQM7xlZ_Y8Q53tA"
         },
       };
-      
+
       console.log(token);
 
       fetch(url, options)
@@ -277,8 +277,8 @@ export default function App() {
 
         console.log(token);
         */
-      
-      
+
+
       const player = new window.Spotify.Player({
         name: "GitHum",
         getOAuthToken: (cb) => { cb(token); },

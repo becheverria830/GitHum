@@ -77,7 +77,7 @@ class ForestPage extends Component {
 
   /*Think about improvements*/
   queueSong(song) {
-    const url = "http://localhost:9000/user/queue/add_song";
+    const url = "http://104.131.160.216:9000/user/queue/add_song";
     const options = {
       method: "POST",
       mode: "cors",
@@ -102,7 +102,7 @@ class ForestPage extends Component {
 
   getForestData() {
     fetch(
-      "http://localhost:9000/user/forests/" + this.props.match.params.forestid
+      "http://104.131.160.216:9000/user/forests/" + this.props.match.params.forestid
     )
       .then((res) => res.json())
       .then((res) => {
@@ -119,7 +119,7 @@ class ForestPage extends Component {
         } else {
           // Check if its been saved before
 
-          fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
+          fetch("http://104.131.160.216:9000/user/forests/saved/" + this.props.auth.user.id)
             .then((res) => res.json())
             .then((res) => {
               console.log(res.forests);
@@ -141,7 +141,7 @@ class ForestPage extends Component {
 
   getHierarchyData() {
     fetch(
-      "http://localhost:9000/user/forests/" +
+      "http://104.131.160.216:9000/user/forests/" +
         this.props.match.params.forestid +
         "/hierarchy"
     )
@@ -155,7 +155,7 @@ class ForestPage extends Component {
   }
 
   getSavedForests(userid) {
-    fetch("http://localhost:9000/user/forests/saved/" + userid)
+    fetch("http://104.131.160.216:9000/user/forests/saved/" + userid)
       .then((res) => res.json())
       .then((res) => {
         console.log(res.forests);
@@ -189,7 +189,7 @@ class ForestPage extends Component {
     // This would indicate 0
 
     event.preventDefault();
-    const url = "http://localhost:9000/user/queue/play_forest";
+    const url = "http://104.131.160.216:9000/user/queue/play_forest";
     const options = {
       method: "POST",
       mode: "cors",
@@ -226,7 +226,7 @@ class ForestPage extends Component {
     // Check if it has been saved already
     else {
       fetch(
-        "http://localhost:9000/user/forests/saved/" + this.props.auth.user.id
+        "http://104.131.160.216:9000/user/forests/saved/" + this.props.auth.user.id
       )
         .then((res) => res.json())
         .then((res) => {
@@ -238,7 +238,7 @@ class ForestPage extends Component {
             }
           }
           // Save Forest
-          const url = "http://localhost:9000/user/forests/save";
+          const url = "http://104.131.160.216:9000/user/forests/save";
           const options = {
             method: "POST",
             mode: "cors",
@@ -279,7 +279,7 @@ class ForestPage extends Component {
     // Check if it has been unsaved already
     else {
 
-      fetch("http://localhost:9000/user/forests/saved/" + this.props.auth.user.id)
+      fetch("http://104.131.160.216:9000/user/forests/saved/" + this.props.auth.user.id)
         .then((res) => res.json())
         .then((res) => {
           console.log(res.forests);
@@ -291,7 +291,7 @@ class ForestPage extends Component {
           }
           if (checkSaved){
             // Unsave Forest
-            const url = "http://localhost:9000/user/forests/unsave";
+            const url = "http://104.131.160.216:9000/user/forests/unsave";
             const options = {
               method: "POST",
               mode: "cors",

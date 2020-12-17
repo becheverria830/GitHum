@@ -84,7 +84,7 @@ class ValleyPage extends Component {
 
   getSavedForests(userid) {
     console.log(userid);
-    fetch("http://localhost:9000/user/forests/saved/" + userid)
+    fetch("http://104.131.160.216:9000/user/forests/saved/" + userid)
       .then((res) => res.json())
       .then((res) => {
         this.savedForestElement.current.updateState(res.forests, this.props.auth.user);
@@ -93,7 +93,7 @@ class ValleyPage extends Component {
   }
 
   getFavoriteSongs(userid) {
-    fetch("http://localhost:9000/user/favorites/songs/" + userid)
+    fetch("http://104.131.160.216:9000/user/favorites/songs/" + userid)
       .then((res) => res.json())
       .then((res) => {
         console.log("test");
@@ -104,7 +104,7 @@ class ValleyPage extends Component {
   }
 
   getForests(userid) {
-    fetch("http://localhost:9000/user/forests/forests/" + userid)
+    fetch("http://104.131.160.216:9000/user/forests/forests/" + userid)
       .then((res) => res.json())
       .then((res) => {
         this.forestElement.current.updateState(res.forests, this.props.auth.user);
@@ -116,7 +116,7 @@ class ValleyPage extends Component {
 
   getValleyInformation(userid) {
     console.log(this.props.auth.user.id);
-    fetch("http://localhost:9000/user/credentials/" + userid)
+    fetch("http://104.131.160.216:9000/user/credentials/" + userid)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
